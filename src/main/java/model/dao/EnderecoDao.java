@@ -4,7 +4,7 @@ import model.bo.Endereco;
 
 public class EnderecoDao extends DaoBase<Endereco> {
 
-    protected EnderecoDao() {
+    public EnderecoDao() {
         super(Endereco.class);
     }
 }

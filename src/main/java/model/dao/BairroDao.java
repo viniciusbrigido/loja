@@ -4,7 +4,7 @@ import model.bo.Bairro;
 
 public class BairroDao extends DaoBase<Bairro> {
 
-    protected BairroDao() {
+    public BairroDao() {
         super(Bairro.class);
     }
 }
