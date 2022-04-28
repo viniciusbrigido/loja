@@ -62,10 +62,6 @@ public abstract class DaoBase<T extends Serializable> {
         }
     }
 
-    public T retrieve(String describe) {
-        return entityManager.find(instance, describe);
-    }
-
     public void delete(T entity) {
         try {
             entityManager.getTransaction().begin();
