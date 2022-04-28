@@ -27,10 +27,10 @@ public class Compra implements Serializable {
     private Date datCompra;
 
     @ManyToOne
-    @JoinColumn(name = "condicaoPagamentoId")
+    @JoinColumn(name = "id_condicao_pagamento")
     private CondicaoPagamento condicaoPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "fornecedorId")
+    @JoinColumn(name = "id_fornecedor")
     private Fornecedor fornecedor;
 }

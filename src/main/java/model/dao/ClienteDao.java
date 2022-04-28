@@ -1,10 +1,10 @@
 package model.dao;
 
-import model.bo.Cidade;
+import model.bo.Cliente;
 
-public class ClienteDao extends DaoBase<Cidade> {
+public class ClienteDao extends DaoBase<Cliente> {
 
     public ClienteDao() {
-        super(Cidade.class);
+        super(Cliente.class);
     }
 }

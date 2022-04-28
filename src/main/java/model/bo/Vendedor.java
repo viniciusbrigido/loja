@@ -16,8 +16,8 @@ public class Vendedor implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_bairro")
-    private String nom_vendedor;
+    @Column(name = "nom_vendedor")
+    private String nomVendedor;
     @Column(name = "nom_complemento")
     private String nomComplemento;
     @Column(name = "nom_email")
@@ -34,6 +34,6 @@ public class Vendedor implements Serializable {
     private Double prcComissaoRecebto;
 
     @ManyToOne
-    @JoinColumn(name = "endereco_id")
+    @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 }

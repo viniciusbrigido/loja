@@ -20,14 +20,14 @@ public class ItemCompra implements Serializable {
     private Double qtdProduto;
     @Column(name = "vlr_unitario")
     private Double vlrUnitario;
-    @Column(name = "nom_bairro")
+    @Column(name = "prc_desconto")
     private Double prcDesconto;
 
     @ManyToOne
-    @JoinColumn(name = "compraId")
+    @JoinColumn(name = "id_compra")
     private Compra compra;
 
     @ManyToOne
-    @JoinColumn(name = "caracteristicaProdutoId")
+    @JoinColumn(name = "id_caracteristica_produto")
     private CaracteristicaProduto caracteristicaProduto;
 }

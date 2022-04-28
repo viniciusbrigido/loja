@@ -24,10 +24,10 @@ public class ItemVenda implements Serializable {
     private Double prcDesconto;
 
     @ManyToOne
-    @JoinColumn(name = "vendaId")
+    @JoinColumn(name = "id_venda")
     private Venda venda;
 
     @ManyToOne
-    @JoinColumn(name = "caracteristicaProdutoId")
+    @JoinColumn(name = "id_caracteristica_produto")
     private CaracteristicaProduto caracteristicaProduto;
 }

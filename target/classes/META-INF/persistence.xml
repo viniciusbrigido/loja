@@ -11,6 +11,8 @@
             <property name="javax.persistence.jdbc.password" value="ifsc" />
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 
+
+<!--            <property name="hibernate.connection.autocommit" value="true" />-->
             <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect" />
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />

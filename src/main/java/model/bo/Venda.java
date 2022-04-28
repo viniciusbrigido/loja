@@ -27,14 +27,14 @@ public class Venda implements Serializable {
     private Date datEmissao;
 
     @ManyToOne
-    @JoinColumn(name = "clienteId")
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "condicaoPagamentoId")
+    @JoinColumn(name = "id_condicao_pagamento")
     private CondicaoPagamento condicaoPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "vendedorId")
+    @JoinColumn(name = "id_vendedor")
     private Vendedor vendedor;
 }

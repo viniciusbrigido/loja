@@ -25,10 +25,10 @@ public class CaracteristicaProduto implements Serializable {
     private String codBarras;
 
     @ManyToOne
-    @JoinColumn(name = "produtoId")
+    @JoinColumn(name = "id_produto")
     private Produto produto;
 
     @ManyToOne
-    @JoinColumn(name = "corId")
+    @JoinColumn(name = "id_cor")
     private Cor cor;
 }

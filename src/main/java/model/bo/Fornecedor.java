@@ -30,6 +30,6 @@ public class Fornecedor implements Serializable {
     private String numInscEstadual;
 
     @ManyToOne
-    @JoinColumn(name = "endereco_id")
+    @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 }

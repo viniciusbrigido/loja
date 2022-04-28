@@ -22,14 +22,14 @@ public class Produto implements Serializable {
     private Double vlrProduto;
 
     @ManyToOne
-    @JoinColumn(name = "marcaId")
+    @JoinColumn(name = "id_marca")
     private Marca marca;
 
     @ManyToOne
-    @JoinColumn(name = "tipoId")
+    @JoinColumn(name = "id_tipo")
     private Tipo tipoProduto;
 
     @ManyToOne
-    @JoinColumn(name = "tamanhoId")
+    @JoinColumn(name = "id_tamanho")
     private Tamanho tamanho;
 }

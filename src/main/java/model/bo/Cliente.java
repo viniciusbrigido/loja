@@ -35,6 +35,6 @@ public class Cliente implements Serializable {
     private Date datNascimento;
 
     @ManyToOne
-    @JoinColumn(name = "endereco_id")
+    @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 }
