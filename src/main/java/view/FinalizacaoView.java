@@ -353,7 +353,7 @@ public class FinalizacaoView extends ControllerView {
         if (btnFinalizar == null) {
             btnFinalizar = new JButtonTelaDeVendas("Finalizar", "F1", "Clique para finalizar a venda", new ImageIcon(getClass().getResource("/imagens/finalizar.png")));
             btnFinalizar.addActionListener(a -> controller.finalizar());
-//            btnFinalizar.getInputMap(UNDEFINED_CONDITION).put(getKeyStroke(VK_F1, 0), EVENTO);
+            btnFinalizar.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, 0), EVENTO);
             btnFinalizar.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
             btnFinalizar.getActionMap().put(EVENTO, new AbstractAction() {
                 @Override
@@ -369,7 +369,7 @@ public class FinalizacaoView extends ControllerView {
         if (btnLimpar == null) {
             btnLimpar = new JButtonTelaDeVendas("Limpar", "F2", "Clique para limpar a tela", new ImageIcon(getClass().getResource("/imagens/excluir.png")));
             btnLimpar.addActionListener(a -> controller.limpaTela());
-//            btnLimpar.getInputMap(UNDEFINED_CONDITION).put(getKeyStroke(VK_F2, 0), EVENTO);
+            btnLimpar.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F2, 0), EVENTO);
             btnLimpar.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
             btnLimpar.getActionMap().put(EVENTO, new AbstractAction() {
                 @Override
@@ -385,7 +385,7 @@ public class FinalizacaoView extends ControllerView {
         if (btnSair == null) {
             btnSair = new JButtonTelaDeVendas("Sair", "Esc", "Clique para fechar", new ImageIcon(getClass().getResource("/imagens/sair.png")));
             btnSair.addActionListener(a -> controller.sairTela());
-//            btnSair.getInputMap(UNDEFINED_CONDITION).put(getKeyStroke(VK_ESCAPE, 0), EVENTO);
+            btnSair.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), EVENTO);
             btnSair.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
             btnSair.getActionMap().put(EVENTO, new AbstractAction() {
                 @Override
