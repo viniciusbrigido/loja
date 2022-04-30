@@ -2,8 +2,6 @@ package view;
 
 import controller.ListagemGeralController;
 import dto.ColunaDto;
-import personalizado.JTextFieldLimitador;
-import personalizado.JTextFieldMoeda;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -12,9 +10,7 @@ import java.awt.event.*;
 import java.util.List;
 import static java.awt.Cursor.getDefaultCursor;
 import static java.awt.event.KeyEvent.VK_ENTER;
-import static java.awt.event.KeyEvent.VK_F2;
 import static javax.swing.JComponent.WHEN_FOCUSED;
-import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 import static javax.swing.KeyStroke.getKeyStroke;
 
 public class ListagemGeralView extends ListagemView {

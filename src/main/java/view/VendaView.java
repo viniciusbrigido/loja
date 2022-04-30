@@ -639,8 +639,6 @@ public class VendaView extends ControllerView {
                 }
             });
 
-//            tabelaProdutos
-
             tabelaProdutos.addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
@@ -709,9 +707,7 @@ public class VendaView extends ControllerView {
                         case 5:
                             return formataDouble(item.getPrcDesconto());
                         case 6:
-                            //TODO Rever
-//                            return formataDouble(item.getVlrBruto());
-                            return formataDouble(item.getVlrUnitario());
+                            return formataDouble(item.getVlrLiquido());
                         default:
                             return "";
                     }

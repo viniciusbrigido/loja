@@ -83,12 +83,10 @@ public class CaracteristicaProdutoService implements InterfaceService<Caracteris
     }
 
     public List<CaracteristicaProduto> buscaCaracteristicasPorProduto(Integer codigoProduto) {
-        return null;
-//        return new CaracteristicaProdutoDao().buscaCaracteristicasPorProduto(codigoProduto);
+        return new CaracteristicaProdutoDao().buscaCaracteristicasPorProduto(codigoProduto);
     }
 
     public CaracteristicaProduto buscaPorCodigoBarras(String codigoBarra) {
-        return null;
-//        return new CaracteristicaProdutoDao().buscaPorCodigoBarras(codigoBarra);
+        return new CaracteristicaProdutoDao().buscaPorCodigoBarras(codigoBarra);
     }
 }

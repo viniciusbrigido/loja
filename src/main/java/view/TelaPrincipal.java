@@ -2,11 +2,7 @@ package view;
 
 import controller.*;
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
 import java.awt.*;
-import java.beans.PropertyVetoException;
-
 import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 import static java.awt.event.KeyEvent.*;
 import static java.lang.Short.*;

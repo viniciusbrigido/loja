@@ -72,8 +72,7 @@ public class ProdutoService implements InterfaceService<Produto> {
     }
 
     public List<Produto> buscaPorNome(String descricao) {
-        return null;
-//        return new ProdutoDao().buscaPorNome(descricao);
+        return new ProdutoDao().buscaPorNome(descricao);
     }
 
     public boolean isProdutoCadastradoComMarca(int codigoMarca) {

@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Time;
 import java.util.*;
-import static java.lang.Float.*;
 import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
 import static util.Formatador.*;
@@ -145,7 +144,7 @@ public class VendaController extends Controller {
             return;
         }
 
-        prossegueBusca(produtos.get(0).getId());
+        prossegueBusca(produtos.get(ZERO).getId());
     }
 
     private void prossegueBusca(Integer codProduto) {
@@ -278,9 +277,8 @@ public class VendaController extends Controller {
         Double valorTotalBruto = ZEROD;
         Double valorTotalLiquido = ZEROD;
         for (ItemVenda item : getItens()) {
-            //TODO Rever
-//            valorTotalBruto += item.getVlrBruto();
-//            valorTotalLiquido += item.getVlrLiquido();
+            valorTotalBruto += item.getVlrBruto();
+            valorTotalLiquido += item.getVlrLiquido();
         }
 
         this.valorTotalLiquido = valorTotalLiquido;
