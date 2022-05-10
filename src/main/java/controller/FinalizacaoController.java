@@ -23,6 +23,7 @@ public class FinalizacaoController extends Controller {
     private ItemVendaService itemVendaService;
     private VendedorService vendedorService;
     private ClienteService clienteService;
+    private ReceberService receberService;
     private CondicaoPagamentoService condicaoPagamentoService;
     private CaracteristicaProdutoService caracteristicaProdutoService;
 
@@ -349,6 +350,7 @@ public class FinalizacaoController extends Controller {
 
         venda = getVendaService().salvarRetornandoVenda(venda);
         atualizaSalvaItensVenda(venda);
+        criaRecebimento(venda);
 
         showMessageDialog(getView(), "Venda efetuada com sucesso!", "Atenção", INFORMATION_MESSAGE);
         getView().dispose();
@@ -361,6 +363,16 @@ public class FinalizacaoController extends Controller {
             item.setVenda(venda);
             getItensVendaService().salvar(item);
         });
+    }
+
+    private void criaRecebimento(Venda venda) {
+        Receber receber = new Receber();
+        receber.setDatEmissao(new Date());
+        receber.setVlrEmissao(venda.getVlrTotal());
+        receber.setVlrDesconto(ZEROD);
+        receber.setVenda(venda);
+
+        getReceberService().salvar(receber);
     }
 
     private void atualizaCaracteristicaProduto(ItemVenda item) {
@@ -419,6 +431,10 @@ public class FinalizacaoController extends Controller {
 
     private ClienteService getClienteService() {
         return ofNullable(clienteService).orElseGet(() -> clienteService = new ClienteService());
+    }
+
+    private ReceberService getReceberService() {
+        return ofNullable(receberService).orElseGet(() -> receberService = new ReceberService());
     }
 
     private CondicaoPagamentoService getCondicaoPagamentoService() {

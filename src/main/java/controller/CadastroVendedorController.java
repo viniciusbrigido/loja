@@ -208,9 +208,10 @@ public class CadastroVendedorController extends CadastroController {
         vendedor.setPrcComissaoRecebto(getView().getTxtComissaoRecebimento().getDoubleValue());
         vendedor.setPrcComissaoVenda(getView().getTxtComissaoVenda().getDoubleValue());
         vendedor.setEndereco(getEnderecoSelecionado());
+        String msg = format("Vendedor %s com sucesso.", isEmpty(vendedor.getId()) ? "cadastrado" : "alterado");
         getVendedorService().createOrUpdate(vendedor);
 
-        showMessageDialog(getView(), format("Vendedor %s com sucesso.", isEmpty(vendedor.getId()) ? "cadastrado" : "alterado"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

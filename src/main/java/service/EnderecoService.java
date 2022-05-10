@@ -67,13 +67,11 @@ public class EnderecoService implements InterfaceService<Endereco> {
         atualizar(endereco);
     }
 
-    public boolean isEnderecoCadastradoComBairro(int codigoBairro) {
-        return false;
-//        return new EnderecoDao().isEnderecoCadastradoComBairro(codigoBairro);
+    public boolean isEnderecoCadastradoComBairro(Integer codigoBairro) {
+        return new EnderecoDao().isEnderecoCadastradoComBairro(codigoBairro);
     }
 
-    public boolean isEnderecoCadastradoComCidade(int codigoCidade) {
-        return false;
-//        return new EnderecoDao().isEnderecoCadastradoComCidade(codigoCidade);
+    public boolean isEnderecoCadastradoComCidade(Integer codigoCidade) {
+        return new EnderecoDao().isEnderecoCadastradoComCidade(codigoCidade);
     }
 }

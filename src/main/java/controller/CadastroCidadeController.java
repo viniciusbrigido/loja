@@ -143,9 +143,10 @@ public class CadastroCidadeController extends CadastroController {
     private void preencheSalvaCidade(Cidade cidade) throws Exception {
         cidade.setNomCidade(getView().getTxtDescricao().getText());
         cidade.setNomUf(getView().getCBEstados().getSelectedItem().toString());
+        String msg = format("Cidade %s com sucesso.", isEmpty(cidade.getId()) ? "cadastrada" : "alterada");
         getCidadeService().createOrUpdate(cidade);
 
-        showMessageDialog(getView(), format("Cidade %s com sucesso.", isEmpty(cidade.getId()) ? "cadastrada" : "alterada"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

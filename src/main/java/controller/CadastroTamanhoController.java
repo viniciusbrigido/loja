@@ -133,9 +133,10 @@ public class CadastroTamanhoController extends CadastroController {
 
     private void preencheSalvaTamanho(Tamanho tamanho) throws Exception {
         tamanho.setNomTamanho(getView().getTxtDescricao().getText());
+        String msg = format("Tamanho %s com sucesso.", isEmpty(tamanho.getId()) ? "cadastrado" : "alterado");
         getTamanhoService().createOrUpdate(tamanho);
 
-        showMessageDialog(getView(), format("Tamanho %s com sucesso.", isEmpty(tamanho.getId()) ? "cadastrado" : "alterado"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

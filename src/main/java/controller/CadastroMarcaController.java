@@ -134,9 +134,10 @@ public class CadastroMarcaController extends CadastroController {
 
     private void preencheSalvaMarca(Marca marca) throws Exception {
         marca.setNomMarca(getView().getTxtDescricao().getText());
+        String msg = format("Marca %s com sucesso.", isEmpty(marca.getId()) ? "cadastrada" : "alterada");
         getMarcaService().createOrUpdate(marca);
 
-        showMessageDialog(getView(), format("Marca %s com sucesso.", isEmpty(marca.getId()) ? "cadastrada" : "alterada"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

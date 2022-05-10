@@ -226,9 +226,10 @@ public class CadastroProdutoController extends CadastroController {
         produto.setTamanho(getTamanhoSelecionado());
         produto.setTipo(getTipoSelecionado());
         produto.setMarca(getMarcaSelecionada());
+        String msg = format("Produto %s com sucesso.", isEmpty(produto.getId()) ? "cadastrado" : "alterado");
         getProdutoService().createOrUpdate(produto);
 
-        showMessageDialog(getView(), format("Produto %s com sucesso.", isEmpty(produto.getId()) ? "cadastrado" : "alterado"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 
@@ -272,8 +273,9 @@ public class CadastroProdutoController extends CadastroController {
         caracteristicaProduto.setQtdEstoque(getView().getTxtEstoque().getDoubleValue());
 
         try {
+            String msg = format("Característica do Produto %s com sucesso.", isEmpty(codigoCaracteristica) ? "cadastrada" : "alterada");
             getCaracteristicaProdutoService().createOrUpdate(caracteristicaProduto);
-            showMessageDialog(getView(), format("Característica do Produto %s com sucesso.", isEmpty(codigoCaracteristica) ? "cadastrada" : "alterada"), "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
             limpaCamposCaracteristica();
         } catch (Exception e) {
             showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);

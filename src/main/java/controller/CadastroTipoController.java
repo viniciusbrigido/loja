@@ -131,9 +131,10 @@ public class CadastroTipoController extends CadastroController {
 
     private void preencheSalvaTipo(Tipo tipo) throws Exception {
         tipo.setNomTipo(getView().getTxtDescricao().getText());
+        String msg = format("Tipo de Produto %s com sucesso.", isEmpty(tipo.getId()) ? "cadastrado" : "alterado");
         getTipoService().createOrUpdate(tipo);
 
-        showMessageDialog(getView(), format("Tipo de Produto %s com sucesso.", isEmpty(tipo.getId()) ? "cadastrado" : "alterado"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

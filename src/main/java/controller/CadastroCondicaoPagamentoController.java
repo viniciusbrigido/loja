@@ -143,9 +143,10 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
         condicao.setNomCondicaoPagamento(getView().getTxtDescricao().getText());
         condicao.setNumDiasAtePrimeiraParcela(asInteger(getView().getTxtNumDiasAtePrimeiraParcela().getText()));
         condicao.setNumDiasEntreParcelas(asInteger(getView().getTxtNumDiasEntreParcelas().getText()));
+        String msg = format("Condição de Pagamento %s com sucesso.", isEmpty(condicao.getId()) ? "cadastrada" : "alterada");
         getCondicaoPagamentoService().createOrUpdate(condicao);
 
-        showMessageDialog(getView(), format("Condição de Pagamento %s com sucesso.", isEmpty(condicao.getId()) ? "cadastrada" : "alterada"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

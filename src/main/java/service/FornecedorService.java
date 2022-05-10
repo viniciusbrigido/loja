@@ -77,8 +77,7 @@ public class FornecedorService implements InterfaceService<Fornecedor> {
         atualizar(fornecedor);
     }
 
-    public boolean isFornecedorCadastradoComEndereco(int codigoEndereco) {
-        return false;
-//        return new FornecedorDao().isFornecedorCadastradoComEndereco(codigoEndereco);
+    public boolean isFornecedorCadastradoComEndereco(Integer codigoEndereco) {
+        return new FornecedorDao().isFornecedorCadastradoComEndereco(codigoEndereco);
     }
 }

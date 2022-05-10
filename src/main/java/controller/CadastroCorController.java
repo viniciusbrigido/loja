@@ -139,9 +139,10 @@ public class CadastroCorController extends CadastroController {
 
     private void preencheSalvaCor(Cor cor) throws Exception {
         cor.setNomCor(getView().getTxtDescricao().getText());
+        String msg = format("Cor %s com sucesso.", isEmpty(cor.getId()) ? "cadastrada" : "alterada");
         getCorService().createOrUpdate(cor);
 
-        showMessageDialog(getView(), format("Cor %s com sucesso.", isEmpty(cor.getId()) ? "cadastrada" : "alterada"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

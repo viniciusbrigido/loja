@@ -77,8 +77,7 @@ public class ClienteService implements InterfaceService<Cliente> {
         atualizar(cliente);
     }
 
-    public boolean isClienteCadastradoComEndereco(int codigoEndereco) {
-        return true;
-//        return new ClienteDao().isClienteCadastradoComEndereco(codigoEndereco);
+    public boolean isClienteCadastradoComEndereco(Integer codigoEndereco) {
+        return new ClienteDao().isClienteCadastradoComEndereco(codigoEndereco);
     }
 }

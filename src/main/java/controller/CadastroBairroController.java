@@ -137,9 +137,10 @@ public class CadastroBairroController extends CadastroController {
 
     private void preencheSalvaBairro(Bairro bairro) throws Exception {
         bairro.setNomBairro(getView().getTxtDescricao().getText());
+        String msg = format("Bairro %s com sucesso.", isEmpty(bairro.getId()) ? "cadastrado" : "alterado");
         getBairroService().createOrUpdate(bairro);
 
-        showMessageDialog(getView(), format("Bairro %s com sucesso.", isEmpty(bairro.getId()) ? "cadastrado" : "alterado"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

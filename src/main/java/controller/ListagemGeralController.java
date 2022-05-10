@@ -12,6 +12,9 @@ import static util.ValueUtil.*;
 
 public class ListagemGeralController extends ListagemController {
 
+    private static final String COLUNA_EDICAO = VAZIO;
+    private static final String COLUNA_EXCLUSAO = VAZIO;
+
     private ListagemGeralView view;
     private List<String> itens;
     private List<ColunaDto> colunas;
@@ -199,8 +202,8 @@ public class ListagemGeralController extends ListagemController {
         List<String> nomeColunas = new ArrayList<>();
         colunas.forEach(coluna -> nomeColunas.add(coluna.getNome()));
         if (!isTelaChamadaNaVenda && !isTelaChamadaNaFinalizacao) {
-            nomeColunas.add(VAZIO);//Coluna de edição
-            nomeColunas.add(VAZIO);//Coluna de exclusão
+            nomeColunas.add(COLUNA_EDICAO);
+            nomeColunas.add(COLUNA_EXCLUSAO);
         }
         return nomeColunas.toArray(new String[nomeColunas.size()]);
     }

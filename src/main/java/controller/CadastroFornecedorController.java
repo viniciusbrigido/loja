@@ -185,9 +185,10 @@ public class CadastroFornecedorController extends CadastroController {
         fornecedor.setEndereco(getEnderecoSelecionado());
         fornecedor.setNumCnpj(getView().getTxtCnpj().getText());
         fornecedor.setNumInscEstadual(getView().getTxtInscricaoEstadual().getText());
+        String msg = format("Fornecedor %s com sucesso.", isEmpty(fornecedor.getId()) ? "cadastrado" : "alterado");
         getFornecedorService().createOrUpdate(fornecedor);
 
-        showMessageDialog(getView(), format("Fornecedor %s com sucesso.", isEmpty(fornecedor.getId()) ? "cadastrado" : "alterado"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

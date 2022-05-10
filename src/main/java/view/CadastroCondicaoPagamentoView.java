@@ -230,7 +230,7 @@ public class CadastroCondicaoPagamentoView extends ControllerView {
 
     public JTextFieldLimitador getTxtDescricao() {
         if (txtDescricao == null) {
-            txtDescricao = new JTextFieldLimitador(45);
+            txtDescricao = new JTextFieldLimitador(40);
             txtDescricao.setFont(new Font("Tahoma", Font.PLAIN, 14));
         }
         return txtDescricao;

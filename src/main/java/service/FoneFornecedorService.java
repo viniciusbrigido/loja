@@ -14,16 +14,17 @@ public class FoneFornecedorService implements InterfaceService<FoneFornecedor> {
 
     @Override
     public List<FoneFornecedor> buscar() {
-        return null;
+        return new FoneFornecedorDao().retrieveAll();
     }
 
     @Override
     public FoneFornecedor buscar(int codigo) {
-        return null;
+        return new FoneFornecedorDao().retrieve(codigo);
     }
 
     @Override
     public void atualizar(FoneFornecedor foneFornecedor) {
+        new FoneFornecedorDao().update(foneFornecedor);
     }
 
     @Override
@@ -33,14 +34,14 @@ public class FoneFornecedorService implements InterfaceService<FoneFornecedor> {
 
     @Override
     public void apagar(int codigo) {
+        new FoneFornecedorDao().delete(codigo);
     }
 
     @Override
     public void createOrUpdate(FoneFornecedor foneFornecedor) {
     }
 
-    public List<FoneFornecedor> buscaFonesPorFornecedor(int codigoFornecedor) {
-        return null;
-//        return new FoneFornecedorDao().buscaFonesPorFornecedor(codigoFornecedor);
+    public List<FoneFornecedor> buscaFonesPorFornecedor(Integer codigoFornecedor) {
+        return new FoneFornecedorDao().buscaFonesPorFornecedor(codigoFornecedor);
     }
 }

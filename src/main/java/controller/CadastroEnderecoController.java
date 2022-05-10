@@ -207,9 +207,10 @@ public class CadastroEnderecoController extends CadastroController {
         endereco.setNomCep(getCepSemFormatacao());
         endereco.setBairro(getBairroSelecionado());
         endereco.setCidade(getCidadeSelecionada());
+        String msg = format("Endereço %s com sucesso.", isEmpty(endereco.getId()) ? "cadastrado" : "alterado");
         getEnderecoService().createOrUpdate(endereco);
 
-        showMessageDialog(getView(), format("Endereço %s com sucesso.", isEmpty(endereco.getId()) ? "cadastrado" : "alterado"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

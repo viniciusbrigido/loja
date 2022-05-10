@@ -213,9 +213,10 @@ public class CadastroClienteController extends CadastroController {
         cliente.setNomComplemento(getView().getTxtComplemento().getText());
         cliente.setEndereco(getEnderecoSelecionado());
         cliente.setDatNascimento(transformaDataFormatadaEmObjeto(getView().getTxtData().getText()));
+        String msg = format("Cliente %s com sucesso.", isEmpty(cliente.getId()) ? "cadastrado" : "alterado");
         getClienteService().createOrUpdate(cliente);
 
-        showMessageDialog(getView(), format("Cliente %s com sucesso.", isEmpty(cliente.getId()) ? "cadastrado" : "alterado"), "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 

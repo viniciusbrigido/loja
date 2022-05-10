@@ -75,18 +75,15 @@ public class ProdutoService implements InterfaceService<Produto> {
         return new ProdutoDao().buscaPorNome(descricao);
     }
 
-    public boolean isProdutoCadastradoComMarca(int codigoMarca) {
-        return false;
-//        return new ProdutoDao().isProdutoCadastradoComMarca(codigoMarca);
+    public boolean isProdutoCadastradoComMarca(Integer codigoMarca) {
+        return new ProdutoDao().isProdutoCadastradoComMarca(codigoMarca);
     }
 
-    public boolean isProdutoCadastradoComTipo(int codigoTipo) {
-        return false;
-//        return new ProdutoDao().isProdutoCadastradoComTipo(codigoTipo);
+    public boolean isProdutoCadastradoComTipo(Integer codigoTipo) {
+        return new ProdutoDao().isProdutoCadastradoComTipo(codigoTipo);
     }
 
-    public boolean isProdutoCadastradoComTamanho(int codigoTamanho) {
-        return false;
-//        return new ProdutoDao().isProdutoCadastradoComTamanho(codigoTamanho);
+    public boolean isProdutoCadastradoComTamanho(Integer codigoTamanho) {
+        return new ProdutoDao().isProdutoCadastradoComTamanho(codigoTamanho);
     }
 }

@@ -77,9 +77,8 @@ public class CaracteristicaProdutoService implements InterfaceService<Caracteris
         atualizar(caracteristicaProduto);
     }
 
-    public boolean isCaracteristicaCadastradaComCor(int codigoCor) {
-        return true;
-//        return new CaracteristicaProdutoDao().isCaracteristicaCadastradaComCor(codigoCor);
+    public boolean isCaracteristicaCadastradaComCor(Integer codigoCor) {
+        return new CaracteristicaProdutoDao().isCaracteristicaCadastradaComCor(codigoCor);
     }
 
     public List<CaracteristicaProduto> buscaCaracteristicasPorProduto(Integer codigoProduto) {

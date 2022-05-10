@@ -85,8 +85,7 @@ public class VendedorService implements InterfaceService<Vendedor> {
         atualizar(vendedor);
     }
 
-    public boolean isVendedorCadastradoComEndereco(int codigoEndereco) {
-        return false;
-//        return new VendedorDao().isVendedorCadastradoComEndereco(codigoEndereco);
+    public boolean isVendedorCadastradoComEndereco(Integer codigoEndereco) {
+        return new VendedorDao().isVendedorCadastradoComEndereco(codigoEndereco);
     }
 }
