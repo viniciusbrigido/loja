@@ -167,7 +167,7 @@ public class CadastroVendedorController extends CadastroController {
         for (Vendedor vendedor : getVendedores()) {
             StringBuilder sb = new StringBuilder();
             sb.append(vendedor.getId()).append(SEPARADOR)
-              .append(vendedor.getNomVendedor()).append(SEPARADOR)
+              .append(vendedor.getNome()).append(SEPARADOR)
               .append(formataCpf(vendedor.getNumCpf())).append(SEPARADOR)
               .append(formataTelefone(vendedor.getNumFone()));
             itens.add(sb.toString());
@@ -186,7 +186,7 @@ public class CadastroVendedorController extends CadastroController {
 
     private void preencheCamposTela(Vendedor vendedor) {
         getView().getTxtCodigo().setText(String.valueOf(vendedor.getId()));
-        getView().getTxtNome().setText(vendedor.getNomVendedor());
+        getView().getTxtNome().setText(vendedor.getNome());
         getView().getTxtEmail().setText(vendedor.getNomEmail());
         getView().getTxtCpf().setText(vendedor.getNumCpf());
         getView().getTxtFone().setText(vendedor.getNumFone());
@@ -199,7 +199,7 @@ public class CadastroVendedorController extends CadastroController {
     }
 
     private void preencheSalvaVendedor(Vendedor vendedor) throws Exception {
-        vendedor.setNomVendedor(getView().getTxtNome().getText());
+        vendedor.setNome(getView().getTxtNome().getText());
         vendedor.setNomEmail(getView().getTxtEmail().getText());
         vendedor.setNumCpf(getCpfSemMascara());
         vendedor.setNumFone(getFoneSemMascara());

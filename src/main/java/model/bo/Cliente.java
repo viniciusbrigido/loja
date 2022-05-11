@@ -12,17 +12,14 @@ import java.util.Date;
 @ToString
 @Entity
 @Table(name = "cliente")
-public class Cliente implements Serializable {
+@AttributeOverride(name = "nome", column = @Column(name = "nom_cliente"))
+@AttributeOverride(name = "nomComplemento", column = @Column(name = "nom_complemento"))
+@AttributeOverride(name = "nomEmail", column = @Column(name = "nom_email"))
+public class Cliente extends Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_cliente")
-    private String nomCliente;
-    @Column(name = "nom_complemento")
-    private String nomComplemento;
-    @Column(name = "nom_email")
-    private String nomEmail;
     @Column(name = "num_cpf")
     private String numCpf;
     @Column(name = "num_rg")

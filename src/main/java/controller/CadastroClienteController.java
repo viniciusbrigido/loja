@@ -172,7 +172,7 @@ public class CadastroClienteController extends CadastroController {
         for (Cliente cliente : getClientes()) {
             StringBuilder sb = new StringBuilder();
             sb.append(cliente.getId()).append(SEPARADOR)
-              .append(cliente.getNomCliente()).append(SEPARADOR)
+              .append(cliente.getNome()).append(SEPARADOR)
               .append(formataCpf(cliente.getNumCpf())).append(SEPARADOR)
               .append(formataTelefone(cliente.getNumFone()));
             itens.add(sb.toString());
@@ -191,7 +191,7 @@ public class CadastroClienteController extends CadastroController {
 
     private void preencheCamposTela(Cliente cliente) {
         getView().getTxtCodigo().setText(String.valueOf(cliente.getId()));
-        getView().getTxtNome().setText(cliente.getNomCliente());
+        getView().getTxtNome().setText(cliente.getNome());
         getView().getTxtEmail().setText(cliente.getNomEmail());
         getView().getTxtCpf().setText(cliente.getNumCpf());
         getView().getTxtRg().setText(cliente.getNumRg());
@@ -204,7 +204,7 @@ public class CadastroClienteController extends CadastroController {
     }
 
     private void preencheSalvaCliente(Cliente cliente) throws Exception {
-        cliente.setNomCliente(getView().getTxtNome().getText());
+        cliente.setNome(getView().getTxtNome().getText());
         cliente.setNomEmail(getView().getTxtEmail().getText());
         cliente.setNumCpf(getCpfSemMascara());
         cliente.setNumRg(getRgSemMascara());

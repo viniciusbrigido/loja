@@ -147,7 +147,7 @@ public class CadastroFornecedorController extends CadastroController {
             StringBuilder sb = new StringBuilder();
             sb.append(fornecedor.getId()).append(SEPARADOR)
               .append(fornecedor.getNomRazaoSocial()).append(SEPARADOR)
-              .append(fornecedor.getNomFornecedor()).append(SEPARADOR)
+              .append(fornecedor.getNome()).append(SEPARADOR)
               .append(fornecedor.getNumCnpj()).append(SEPARADOR)
               .append(fornecedor.getEndereco().getNomCep());
             itens.add(sb.toString());
@@ -167,7 +167,7 @@ public class CadastroFornecedorController extends CadastroController {
 
     private void preencheCamposTela(Fornecedor fornecedor) {
         getView().getTxtCodigo().setText(String.valueOf(fornecedor.getId()));
-        getView().getTxtNome().setText(fornecedor.getNomFornecedor());
+        getView().getTxtNome().setText(fornecedor.getNome());
         getView().getTxtRazaoSocial().setText(fornecedor.getNomRazaoSocial());
         getView().getTxtEmail().setText(fornecedor.getNomEmail());
         getView().getTxtComplemento().setText(fornecedor.getNomComplemento());
@@ -178,7 +178,7 @@ public class CadastroFornecedorController extends CadastroController {
     }
 
     private void preencheSalvaFornecedor(Fornecedor fornecedor) throws Exception {
-        fornecedor.setNomFornecedor(getView().getTxtNome().getText());
+        fornecedor.setNome(getView().getTxtNome().getText());
         fornecedor.setNomRazaoSocial(getView().getTxtRazaoSocial().getText());
         fornecedor.setNomEmail(getView().getTxtEmail().getText());
         fornecedor.setNomComplemento(getView().getTxtComplemento().getText());

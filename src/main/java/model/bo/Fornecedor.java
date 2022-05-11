@@ -11,17 +11,14 @@ import java.io.Serializable;
 @ToString
 @Entity
 @Table(name = "fornecedor")
-public class Fornecedor implements Serializable {
+@AttributeOverride(name = "nome", column = @Column(name = "nom_fornecedor"))
+@AttributeOverride(name = "nomComplemento", column = @Column(name = "nom_complemento"))
+@AttributeOverride(name = "nomEmail", column = @Column(name = "nom_email"))
+public class Fornecedor extends Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_fornecedor")
-    private String nomFornecedor;
-    @Column(name = "nom_complemento")
-    private String nomComplemento;
-    @Column(name = "nom_email")
-    private String nomEmail;
     @Column(name = "nom_razao_social")
     private String nomRazaoSocial;
     @Column(name = "num_cnpj")

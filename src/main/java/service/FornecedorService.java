@@ -40,7 +40,7 @@ public class FornecedorService implements InterfaceService<Fornecedor> {
 
     private void validate(Fornecedor fornecedor) throws Exception {
         StringBuilder msg = new StringBuilder();
-        if (isEmpty(fornecedor.getNomFornecedor())) {
+        if (isEmpty(fornecedor.getNome())) {
             msg.append("Nome: Campo com preenchimento Obrigatório.\n");
         }
         if (isEmpty(fornecedor.getNomRazaoSocial())) {

@@ -41,7 +41,7 @@ public class VendedorService implements InterfaceService<Vendedor> {
 
     private void validate(Vendedor vendedor) throws Exception {
         StringBuilder msg = new StringBuilder();
-        if (isEmpty(vendedor.getNomVendedor())) {
+        if (isEmpty(vendedor.getNome())) {
             msg.append("Nome: Campo com preenchimento Obrigatório.\n");
         }
         if (isEmpty(vendedor.getNumCpf())) {

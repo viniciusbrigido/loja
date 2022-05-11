@@ -40,7 +40,7 @@ public class ClienteService implements InterfaceService<Cliente> {
 
     private void validate(Cliente cliente) throws Exception {
         StringBuilder msg = new StringBuilder();
-        if (isEmpty(cliente.getNomCliente())) {
+        if (isEmpty(cliente.getNome())) {
             msg.append("Nome: Campo com preenchimento Obrigatório.\n");
         }
         if (isEmpty(cliente.getNumCpf())) {

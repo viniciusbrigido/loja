@@ -116,13 +116,13 @@ public class FinalizacaoController extends Controller {
 
     private void preencheVendedor(Vendedor vendedor) {
         getView().getTxtCodVendedor().setText(String.valueOf(vendedor.getId()));
-        getView().getTxtNomVendedor().setText(vendedor.getNomVendedor());
+        getView().getTxtNomVendedor().setText(vendedor.getNome());
         this.vendedor = vendedor;
     }
 
     private void preencheCliente(Cliente cliente) {
         getView().getTxtCodCliente().setText(String.valueOf(cliente.getId()));
-        getView().getTxtNomCliente().setText(cliente.getNomCliente());
+        getView().getTxtNomCliente().setText(cliente.getNome());
         this.cliente = cliente;
     }
 
@@ -263,7 +263,7 @@ public class FinalizacaoController extends Controller {
         for (Vendedor vendedor : getVendedores()) {
             StringBuilder sb = new StringBuilder();
             sb.append(vendedor.getId()).append(SEPARADOR)
-              .append(vendedor.getNomVendedor()).append(SEPARADOR)
+              .append(vendedor.getNome()).append(SEPARADOR)
               .append(formataCpf(vendedor.getNumCpf())).append(SEPARADOR)
               .append(formataTelefone(vendedor.getNumFone()));
             itens.add(sb.toString());
@@ -276,7 +276,7 @@ public class FinalizacaoController extends Controller {
         for (Cliente cliente : getClientes()) {
             StringBuilder sb = new StringBuilder();
             sb.append(cliente.getId()).append(SEPARADOR)
-              .append(cliente.getNomCliente()).append(SEPARADOR)
+              .append(cliente.getNome()).append(SEPARADOR)
               .append(formataCpf(cliente.getNumCpf())).append(SEPARADOR)
               .append(formataTelefone(cliente.getNumFone()));
             itens.add(sb.toString());

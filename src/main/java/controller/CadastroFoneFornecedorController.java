@@ -32,7 +32,7 @@ public class CadastroFoneFornecedorController extends CadastroController {
         if (isNull(fornecedor)) {
             return;
         }
-        getView().getTxtFornecedor().setText(String.format("%s - %s", fornecedor.getId(), fornecedor.getNomFornecedor()));
+        getView().getTxtFornecedor().setText(String.format("%s - %s", fornecedor.getId(), fornecedor.getNome()));
     }
 
     public void excluiFornecedor(int index) {
