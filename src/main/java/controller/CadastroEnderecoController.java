@@ -41,11 +41,12 @@ public class CadastroEnderecoController extends CadastroController {
 
     private void verificaBairroCidadeCadastrados() {
         if (getBairros().isEmpty()) {
-            showMessageDialog(getView(), "Não há Bairros cadastrados.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Nï¿½o hï¿½ Bairros cadastrados.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
             getView().dispose();
+            return;
         }
         if (getCidades().isEmpty()) {
-            showMessageDialog(getView(), "Não há Cidades cadastradas.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Nï¿½o hï¿½ Cidades cadastradas.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
             getView().dispose();
         }
     }
@@ -62,15 +63,15 @@ public class CadastroEnderecoController extends CadastroController {
     public void excluiItem() {
         Endereco endereco = getEnderecos().get(index);
         if (getClienteService().isClienteCadastradoComEndereco(endereco.getId())) {
-            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Clientes cadastrados com esse Endereço.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "O item nï¿½o pode ser excluï¿½do pois jï¿½ hï¿½ um ou mais Clientes cadastrados com esse Endereï¿½o.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
             return;
         }
         if (getFornecedorService().isFornecedorCadastradoComEndereco(endereco.getId())) {
-            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Fornecedores cadastrados com esse Endereço.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "O item nï¿½o pode ser excluï¿½do pois jï¿½ hï¿½ um ou mais Fornecedores cadastrados com esse Endereï¿½o.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
             return;
         }
         if (getVendedorService().isVendedorCadastradoComEndereco(endereco.getId())) {
-            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Vendedores cadastrados com esse Endereço.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "O item nï¿½o pode ser excluï¿½do pois jï¿½ hï¿½ um ou mais Vendedores cadastrados com esse Endereï¿½o.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
             return;
         }
         getEnderecoService().apagar(endereco);
@@ -90,7 +91,7 @@ public class CadastroEnderecoController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cï¿½digo: Valor Invï¿½lido.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -99,7 +100,7 @@ public class CadastroEnderecoController extends CadastroController {
         if (isNotNull(endereco) && isNotEmpty(endereco.getId())) {
             preencheCamposTela(endereco);
         } else {
-            showMessageDialog(getView(), "Cidade não encontrada.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cidade nï¿½o encontrada.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -113,7 +114,7 @@ public class CadastroEnderecoController extends CadastroController {
                 verificaEnderecoJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), "Atenï¿½ï¿½o", ERROR_MESSAGE);
             getView().getTxtLogradouro().requestFocus();
         }
     }
@@ -123,7 +124,7 @@ public class CadastroEnderecoController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cï¿½digo: Valor Invï¿½lido.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -132,7 +133,7 @@ public class CadastroEnderecoController extends CadastroController {
             preencheSalvaEndereco(endereco);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Endereço não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Cï¿½digo nï¿½o encontrado.\nPara cadastrar um novo Endereï¿½o nï¿½o preencha o campo de cï¿½digo.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -161,10 +162,10 @@ public class CadastroEnderecoController extends CadastroController {
         getEnderecos().addAll(getEnderecoService().buscar());
 
         if (getEnderecos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Endereços para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Nï¿½o hï¿½ Endereï¿½os para listar.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
             return;
         }
-        new ListagemGeralController(this, "Listagem de Endereços", getItens(), getColunas());
+        new ListagemGeralController(this, "Listagem de Endereï¿½os", getItens(), getColunas());
     }
 
     private List<String> getItens() {
@@ -183,7 +184,7 @@ public class CadastroEnderecoController extends CadastroController {
 
     private List<ColunaDto> getColunas() {
         List<ColunaDto> colunas = new ArrayList<>();
-        colunas.add(new ColunaDto("Código", DIREITA, 30));
+        colunas.add(new ColunaDto("Cï¿½digo", DIREITA, 30));
         colunas.add(new ColunaDto("Logradouro", ESQUERDA, 110));
         colunas.add(new ColunaDto("CEP", MEIO, 40));
         colunas.add(new ColunaDto("Bairro", ESQUERDA, 60));
@@ -205,10 +206,10 @@ public class CadastroEnderecoController extends CadastroController {
         endereco.setNomCep(getCepSemFormatacao());
         endereco.setBairro(getBairroSelecionado());
         endereco.setCidade(getCidadeSelecionada());
-        String msg = format("Endereço %s com sucesso.", isEmpty(endereco.getId()) ? "cadastrado" : "alterado");
+        String msg = format("Endereï¿½o %s com sucesso.", isEmpty(endereco.getId()) ? "cadastrado" : "alterado");
         getEnderecoService().createOrUpdate(endereco);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
         limpaTela();
     }
 

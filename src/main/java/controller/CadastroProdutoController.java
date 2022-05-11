@@ -52,19 +52,22 @@ public class CadastroProdutoController extends CadastroController {
 
     private void verificaMarcaTipoTamanhoCorCadastrados() {
         if (getMarcas().isEmpty()) {
-            showMessageDialog(getView(), "Não há Marcas cadastradas.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Nï¿½o hï¿½ Marcas cadastradas.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
             getView().dispose();
+            return;
         }
         if (getTipos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Tipos de Produto cadastrados.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Nï¿½o hï¿½ Tipos de Produto cadastrados.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
             getView().dispose();
+            return;
         }
         if (getTamanhos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Tamanhos cadastrados.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Nï¿½o hï¿½ Tamanhos cadastrados.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
             getView().dispose();
+            return;
         }
         if (getCores().isEmpty()) {
-            showMessageDialog(getView(), "Não há Cores cadastradas.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Nï¿½o hï¿½ Cores cadastradas.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
             getView().dispose();
         }
     }
@@ -105,7 +108,7 @@ public class CadastroProdutoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cï¿½digo: Valor Invï¿½lido.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -116,7 +119,7 @@ public class CadastroProdutoController extends CadastroController {
             habilitaBotaoAddCaracteristica(true);
             limpaCamposCaracteristica();
         } else {
-            showMessageDialog(getView(), "Produto não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Produto nï¿½o encontrado.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -130,7 +133,7 @@ public class CadastroProdutoController extends CadastroController {
                 verificaProdutoJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), "Atenï¿½ï¿½o", ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -140,7 +143,7 @@ public class CadastroProdutoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cï¿½digo: Valor Invï¿½lido.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -149,7 +152,7 @@ public class CadastroProdutoController extends CadastroController {
             preencheSalvaProduto(produto);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Produto não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Cï¿½digo nï¿½o encontrado.\nPara cadastrar um novo Produto nï¿½o preencha o campo de cï¿½digo.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -174,7 +177,7 @@ public class CadastroProdutoController extends CadastroController {
         getProdutos().addAll(getProdutoService().buscar());
 
         if (getProdutos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Produtos para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Nï¿½o hï¿½ Produtos para listar.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Produtos", getItens(), getColunas());
@@ -197,8 +200,8 @@ public class CadastroProdutoController extends CadastroController {
 
     private List<ColunaDto> getColunas() {
         List<ColunaDto> colunas = new ArrayList<>();
-        colunas.add(new ColunaDto("Código", DIREITA, 30));
-        colunas.add(new ColunaDto("Descrição", ESQUERDA, 90));
+        colunas.add(new ColunaDto("Cï¿½digo", DIREITA, 30));
+        colunas.add(new ColunaDto("Descriï¿½ï¿½o", ESQUERDA, 90));
         colunas.add(new ColunaDto("Valor(R$)", DIREITA, 50));
         colunas.add(new ColunaDto("Tipo", ESQUERDA, 50));
         colunas.add(new ColunaDto("Tamanho", ESQUERDA, 50));
@@ -225,7 +228,7 @@ public class CadastroProdutoController extends CadastroController {
         String msg = format("Produto %s com sucesso.", isEmpty(produto.getId()) ? "cadastrado" : "alterado");
         getProdutoService().createOrUpdate(produto);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
         limpaTela();
     }
 
@@ -269,12 +272,12 @@ public class CadastroProdutoController extends CadastroController {
         caracteristicaProduto.setQtdEstoque(getView().getTxtEstoque().getDoubleValue());
 
         try {
-            String msg = format("Característica do Produto %s com sucesso.", isEmpty(codigoCaracteristica) ? "cadastrada" : "alterada");
+            String msg = format("Caracterï¿½stica do Produto %s com sucesso.", isEmpty(codigoCaracteristica) ? "cadastrada" : "alterada");
             getCaracteristicaProdutoService().createOrUpdate(caracteristicaProduto);
-            showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), msg, "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
             limpaCamposCaracteristica();
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), "Atenï¿½ï¿½o", ERROR_MESSAGE);
             getView().getTxtBarra().requestFocus();
         }
     }
