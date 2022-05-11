@@ -52,7 +52,6 @@ public class CadastroCorController extends CadastroController {
             limpaTela();
             return;
         }
-
         Cor cor = getCorService().buscar(codigo);
         if (isNotNull(cor) && isNotEmpty(cor.getId())) {
             preencheCamposTela(cor);

@@ -52,7 +52,6 @@ public class CadastroTamanhoController extends CadastroController {
             limpaTela();
             return;
         }
-
         Tamanho tamanho = getTamanhoService().buscar(codigo);
         if (isNotNull(tamanho) && isNotEmpty(tamanho.getId())) {
             preencheCamposTela(tamanho);

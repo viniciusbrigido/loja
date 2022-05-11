@@ -41,7 +41,6 @@ public class CadastroVendedorController extends CadastroController {
         if (getEnderecos().isEmpty()) {
             showMessageDialog(getView(), "Não há Endereços cadastrados.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
-            return;
         }
     }
 
@@ -73,7 +72,6 @@ public class CadastroVendedorController extends CadastroController {
             limpaTela();
             return;
         }
-
         Vendedor vendedor = getVendedorService().buscar(codigo);
         if (isNotNull(vendedor) && isNotEmpty(vendedor.getId())) {
             preencheCamposTela(vendedor);

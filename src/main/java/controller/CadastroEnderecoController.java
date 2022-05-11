@@ -43,12 +43,10 @@ public class CadastroEnderecoController extends CadastroController {
         if (getBairros().isEmpty()) {
             showMessageDialog(getView(), "Não há Bairros cadastrados.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
-            return;
         }
         if (getCidades().isEmpty()) {
             showMessageDialog(getView(), "Não há Cidades cadastradas.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
-            return;
         }
     }
 

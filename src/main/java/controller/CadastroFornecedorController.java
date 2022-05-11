@@ -41,7 +41,6 @@ public class CadastroFornecedorController extends CadastroController {
         if (getEnderecos().isEmpty()) {
             showMessageDialog(getView(), "Não há Endereços cadastrados.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
-            return;
         }
     }
 

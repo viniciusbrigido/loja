@@ -156,8 +156,6 @@ public class ListagemGeralController extends ListagemController {
     public void sairTela() {
         if (isTelaChamadaNaVenda) {
             vendaController.limpaCamposProduto();
-        } else if (isTelaChamadaNaFinalizacao) {
-
         }
         getView().dispose();
     }

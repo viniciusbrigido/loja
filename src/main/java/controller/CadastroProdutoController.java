@@ -54,22 +54,18 @@ public class CadastroProdutoController extends CadastroController {
         if (getMarcas().isEmpty()) {
             showMessageDialog(getView(), "Não há Marcas cadastradas.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
-            return;
         }
         if (getTipos().isEmpty()) {
             showMessageDialog(getView(), "Não há Tipos de Produto cadastrados.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
-            return;
         }
         if (getTamanhos().isEmpty()) {
             showMessageDialog(getView(), "Não há Tamanhos cadastrados.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
-            return;
         }
         if (getCores().isEmpty()) {
             showMessageDialog(getView(), "Não há Cores cadastradas.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
-            return;
         }
     }
 
