@@ -9,6 +9,7 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
+import java.awt.event.InputEvent;
 import static java.awt.event.KeyEvent.*;
 import static javax.swing.JComponent.WHEN_FOCUSED;
 import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
@@ -483,7 +484,7 @@ public class CadastroFornecedorView extends ControllerView {
 
     public JLabel getLblCodigo() {
         if (lblCodigo == null) {
-            lblCodigo = new JLabel("Código:");
+            lblCodigo = new JLabel("Cï¿½digo:");
         }
         return lblCodigo;
     }
@@ -497,7 +498,7 @@ public class CadastroFornecedorView extends ControllerView {
 
     public JLabel getLblRazaoSocial() {
         if (lblRazaoSocial == null) {
-            lblRazaoSocial = new JLabel("Razão Social:*");
+            lblRazaoSocial = new JLabel("Razï¿½o Social:*");
         }
         return lblRazaoSocial;
     }
@@ -511,7 +512,7 @@ public class CadastroFornecedorView extends ControllerView {
 
     public JLabel getLblEndereco() {
         if (lblEndereco == null) {
-            lblEndereco = new JLabel("Endereço:*");
+            lblEndereco = new JLabel("Endereï¿½o:*");
         }
         return lblEndereco;
     }
@@ -532,7 +533,7 @@ public class CadastroFornecedorView extends ControllerView {
 
     public JLabel getLblInscricaoEstadual() {
         if (lblInscricaoEstadual == null) {
-            lblInscricaoEstadual = new JLabel("Inscrição Estadual:*");
+            lblInscricaoEstadual = new JLabel("Inscriï¿½ï¿½o Estadual:*");
         }
         return lblInscricaoEstadual;
     }
@@ -570,7 +571,7 @@ public class CadastroFornecedorView extends ControllerView {
             btnCadastroFone = new JButton("Cadastrar Telefone [SHIFT + F1]");
             btnCadastroFone.setIcon(new ImageIcon(getClass().getResource("/imagens/phone.png")));
             btnCadastroFone.addActionListener(a -> controller.cadastraFone());
-            btnCadastroFone.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, VK_SHIFT), EVENTO);
+            btnCadastroFone.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, InputEvent.SHIFT_DOWN_MASK), EVENTO);
             btnCadastroFone.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
             btnCadastroFone.getActionMap().put(EVENTO, new AbstractAction() {
                 @Override

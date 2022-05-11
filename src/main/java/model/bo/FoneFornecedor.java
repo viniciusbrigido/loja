@@ -17,7 +17,7 @@ public class FoneFornecedor implements Serializable {
     @Column(name = "num_fone")
     private String numFone;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_fornecedor")
     private Fornecedor fornecedor;
 }
