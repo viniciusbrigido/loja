@@ -29,8 +29,4 @@ public class Vendedor extends Pessoa implements Serializable {
     private Double prcComissaoVenda;
     @Column(name = "prc_comissao_recebimento ")
     private Double prcComissaoRecebto;
-
-    @ManyToOne
-    @JoinColumn(name = "id_endereco")
-    private Endereco endereco;
 }

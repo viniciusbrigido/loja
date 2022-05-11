@@ -224,7 +224,7 @@ public class CadastroEnderecoController extends CadastroController {
 
     private String getCepSemFormatacao() {
         return getView().getTxtCep().getText()
-                .replaceAll(".", VAZIO)
+                .replaceAll("\\.", VAZIO)
                 .replaceAll("-", VAZIO);
     }
 

@@ -2,7 +2,7 @@ package model.bo;
 
 import lombok.Getter;
 import lombok.Setter;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 @Getter
@@ -11,5 +11,8 @@ public class Pessoa {
     private String nome;
     private String nomComplemento;
     private String nomEmail;
-    private Integer codEndereco;
+
+    @ManyToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
 }

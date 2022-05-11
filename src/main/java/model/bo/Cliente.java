@@ -30,8 +30,4 @@ public class Cliente extends Pessoa implements Serializable {
     private String numFone2;
     @Column(name = "dat_nascimento")
     private Date datNascimento;
-
-    @ManyToOne
-    @JoinColumn(name = "id_endereco")
-    private Endereco endereco;
 }

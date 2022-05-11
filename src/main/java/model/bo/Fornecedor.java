@@ -25,8 +25,4 @@ public class Fornecedor extends Pessoa implements Serializable {
     private String numCnpj;
     @Column(name = "nom_inscricao_estadual")
     private String numInscEstadual;
-
-    @ManyToOne
-    @JoinColumn(name = "id_endereco")
-    private Endereco endereco;
 }
