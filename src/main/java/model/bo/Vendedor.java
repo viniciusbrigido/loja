@@ -11,7 +11,7 @@ import java.io.Serializable;
 @ToString
 @Entity
 @Table(name = "vendedor")
-@AttributeOverride(name = "nome", column = @Column(name = "nom_cliente"))
+@AttributeOverride(name = "nome", column = @Column(name = "nom_vendedor"))
 @AttributeOverride(name = "nomComplemento", column = @Column(name = "nom_complemento"))
 @AttributeOverride(name = "nomEmail", column = @Column(name = "nom_email"))
 public class Vendedor extends Pessoa implements Serializable {
