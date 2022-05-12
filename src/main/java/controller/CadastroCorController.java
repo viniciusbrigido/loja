@@ -18,9 +18,9 @@ public class CadastroCorController extends CadastroController {
     private CorService corService;
     private CaracteristicaProdutoService caracteristicaProdutoService;
 
-    public CadastroCorController() {
-        super();
-        setView(new CadastroCorView(this));
+    public CadastroCorController(CadastroCorView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
     }
 
@@ -39,7 +39,8 @@ public class CadastroCorController extends CadastroController {
         preencheCamposTela(getCores().get(index));
     }
 
-    public void buscaCor() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;

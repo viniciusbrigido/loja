@@ -17,9 +17,9 @@ public class CadastroTipoController extends CadastroController {
     private TipoService tipoService;
     private ProdutoService produtoService;
 
-    public CadastroTipoController() {
-        super();
-        setView(new CadastroTipoView(this));
+    public CadastroTipoController(CadastroTipoView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
     }
 
@@ -38,7 +38,8 @@ public class CadastroTipoController extends CadastroController {
         preencheCamposTela(getTipos().get(index));
     }
 
-    public void buscaTipoProduto() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;

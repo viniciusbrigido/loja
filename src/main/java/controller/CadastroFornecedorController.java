@@ -5,13 +5,20 @@ import model.bo.Endereco;
 import model.bo.Fornecedor;
 import service.FornecedorService;
 import service.EnderecoService;
+import view.CadastroFoneFornecedorView;
 import view.CadastroFornecedorView;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.List;
+import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.awt.event.KeyEvent.VK_F1;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
+import static javax.swing.KeyStroke.getKeyStroke;
 import static util.Formatador.*;
 import static util.ValueUtil.*;
 import static util.ValueUtil.isNull;
@@ -24,13 +31,26 @@ public class CadastroFornecedorController extends CadastroController {
     private FornecedorService fornecedorService;
     private EnderecoService enderecoService;
 
-    public CadastroFornecedorController() {
-        super();
-        setView(new CadastroFornecedorView(this));
+    public CadastroFornecedorController(CadastroFornecedorView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
+        adicionaAcaoBotaoFoneFornecedor();
         preencheListas();
         verificaEnderecoCadastrado();
         populaCombos();
+    }
+
+    private void adicionaAcaoBotaoFoneFornecedor() {
+        getView().getBtnCadastroFone().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, InputEvent.SHIFT_DOWN_MASK), EVENTO);
+        getView().getBtnCadastroFone().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnCadastroFone().addActionListener(a -> cadastraFone());
+        getView().getBtnCadastroFone().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cadastraFone();
+            }
+        });
     }
 
     private void preencheListas() {
@@ -59,7 +79,8 @@ public class CadastroFornecedorController extends CadastroController {
         preencheCamposTela(getFornecedores().get(index));
     }
 
-    public void buscaFornecedor() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;
@@ -192,7 +213,7 @@ public class CadastroFornecedorController extends CadastroController {
     }
 
     private Endereco getEnderecoSelecionado() {
-        return getView().getComboEndereco().getSelectedIndex() <= 0 ? null : getEnderecos().get(getView().getComboEndereco().getSelectedIndex() - 1);
+        return getView().getComboEndereco().getSelectedIndex() <= ZERO ? null : getEnderecos().get(getView().getComboEndereco().getSelectedIndex() - 1);
     }
 
     public void cadastraFone() {
@@ -208,7 +229,7 @@ public class CadastroFornecedorController extends CadastroController {
             limpaTela();
             return;
         }
-        new CadastroFoneFornecedorController(fornecedor);
+        new CadastroFoneFornecedorController(new CadastroFoneFornecedorView(), fornecedor);
     }
 
     public CadastroFornecedorView getView() {

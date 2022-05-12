@@ -1,9 +1,6 @@
 package view;
 
-import controller.CadastroCidadeController;
 import personalizado.JTextFieldLimitador;
-import personalizado.JTextFieldSomenteNumeros;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,20 +14,11 @@ public class CadastroCidadeView extends ControllerView {
     private JLabel lblDescricao;
     private JLabel lblUf;
 
-    private JTextFieldSomenteNumeros txtCodigo;
     private JTextFieldLimitador txtDescricao;
     private JComboBox<String> estados;
 
-    private JButton btnSalvar;
-    private JButton btnSair;
-    private JButton btnLimpar;
-    private JButton btnListar;
-
-    private CadastroCidadeController controller;
-
-    public CadastroCidadeView(CadastroCidadeController controller) {
+    public CadastroCidadeView() {
         setTitle("Cadastro de Cidades");
-        this.controller = controller;
         initialize();
     }
 
@@ -180,16 +168,6 @@ public class CadastroCidadeView extends ControllerView {
         return gbcPanelBotoes;
     }
 
-    public JTextField getTxtCodigo() {
-        if (txtCodigo == null) {
-            txtCodigo = new JTextFieldSomenteNumeros();
-            txtCodigo.setHorizontalAlignment(SwingConstants.RIGHT);
-            txtCodigo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            txtCodigo.addActionListener(a -> controller.buscaCidade());
-        }
-        return txtCodigo;
-    }
-
     public JTextFieldLimitador getTxtDescricao() {
         if (txtDescricao == null) {
             txtDescricao = new JTextFieldLimitador(40);
@@ -225,33 +203,5 @@ public class CadastroCidadeView extends ControllerView {
             lblUf = new JLabel("UF:*");
         }
         return lblUf;
-    }
-
-    public JButton getBtnSalvar() {
-        if (btnSalvar == null) {
-            btnSalvar = getBotaoSalvarPadrao(controller);
-        }
-        return btnSalvar;
-    }
-
-    public JButton getBtnListar() {
-        if (btnListar == null) {
-            btnListar = getBotaoListarPadrao(controller);
-        }
-        return btnListar;
-    }
-
-    public JButton getBtnLimpar() {
-        if (btnLimpar == null) {
-            btnLimpar = getBotaoLimparPadrao(controller);
-        }
-        return btnLimpar;
-    }
-
-    public JButton getBtnSair() {
-        if (btnSair == null) {
-            btnSair = getBotaoSairPadrao();
-        }
-        return btnSair;
     }
 }

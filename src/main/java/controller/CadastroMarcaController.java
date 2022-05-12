@@ -18,9 +18,9 @@ public class CadastroMarcaController extends CadastroController {
     private MarcaService marcaService;
     private ProdutoService produtoService;
 
-    public CadastroMarcaController() {
-        super();
-        setView(new CadastroMarcaView(this));
+    public CadastroMarcaController(CadastroMarcaView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
     }
 
@@ -39,7 +39,8 @@ public class CadastroMarcaController extends CadastroController {
         preencheCamposTela(getMarcas().get(index));
     }
 
-    public void buscaMarca() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;

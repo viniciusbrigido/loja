@@ -4,11 +4,15 @@ import model.bo.FoneFornecedor;
 import model.bo.Fornecedor;
 import service.FoneFornecedorService;
 import view.CadastroFoneFornecedorView;
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import static java.awt.Cursor.getDefaultCursor;
 import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
+import static util.Formatador.*;
 import static util.ValueUtil.*;
 
 public class CadastroFoneFornecedorController extends CadastroController {
@@ -17,15 +21,82 @@ public class CadastroFoneFornecedorController extends CadastroController {
     private Fornecedor fornecedor;
     private List<FoneFornecedor> fones;
     private FoneFornecedorService foneFornecedorService;
+    private AbstractTableModel grid;
 
-    public CadastroFoneFornecedorController(Fornecedor fornecedor) {
-        super();
+    public CadastroFoneFornecedorController(CadastroFoneFornecedorView view, Fornecedor fornecedor) {
+        super(view);
         this.fornecedor = fornecedor;
         setFones(getFoneFornecedorService().buscaFonesPorFornecedor(fornecedor.getId()));
-        setView(new CadastroFoneFornecedorView(this));
+        setView(view);
+        adicionaAcoesGrid();
         getView().setVisible(true);
         preencheFornecedor();
         getView().getTxtFone().requestFocus();
+    }
+
+    private void adicionaAcoesGrid() {
+        getView().getTabelaFones().setModel(getGrid());
+        getView().getTabelaFones().addMouseListener(getMouseListenerTableGrid());
+    }
+
+    public AbstractTableModel getGrid() {
+        if (grid == null) {
+
+            grid = new AbstractTableModel() {
+                public final String[] columnNames = {"Fone", ""};
+
+                public int getColumnCount() {
+                    return columnNames.length;
+                }
+
+                public String getColumnName(int column) {
+                    return columnNames[column];
+                }
+
+                public int getRowCount() {
+                    return getFones().size();
+                }
+
+                public Object getValueAt(int row, int column) {
+                    FoneFornecedor fone = getFones().get(row);
+
+                    switch (column) {
+                        case 0:
+                            return formataTelefone(fone.getNumFone());
+                        default:
+                            return null;
+                    }
+                }
+            };
+        }
+        return grid;
+    }
+
+    private MouseListener getMouseListenerTableGrid() {
+        return new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                int colunaSelecionada = ((JTable) e.getSource()).getSelectedColumn();
+                int index = ((JTable) e.getSource()).getSelectedRow();
+
+                switch (colunaSelecionada) {
+                    case 1:
+                        excluiFornecedor(index);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                getView().setCursor(getDefaultCursor());
+            }
+        };
+    }
+
+    public void fireTableDataChanged() {
+        getGrid().fireTableDataChanged();
     }
 
     private void preencheFornecedor() {
@@ -75,7 +146,7 @@ public class CadastroFoneFornecedorController extends CadastroController {
 
     @Override
     public void limpaTela() {
-        getView().fireTableDataChanged();
+        fireTableDataChanged();
         getView().getTxtFone().setText(VAZIO);
         getView().getTxtFone().requestFocus();
     }
@@ -90,6 +161,10 @@ public class CadastroFoneFornecedorController extends CadastroController {
 
     @Override
     public void excluiItem() {
+    }
+
+    @Override
+    public void buscaPorCodigo() {
     }
 
     public List<FoneFornecedor> getFones() {

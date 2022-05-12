@@ -16,9 +16,9 @@ public class CadastroBairroController extends CadastroController {
     private BairroService bairroService;
     private EnderecoService enderecoService;
 
-    public CadastroBairroController() {
-        super();
-        setView(new CadastroBairroView(this));
+    public CadastroBairroController(CadastroBairroView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
     }
 
@@ -37,7 +37,8 @@ public class CadastroBairroController extends CadastroController {
         preencheCamposTela(getBairros().get(index));
     }
 
-    public void buscaBairro() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;

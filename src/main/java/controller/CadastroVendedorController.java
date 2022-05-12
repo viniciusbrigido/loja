@@ -24,9 +24,9 @@ public class CadastroVendedorController extends CadastroController {
     private VendedorService vendedorService;
     private EnderecoService enderecoService;
 
-    public CadastroVendedorController() {
-        super();
-        setView(new CadastroVendedorView(this));
+    public CadastroVendedorController(CadastroVendedorView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
         preencheListas();
         verificaEnderecoCadastrado();
@@ -59,7 +59,8 @@ public class CadastroVendedorController extends CadastroController {
         preencheCamposTela(getVendedores().get(index));
     }
 
-    public void buscaVendedor() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;
@@ -214,7 +215,7 @@ public class CadastroVendedorController extends CadastroController {
     }
 
     private Endereco getEnderecoSelecionado() {
-        return getView().getComboEndereco().getSelectedIndex() <= 0 ? null : getEnderecos().get(getView().getComboEndereco().getSelectedIndex() - 1);
+        return getView().getComboEndereco().getSelectedIndex() <= ZERO ? null : getEnderecos().get(getView().getComboEndereco().getSelectedIndex() - 1);
     }
 
     public CadastroVendedorView getView() {

@@ -18,9 +18,9 @@ public class CadastroTamanhoController extends CadastroController {
     private TamanhoService tamanhoService;
     private ProdutoService produtoService;
 
-    public CadastroTamanhoController() {
-        super();
-        setView(new CadastroTamanhoView(this));
+    public CadastroTamanhoController(CadastroTamanhoView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
     }
 
@@ -39,7 +39,8 @@ public class CadastroTamanhoController extends CadastroController {
         preencheCamposTela(getTamanhos().get(index));
     }
 
-    public void buscaTamanho() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;

@@ -17,9 +17,9 @@ public class CadastroCidadeController extends CadastroController {
     private CidadeService cidadeService;
     private EnderecoService enderecoService;
 
-    public CadastroCidadeController() {
-        super();
-        setView(new CadastroCidadeView(this));
+    public CadastroCidadeController(CadastroCidadeView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
     }
 
@@ -38,7 +38,8 @@ public class CadastroCidadeController extends CadastroController {
         preencheCamposTela(getCidades().get(index));
     }
 
-    public void buscaCidade() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;

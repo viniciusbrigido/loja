@@ -1,9 +1,6 @@
 package view;
 
-import controller.CadastroEnderecoController;
-import personalizado.JTextFieldSomenteNumeros;
 import util.Cores;
-
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
@@ -22,23 +19,15 @@ public class CadastroEnderecoView extends ControllerView {
     private JLabel lblBairro;
     private JLabel lblCidade;
 
-    private JTextFieldSomenteNumeros txtCodigo;
     private JTextField txtCep;
     private JTextField txtLogradouro;
 
     private JComboBox<String> comboBairro;
     private JComboBox<String> comboCidade;
 
-    private JButton btnSalvar;
-    private JButton btnSair;
-    private JButton btnLimpar;
-    private JButton btnListar;
 
-    private CadastroEnderecoController controller;
-
-    public CadastroEnderecoView(CadastroEnderecoController controller) {
+    public CadastroEnderecoView() {
         setTitle("Cadastro de Endereços");
-        this.controller = controller;
         initialize();
     }
 
@@ -240,16 +229,6 @@ public class CadastroEnderecoView extends ControllerView {
         return gbcPanelBotoes;
     }
 
-    public JTextField getTxtCodigo() {
-        if (txtCodigo == null) {
-            txtCodigo = new JTextFieldSomenteNumeros();
-            txtCodigo.setHorizontalAlignment(SwingConstants.RIGHT);
-            txtCodigo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            txtCodigo.addActionListener(a -> controller.buscaEndereco());
-        }
-        return txtCodigo;
-    }
-
     public JTextField getTxtCep() {
         if (txtCep == null) {
             try {
@@ -321,33 +300,5 @@ public class CadastroEnderecoView extends ControllerView {
             lblCidade = new JLabel("Cidade:*");
         }
         return lblCidade;
-    }
-
-    public JButton getBtnSalvar() {
-        if (btnSalvar == null) {
-            btnSalvar = getBotaoSalvarPadrao(controller);
-        }
-        return btnSalvar;
-    }
-
-    public JButton getBtnListar() {
-        if (btnListar == null) {
-            btnListar = getBotaoListarPadrao(controller);
-        }
-        return btnListar;
-    }
-
-    public JButton getBtnLimpar() {
-        if (btnLimpar == null) {
-            btnLimpar = getBotaoLimparPadrao(controller);
-        }
-        return btnLimpar;
-    }
-
-    public JButton getBtnSair() {
-        if (btnSair == null) {
-            btnSair = getBotaoSairPadrao();
-        }
-        return btnSair;
     }
 }

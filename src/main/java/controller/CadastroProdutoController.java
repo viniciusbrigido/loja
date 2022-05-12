@@ -4,13 +4,19 @@ import dto.ColunaDto;
 import model.bo.*;
 import service.*;
 import view.CadastroProdutoView;
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import java.awt.*;
+import java.awt.event.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import static java.awt.Cursor.getDefaultCursor;
+import static java.awt.event.KeyEvent.*;
 import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
+import static javax.swing.KeyStroke.getKeyStroke;
 import static util.Formatador.*;
 import static util.ValueUtil.*;
 
@@ -31,16 +37,155 @@ public class CadastroProdutoController extends CadastroController {
     private CaracteristicaProdutoService caracteristicaProdutoService;
     private CorService corService;
 
+    private AbstractTableModel grid;
+
     private Integer codigoCaracteristica;
 
-    public CadastroProdutoController() {
-        super();
-        setView(new CadastroProdutoView(this));
+    public CadastroProdutoController(CadastroProdutoView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
+        adicionaAcaoAosBotoes();
+        adicionaAcoesGrid();
         preencheListas();
         verificaMarcaTipoTamanhoCorCadastrados();
         populaCombos();
         habilitaBotaoAddCaracteristica(false);
+    }
+
+    private void adicionaAcaoAosBotoes() {
+        adicionaAcaoBotaoCaracteristica();
+        adicionaAcaoBotaoSalvarCaracteristica();
+        adicionaAcaoBotaoEditarProduto();
+        adicionaAcaoBotaoNovoProduto();
+        adicionaAcaoBotaoSairCaracteristica();
+    }
+
+    private void adicionaAcaoBotaoCaracteristica() {
+        getView().getBtnAdicionarCaracteristica().addActionListener(a -> adicionaCaracteristica());
+        getView().getBtnAdicionarCaracteristica().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F4, ZERO), EVENTO);
+        getView().getBtnAdicionarCaracteristica().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnAdicionarCaracteristica().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adicionaCaracteristica();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoSalvarCaracteristica() {
+        getView().getBtnSalvarCaracteristica().addActionListener(a -> salvaCaracteristica());
+        getView().getBtnSalvarCaracteristica().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F5, ZERO), EVENTO);
+        getView().getBtnSalvarCaracteristica().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnSalvarCaracteristica().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salvaCaracteristica();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoEditarProduto() {
+        getView().getBtnEditarProduto().addActionListener(a -> editaProduto());
+        getView().getBtnEditarProduto().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F6, ZERO), EVENTO);
+        getView().getBtnEditarProduto().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnEditarProduto().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editaProduto();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoNovoProduto() {
+        getView().getBtnNovoProduto().addActionListener(a -> novoProduto());
+        getView().getBtnNovoProduto().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F7, ZERO), EVENTO);
+        getView().getBtnNovoProduto().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnNovoProduto().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                novoProduto();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoSairCaracteristica() {
+        getView().getBtnSairCaracteristica().addActionListener(a -> getView().dispose());
+        getView().getBtnSairCaracteristica().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, ZERO), EVENTO);
+        getView().getBtnSairCaracteristica().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnSairCaracteristica().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getView().dispose();
+            }
+        });
+    }
+
+    private void adicionaAcoesGrid() {
+        getView().getTabelaCaracteristicas().setModel(getGrid());
+        getView().getTabelaCaracteristicas().addMouseListener(getMouseListenerTableGrid());
+    }
+
+    public AbstractTableModel getGrid() {
+        if (grid == null) {
+            grid = new AbstractTableModel() {
+                public final String[] columnNames = {"Código Barra", "Estoque", "Tamanho", "Cor", "", ""};
+
+                public int getColumnCount() {
+                    return columnNames.length;
+                }
+
+                public String getColumnName(int column) {
+                    return columnNames[column];
+                }
+
+                public int getRowCount() {
+                    return getCaracteristicas().size();
+                }
+
+                public Object getValueAt(int row, int column) {
+                    CaracteristicaProduto caracteristica = getCaracteristicas().get(row);
+
+                    switch (column) {
+                        case 0:
+                            return caracteristica.getCodBarras();
+                        case 1:
+                            return formataDouble(caracteristica.getQtdEstoque());
+                        case 2:
+                            return caracteristica.getNumTamanho();
+                        case 3:
+                            return caracteristica.getCor().getNomCor();
+                        default:
+                            return "";
+                    }
+                }
+            };
+        }
+        return grid;
+    }
+
+    public void fireTableDataChanged() {
+        getGrid().fireTableDataChanged();
+    }
+
+    private MouseListener getMouseListenerTableGrid() {
+        return new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                int colunaSelecionada = ((JTable) e.getSource()).getSelectedColumn();
+
+                if (colunaSelecionada == 4) {
+                    editaCaracteristica();
+                } else if (colunaSelecionada == 5) {
+                    excluiCaracteristica();
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                getView().setCursor(getDefaultCursor());
+            }
+        };
     }
 
     private void preencheListas() {
@@ -52,22 +197,22 @@ public class CadastroProdutoController extends CadastroController {
 
     private void verificaMarcaTipoTamanhoCorCadastrados() {
         if (getMarcas().isEmpty()) {
-            showMessageDialog(getView(), "Nï¿½o hï¿½ Marcas cadastradas.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Marcas cadastradas.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
             return;
         }
         if (getTipos().isEmpty()) {
-            showMessageDialog(getView(), "Nï¿½o hï¿½ Tipos de Produto cadastrados.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Tipos de Produto cadastrados.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
             return;
         }
         if (getTamanhos().isEmpty()) {
-            showMessageDialog(getView(), "Nï¿½o hï¿½ Tamanhos cadastrados.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Tamanhos cadastrados.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
             return;
         }
         if (getCores().isEmpty()) {
-            showMessageDialog(getView(), "Nï¿½o hï¿½ Cores cadastradas.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Cores cadastradas.", "Atenção", INFORMATION_MESSAGE);
             getView().dispose();
         }
     }
@@ -99,7 +244,8 @@ public class CadastroProdutoController extends CadastroController {
         preencheCamposTela(getProdutos().get(index));
     }
 
-    public void buscaProduto() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;
@@ -108,7 +254,7 @@ public class CadastroProdutoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Cï¿½digo: Valor Invï¿½lido.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -119,7 +265,7 @@ public class CadastroProdutoController extends CadastroController {
             habilitaBotaoAddCaracteristica(true);
             limpaCamposCaracteristica();
         } else {
-            showMessageDialog(getView(), "Produto nï¿½o encontrado.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Produto não encontrado.", "Atenção", ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -133,7 +279,7 @@ public class CadastroProdutoController extends CadastroController {
                 verificaProdutoJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenï¿½ï¿½o", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -143,7 +289,7 @@ public class CadastroProdutoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Cï¿½digo: Valor Invï¿½lido.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -152,7 +298,7 @@ public class CadastroProdutoController extends CadastroController {
             preencheSalvaProduto(produto);
             return;
         }
-        showMessageDialog(getView(), "Cï¿½digo nï¿½o encontrado.\nPara cadastrar um novo Produto nï¿½o preencha o campo de cï¿½digo.", "Atenï¿½ï¿½o", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Produto não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -168,7 +314,7 @@ public class CadastroProdutoController extends CadastroController {
         habilitaBotaoAddCaracteristica(false);
         getView().getTxtCodigo().requestFocus();
         getCaracteristicas().clear();
-        getView().fireTableDataChanged();
+        fireTableDataChanged();
     }
 
     @Override
@@ -177,7 +323,7 @@ public class CadastroProdutoController extends CadastroController {
         getProdutos().addAll(getProdutoService().buscar());
 
         if (getProdutos().isEmpty()) {
-            showMessageDialog(getView(), "Nï¿½o hï¿½ Produtos para listar.", "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Produtos para listar.", "Atenção", INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Produtos", getItens(), getColunas());
@@ -200,8 +346,8 @@ public class CadastroProdutoController extends CadastroController {
 
     private List<ColunaDto> getColunas() {
         List<ColunaDto> colunas = new ArrayList<>();
-        colunas.add(new ColunaDto("Cï¿½digo", DIREITA, 30));
-        colunas.add(new ColunaDto("Descriï¿½ï¿½o", ESQUERDA, 90));
+        colunas.add(new ColunaDto("Código", DIREITA, 30));
+        colunas.add(new ColunaDto("Descrição", ESQUERDA, 90));
         colunas.add(new ColunaDto("Valor(R$)", DIREITA, 50));
         colunas.add(new ColunaDto("Tipo", ESQUERDA, 50));
         colunas.add(new ColunaDto("Tamanho", ESQUERDA, 50));
@@ -228,28 +374,28 @@ public class CadastroProdutoController extends CadastroController {
         String msg = format("Produto %s com sucesso.", isEmpty(produto.getId()) ? "cadastrado" : "alterado");
         getProdutoService().createOrUpdate(produto);
 
-        showMessageDialog(getView(), msg, "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
         limpaTela();
     }
 
     private Tamanho getTamanhoSelecionado() {
-        return getView().getComboTamanho().getSelectedIndex() <= 0 ? null : getTamanhos().get(getView().getComboTamanho().getSelectedIndex() - 1);
+        return getView().getComboTamanho().getSelectedIndex() <= ZERO ? null : getTamanhos().get(getView().getComboTamanho().getSelectedIndex() - 1);
     }
 
     private Tipo getTipoSelecionado() {
-        return getView().getComboTipo().getSelectedIndex() <= 0 ? null : getTipos().get(getView().getComboTipo().getSelectedIndex() - 1);
+        return getView().getComboTipo().getSelectedIndex() <= ZERO ? null : getTipos().get(getView().getComboTipo().getSelectedIndex() - 1);
     }
 
     private Marca getMarcaSelecionada() {
-        return getView().getComboMarca().getSelectedIndex() <= 0 ? null : getMarcas().get(getView().getComboMarca().getSelectedIndex() - 1);
+        return getView().getComboMarca().getSelectedIndex() <= ZERO ? null : getMarcas().get(getView().getComboMarca().getSelectedIndex() - 1);
     }
 
     private Cor getCorSelecionada() {
-        return getView().getComboCor().getSelectedIndex() <= 0 ? null : getCores().get(getView().getComboCor().getSelectedIndex() - 1);
+        return getView().getComboCor().getSelectedIndex() <= ZERO ? null : getCores().get(getView().getComboCor().getSelectedIndex() - 1);
     }
 
     private void habilitaBotaoAddCaracteristica(boolean isHabilitar) {
-        getView().getBtnCaracteristica().setEnabled(isHabilitar);
+        getView().getBtnAdicionarCaracteristica().setEnabled(isHabilitar);
     }
 
     public void adicionaCaracteristica() {
@@ -272,12 +418,12 @@ public class CadastroProdutoController extends CadastroController {
         caracteristicaProduto.setQtdEstoque(getView().getTxtEstoque().getDoubleValue());
 
         try {
-            String msg = format("Caracterï¿½stica do Produto %s com sucesso.", isEmpty(codigoCaracteristica) ? "cadastrada" : "alterada");
+            String msg = format("Característica do Produto %s com sucesso.", isEmpty(codigoCaracteristica) ? "cadastrada" : "alterada");
             getCaracteristicaProdutoService().createOrUpdate(caracteristicaProduto);
-            showMessageDialog(getView(), msg, "Atenï¿½ï¿½o", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
             limpaCamposCaracteristica();
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenï¿½ï¿½o", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
             getView().getTxtBarra().requestFocus();
         }
     }
@@ -353,8 +499,7 @@ public class CadastroProdutoController extends CadastroController {
     private void buscaCaracteristicas() {
         getCaracteristicas().clear();
         getCaracteristicas().addAll(getCaracteristicaProdutoService().buscaCaracteristicasPorProduto(Integer.parseInt(getView().getTxtCodigo().getText())));
-
-        getView().fireTableDataChanged();
+        fireTableDataChanged();
     }
 
     public void setView(CadastroProdutoView view) {

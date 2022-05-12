@@ -1,19 +1,11 @@
 package view;
 
-import controller.CadastroFornecedorController;
 import personalizado.JTextFieldLimitador;
-import personalizado.JTextFieldSomenteNumeros;
 import util.Cores;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.text.ParseException;
-import java.awt.event.InputEvent;
-import static java.awt.event.KeyEvent.*;
-import static javax.swing.JComponent.WHEN_FOCUSED;
-import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
-import static javax.swing.KeyStroke.getKeyStroke;
 
 public class CadastroFornecedorView extends ControllerView {
 
@@ -29,14 +21,12 @@ public class CadastroFornecedorView extends ControllerView {
     private JLabel lblCodigo;
     private JLabel lblNome;
     private JLabel lblRazaoSocial;
-    private JLabel lblVazio;
     private JLabel lblEndereco;
     private JLabel lblComplemento;
     private JLabel lblEmail;
     private JLabel lblCnpj;
     private JLabel lblInscricaoEstadual;
 
-    private JTextFieldSomenteNumeros txtCodigo;
     private JTextFieldLimitador txtNome;
     private JTextFieldLimitador txtRazaoSocial;
     private JTextFieldLimitador txtComplemento;
@@ -45,17 +35,10 @@ public class CadastroFornecedorView extends ControllerView {
     private JTextFieldLimitador txtInscricaoEstadual;
     private JComboBox<String> comboEndereco;
 
-    private JButton btnSalvar;
-    private JButton btnSair;
-    private JButton btnLimpar;
     private JButton btnCadastroFone;
-    private JButton btnListar;
 
-    private CadastroFornecedorController controller;
-
-    public CadastroFornecedorView(CadastroFornecedorController controller) {
+    public CadastroFornecedorView() {
         setTitle("Cadastro de Fornecedores");
-        this.controller = controller;
         initialize();
     }
 
@@ -96,13 +79,6 @@ public class CadastroFornecedorView extends ControllerView {
             gbcTxtCodigo.gridx = 0;
             gbcTxtCodigo.gridy = 1;
             panelCodigo.add(getTxtCodigo(), gbcTxtCodigo);
-
-            GridBagConstraints gbcLblVazio = new GridBagConstraints();
-            gbcLblVazio.fill = GridBagConstraints.BOTH;
-            gbcLblVazio.insets = new Insets(0, 5, 5, 5);
-            gbcLblVazio.gridx = 1;
-            gbcLblVazio.gridy = 1;
-            panelCodigo.add(getLblVazio(), gbcLblVazio);
         }
         return panelCodigo;
     }
@@ -411,16 +387,6 @@ public class CadastroFornecedorView extends ControllerView {
         return gbcPanelBotoes;
     }
 
-    public JTextField getTxtCodigo() {
-        if (txtCodigo == null) {
-            txtCodigo = new JTextFieldSomenteNumeros();
-            txtCodigo.setHorizontalAlignment(SwingConstants.RIGHT);
-            txtCodigo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            txtCodigo.addActionListener(a -> controller.buscaFornecedor());
-        }
-        return txtCodigo;
-    }
-
     public JTextFieldLimitador getTxtNome() {
         if (txtNome == null) {
             txtNome = new JTextFieldLimitador(100);
@@ -484,7 +450,7 @@ public class CadastroFornecedorView extends ControllerView {
 
     public JLabel getLblCodigo() {
         if (lblCodigo == null) {
-            lblCodigo = new JLabel("Cï¿½digo:");
+            lblCodigo = new JLabel("Código:");
         }
         return lblCodigo;
     }
@@ -498,7 +464,7 @@ public class CadastroFornecedorView extends ControllerView {
 
     public JLabel getLblRazaoSocial() {
         if (lblRazaoSocial == null) {
-            lblRazaoSocial = new JLabel("Razï¿½o Social:*");
+            lblRazaoSocial = new JLabel("Razão Social:*");
         }
         return lblRazaoSocial;
     }
@@ -512,7 +478,7 @@ public class CadastroFornecedorView extends ControllerView {
 
     public JLabel getLblEndereco() {
         if (lblEndereco == null) {
-            lblEndereco = new JLabel("Endereï¿½o:*");
+            lblEndereco = new JLabel("Enderço:*");
         }
         return lblEndereco;
     }
@@ -533,60 +499,16 @@ public class CadastroFornecedorView extends ControllerView {
 
     public JLabel getLblInscricaoEstadual() {
         if (lblInscricaoEstadual == null) {
-            lblInscricaoEstadual = new JLabel("Inscriï¿½ï¿½o Estadual:*");
+            lblInscricaoEstadual = new JLabel("Inscrição Estadual:*");
         }
         return lblInscricaoEstadual;
-    }
-
-    public JLabel getLblVazio() {
-        if (lblVazio == null) {
-            lblVazio = new JLabel("");
-        }
-        return lblVazio;
-    }
-
-    public JButton getBtnSalvar() {
-        if (btnSalvar == null) {
-            btnSalvar = getBotaoSalvarPadrao(controller);
-        }
-        return btnSalvar;
-    }
-
-    public JButton getBtnListar() {
-        if (btnListar == null) {
-            btnListar = getBotaoListarPadrao(controller);
-        }
-        return btnListar;
-    }
-
-    public JButton getBtnLimpar() {
-        if (btnLimpar == null) {
-            btnLimpar = getBotaoLimparPadrao(controller);
-        }
-        return btnLimpar;
     }
 
     public JButton getBtnCadastroFone() {
         if (btnCadastroFone == null) {
             btnCadastroFone = new JButton("Cadastrar Telefone [SHIFT + F1]");
             btnCadastroFone.setIcon(new ImageIcon(getClass().getResource("/imagens/phone.png")));
-            btnCadastroFone.addActionListener(a -> controller.cadastraFone());
-            btnCadastroFone.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, InputEvent.SHIFT_DOWN_MASK), EVENTO);
-            btnCadastroFone.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnCadastroFone.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.cadastraFone();
-                }
-            });
         }
         return btnCadastroFone;
-    }
-
-    public JButton getBtnSair() {
-        if (btnSair == null) {
-            btnSair = getBotaoSairPadrao();
-        }
-        return btnSair;
     }
 }

@@ -15,9 +15,9 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
     private List<CondicaoPagamento> condicoes;
     private CondicaoPagamentoService condicaoPagamentoService;
 
-    public CadastroCondicaoPagamentoController() {
-        super();
-        setView(new CadastroCondicaoPagamentoView(this));
+    public CadastroCondicaoPagamentoController(CadastroCondicaoPagamentoView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
     }
 
@@ -31,7 +31,8 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
         preencheCamposTela(getCondicoes().get(index));
     }
 
-    public void buscaCondicao() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;

@@ -1,3 +1,5 @@
+CREATE DATABASE bancoloja;
+
 CREATE SEQUENCE bairro_id_seq;
 CREATE TABLE bairro (
     id INTEGER NOT NULL DEFAULT nextval('bairro_id_seq'),

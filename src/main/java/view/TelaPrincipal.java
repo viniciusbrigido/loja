@@ -136,7 +136,7 @@ public class TelaPrincipal extends JFrame {
             menuItemBairro = new JMenuItem();
             menuItemBairro.setText("Bairro");
             menuItemBairro.setAccelerator(getKeyStroke(VK_F1, CTRL_DOWN_MASK));
-            menuItemBairro.addActionListener(a -> new CadastroBairroController());
+            menuItemBairro.addActionListener(a -> new CadastroBairroController(new CadastroBairroView()));
             menuItemBairro.setIcon(new ImageIcon(getClass().getResource("/imagens/neighborhood.png")));
         }
         return menuItemBairro;
@@ -147,7 +147,7 @@ public class TelaPrincipal extends JFrame {
             menuItemCidade = new JMenuItem();
             menuItemCidade.setText("Cidade");
             menuItemCidade.setAccelerator(getKeyStroke(VK_F2, CTRL_DOWN_MASK));
-            menuItemCidade.addActionListener(a -> new CadastroCidadeController());
+            menuItemCidade.addActionListener(a -> new CadastroCidadeController(new CadastroCidadeView()));
             menuItemCidade.setIcon(new ImageIcon(getClass().getResource("/imagens/city.png")));
         }
         return menuItemCidade;
@@ -158,7 +158,7 @@ public class TelaPrincipal extends JFrame {
             menuItemEndereco = new JMenuItem();
             menuItemEndereco.setText("Endereço");
             menuItemEndereco.setAccelerator(getKeyStroke(VK_F3, CTRL_DOWN_MASK));
-            menuItemEndereco.addActionListener(a -> new CadastroEnderecoController());
+            menuItemEndereco.addActionListener(a -> new CadastroEnderecoController(new CadastroEnderecoView()));
             menuItemEndereco.setIcon(new ImageIcon(getClass().getResource("/imagens/adress.png")));
         }
         return menuItemEndereco;
@@ -169,7 +169,7 @@ public class TelaPrincipal extends JFrame {
             menuItemMarca = new JMenuItem();
             menuItemMarca.setText("Marca");
             menuItemMarca.setAccelerator(getKeyStroke(VK_F4, CTRL_DOWN_MASK));
-            menuItemMarca.addActionListener(a -> new CadastroMarcaController());
+            menuItemMarca.addActionListener(a -> new CadastroMarcaController(new CadastroMarcaView()));
             menuItemMarca.setIcon(new ImageIcon(getClass().getResource("/imagens/logo.png")));
         }
         return menuItemMarca;
@@ -180,7 +180,7 @@ public class TelaPrincipal extends JFrame {
             menuItemTamanho = new JMenuItem();
             menuItemTamanho.setText("Tamanho");
             menuItemTamanho.setAccelerator(getKeyStroke(VK_F5, CTRL_DOWN_MASK));
-            menuItemTamanho.addActionListener(a -> new CadastroTamanhoController());
+            menuItemTamanho.addActionListener(a -> new CadastroTamanhoController(new CadastroTamanhoView()));
             menuItemTamanho.setIcon(new ImageIcon(getClass().getResource("/imagens/size.png")));
         }
         return menuItemTamanho;
@@ -191,7 +191,7 @@ public class TelaPrincipal extends JFrame {
             menuItemTipoProduto = new JMenuItem();
             menuItemTipoProduto.setText("Tipo de Produto");
             menuItemTipoProduto.setAccelerator(getKeyStroke(VK_F6, CTRL_DOWN_MASK));
-            menuItemTipoProduto.addActionListener(a -> new CadastroTipoController());
+            menuItemTipoProduto.addActionListener(a -> new CadastroTipoController(new CadastroTipoView()));
             menuItemTipoProduto.setIcon(new ImageIcon(getClass().getResource("/imagens/type.png")));
         }
         return menuItemTipoProduto;
@@ -202,7 +202,7 @@ public class TelaPrincipal extends JFrame {
             menuItemCor = new JMenuItem();
             menuItemCor.setText("Cor");
             menuItemCor.setAccelerator(getKeyStroke(VK_F7, CTRL_DOWN_MASK));
-            menuItemCor.addActionListener(a -> new CadastroCorController());
+            menuItemCor.addActionListener(a -> new CadastroCorController(new CadastroCorView()));
             menuItemCor.setIcon(new ImageIcon(getClass().getResource("/imagens/color.png")));
         }
         return menuItemCor;
@@ -213,7 +213,7 @@ public class TelaPrincipal extends JFrame {
             menuItemProduto = new JMenuItem();
             menuItemProduto.setText("Produto");
             menuItemProduto.setAccelerator(getKeyStroke(VK_F8, CTRL_DOWN_MASK));
-            menuItemProduto.addActionListener(a -> new CadastroProdutoController());
+            menuItemProduto.addActionListener(a -> new CadastroProdutoController(new CadastroProdutoView()));
             menuItemProduto.setIcon(new ImageIcon(getClass().getResource("/imagens/product.png")));
         }
         return menuItemProduto;
@@ -224,7 +224,7 @@ public class TelaPrincipal extends JFrame {
             menuItemCondicao = new JMenuItem();
             menuItemCondicao.setText("Condição de Pagamento");
             menuItemCondicao.setAccelerator(getKeyStroke(VK_F9, CTRL_DOWN_MASK));
-            menuItemCondicao.addActionListener(a -> new CadastroCondicaoPagamentoController());
+            menuItemCondicao.addActionListener(a -> new CadastroCondicaoPagamentoController(new CadastroCondicaoPagamentoView()));
             menuItemCondicao.setIcon(new ImageIcon(getClass().getResource("/imagens/payment.png")));
         }
         return menuItemCondicao;
@@ -249,7 +249,7 @@ public class TelaPrincipal extends JFrame {
             menuItemCliente = new JMenuItem();
             menuItemCliente.setText("Cliente");
             menuItemCliente.setAccelerator(getKeyStroke(VK_F10, CTRL_DOWN_MASK));
-            menuItemCliente.addActionListener(a -> new CadastroClienteController());
+            menuItemCliente.addActionListener(a -> new CadastroClienteController(new CadastroClienteView()));
             menuItemCliente.setIcon(new ImageIcon(getClass().getResource("/imagens/client.png")));
         }
         return menuItemCliente;
@@ -260,7 +260,7 @@ public class TelaPrincipal extends JFrame {
             menuItemFornecedor = new JMenuItem();
             menuItemFornecedor.setText("Fornecedor");
             menuItemFornecedor.setAccelerator(getKeyStroke(VK_F11, CTRL_DOWN_MASK));
-            menuItemFornecedor.addActionListener(a -> new CadastroFornecedorController());
+            menuItemFornecedor.addActionListener(a -> new CadastroFornecedorController(new CadastroFornecedorView()));
             menuItemFornecedor.setIcon(new ImageIcon(getClass().getResource("/imagens/client.png")));
         }
         return menuItemFornecedor;
@@ -271,7 +271,7 @@ public class TelaPrincipal extends JFrame {
             menuItemVendedor = new JMenuItem();
             menuItemVendedor.setText("Vendedor");
             menuItemVendedor.setAccelerator(getKeyStroke(VK_F12, CTRL_DOWN_MASK));
-            menuItemVendedor.addActionListener(a -> new CadastroVendedorController());
+            menuItemVendedor.addActionListener(a -> new CadastroVendedorController(new CadastroVendedorView()));
             menuItemVendedor.setIcon(new ImageIcon(getClass().getResource("/imagens/client.png")));
         }
         return menuItemVendedor;

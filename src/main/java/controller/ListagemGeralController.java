@@ -84,7 +84,7 @@ public class ListagemGeralController extends ListagemController {
 
     @Override
     public void selecionaItem() {
-        if (getView().getTableGrid().getSelectedRow() < 0) {
+        if (getView().getTableGrid().getSelectedRow() < ZERO) {
             showMessageDialog(getView(), "Selecione um item para carregá-lo.", "Atenção", ERROR_MESSAGE);
             return;
         }
@@ -132,7 +132,7 @@ public class ListagemGeralController extends ListagemController {
 
     @Override
     public void excluiItem() {
-        if (getView().getTableGrid().getSelectedRow() < 0) {
+        if (getView().getTableGrid().getSelectedRow() < ZERO) {
             showMessageDialog(getView(), "Selecione um item para excluir.", "Atenção", ERROR_MESSAGE);
             return;
         }

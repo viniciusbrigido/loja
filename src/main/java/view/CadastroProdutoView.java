@@ -1,20 +1,12 @@
 package view;
 
-import controller.CadastroProdutoController;
-import model.bo.CaracteristicaProduto;
 import personalizado.*;
 import util.Cores;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
-
 import static java.awt.Cursor.getDefaultCursor;
-import static java.awt.event.KeyEvent.*;
-import static javax.swing.JComponent.WHEN_FOCUSED;
-import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
-import static javax.swing.KeyStroke.getKeyStroke;
-import static util.Formatador.formataDouble;
 
 public class CadastroProdutoView extends ControllerView {
 
@@ -27,7 +19,6 @@ public class CadastroProdutoView extends ControllerView {
 
     private JScrollPane scrollTabela;
     private JTable tabelaCaracteristicas;
-    private AbstractTableModel grid;
 
     private JLabel lblCodigo;
     private JLabel lblDescricao;
@@ -40,7 +31,6 @@ public class CadastroProdutoView extends ControllerView {
     private JLabel lblTamanhoCaracteristica;
     private JLabel lblCor;
 
-    private JTextFieldSomenteNumeros txtCodigo;
     private JTextFieldLimitador txtDescricao;
     private JTextFieldMoeda txtPreco;
     private JComboBox<String> comboMarca;
@@ -51,21 +41,15 @@ public class CadastroProdutoView extends ControllerView {
     private JTextFieldLimitador txtTamanho;
     private JTextFieldPorcentagem txtEstoque;
 
-    private JButton btnSalvarProduto;
-    private JButton btnSair;
-    private JButton btnLimpar;
-    private JButton btnListar;
-    private JButton btnCaracteristica;
+    private JButton btnAdicionarCaracteristica;
     private JButton btnSalvarCaracteristica;
     private JButton btnEditarProduto;
     private JButton btnNovoProduto;
     private JButton btnSairCaracteristica;
 
-    private CadastroProdutoController controller;
 
-    public CadastroProdutoView(CadastroProdutoController controller) {
+    public CadastroProdutoView() {
         setTitle("Cadastro de Produtos");
-        this.controller = controller;
         initialize();
     }
 
@@ -218,11 +202,11 @@ public class CadastroProdutoView extends ControllerView {
             gblPanelBotoes.rowWeights = new double[]{0.0};
             panelBotoesProduto.setLayout(gblPanelBotoes);
 
-            GridBagConstraints gbcBtnSalvarProduto = new GridBagConstraints();
-            gbcBtnSalvarProduto.insets = new Insets(10, 5, 5, 5);
-            gbcBtnSalvarProduto.gridx = 0;
-            gbcBtnSalvarProduto.gridy = 0;
-            panelBotoesProduto.add(getBtnSalvarProduto(), gbcBtnSalvarProduto);
+            GridBagConstraints gbcBtnSalvar = new GridBagConstraints();
+            gbcBtnSalvar.insets = new Insets(10, 5, 5, 5);
+            gbcBtnSalvar.gridx = 0;
+            gbcBtnSalvar.gridy = 0;
+            panelBotoesProduto.add(getBtnSalvar(), gbcBtnSalvar);
 
             GridBagConstraints gbcBtnListar = new GridBagConstraints();
             gbcBtnListar.insets = new Insets(10, 5, 5, 5);
@@ -236,12 +220,12 @@ public class CadastroProdutoView extends ControllerView {
             gbcBtnLimpar.gridy = 0;
             panelBotoesProduto.add(getBtnLimpar(), gbcBtnLimpar);
 
-            GridBagConstraints gbcBtnCaracteristica = new GridBagConstraints();
-            gbcBtnCaracteristica.fill = GridBagConstraints.BOTH;
-            gbcBtnCaracteristica.insets = new Insets(10, 5, 5, 5);
-            gbcBtnCaracteristica.gridx = 3;
-            gbcBtnCaracteristica.gridy = 0;
-            panelBotoesProduto.add(getBtnCaracteristica(), gbcBtnCaracteristica);
+            GridBagConstraints gbcBtnAdicionarCaracteristica = new GridBagConstraints();
+            gbcBtnAdicionarCaracteristica.fill = GridBagConstraints.BOTH;
+            gbcBtnAdicionarCaracteristica.insets = new Insets(10, 5, 5, 5);
+            gbcBtnAdicionarCaracteristica.gridx = 3;
+            gbcBtnAdicionarCaracteristica.gridy = 0;
+            panelBotoesProduto.add(getBtnAdicionarCaracteristica(), gbcBtnAdicionarCaracteristica);
 
             GridBagConstraints gbcBtnSair = new GridBagConstraints();
             gbcBtnSair.insets = new Insets(10, 5, 5, 5);
@@ -384,7 +368,6 @@ public class CadastroProdutoView extends ControllerView {
             gblPanelGrid.columnWeights = new double[]{0.0};
             gblPanelGrid.rowWeights = new double[]{0.0};
             tabelaCaracteristicas.setLayout(gblPanelGrid);
-            tabelaCaracteristicas.setModel(getGrid());
             tabelaCaracteristicas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
             DefaultTableCellRenderer dtcrRight = new DefaultTableCellRenderer();
@@ -408,24 +391,6 @@ public class CadastroProdutoView extends ControllerView {
             columnModel.getColumn(5).setCellRenderer(dtcrExcluir);
             columnModel.getColumn(5).setMaxWidth(20);
 
-            tabelaCaracteristicas.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    int colunaSelecionada = ((JTable) e.getSource()).getSelectedColumn();
-
-                    if (colunaSelecionada == 4) {
-                        controller.editaCaracteristica();
-                    } else if (colunaSelecionada == 5) {
-                        controller.excluiCaracteristica();
-                    }
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    setCursor(getDefaultCursor());
-                }
-            });
-
             tabelaCaracteristicas.addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
@@ -439,49 +404,6 @@ public class CadastroProdutoView extends ControllerView {
     private boolean isIconeExcluirEditarSelecionado(MouseEvent e) {
         int colunaSelecionada = ((JTable) e.getSource()).columnAtPoint(e.getPoint());
         return colunaSelecionada == 4 || colunaSelecionada == 5;
-    }
-
-    public AbstractTableModel getGrid() {
-        if (grid == null) {
-
-            grid = new AbstractTableModel() {
-                public final String[] columnNames = {"Código Barra", "Estoque", "Tamanho", "Cor", "", ""};
-
-                public int getColumnCount() {
-                    return columnNames.length;
-                }
-
-                public String getColumnName(int column) {
-                    return columnNames[column];
-                }
-
-                public int getRowCount() {
-                    return controller.getCaracteristicas().size();
-                }
-
-                public Object getValueAt(int row, int column) {
-                    CaracteristicaProduto caracteristica = controller.getCaracteristicas().get(row);
-
-                    switch (column) {
-                        case 0:
-                            return caracteristica.getCodBarras();
-                        case 1:
-                            return formataDouble(caracteristica.getQtdEstoque());
-                        case 2:
-                            return caracteristica.getNumTamanho();
-                        case 3:
-                            return caracteristica.getCor().getNomCor();
-                        default:
-                            return "";
-                    }
-                }
-            };
-        }
-        return grid;
-    }
-
-    public void fireTableDataChanged() {
-        getGrid().fireTableDataChanged();
     }
 
     private GridBagConstraints getGbcPanelCodigo() {
@@ -552,16 +474,6 @@ public class CadastroProdutoView extends ControllerView {
         gbcPanelBotoesCaracteristica.gridy = 6;
 
         return gbcPanelBotoesCaracteristica;
-    }
-
-    public JTextField getTxtCodigo() {
-        if (txtCodigo == null) {
-            txtCodigo = new JTextFieldSomenteNumeros();
-            txtCodigo.setHorizontalAlignment(SwingConstants.RIGHT);
-            txtCodigo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            txtCodigo.addActionListener(a -> controller.buscaProduto());
-        }
-        return txtCodigo;
     }
 
     public JTextFieldLimitador getTxtDescricao() {
@@ -710,57 +622,18 @@ public class CadastroProdutoView extends ControllerView {
         return lblCor;
     }
 
-    public JButton getBtnSalvarProduto() {
-        if (btnSalvarProduto == null) {
-            btnSalvarProduto = getBotaoSalvarPadrao(controller);
+    public JButton getBtnAdicionarCaracteristica() {
+        if (btnAdicionarCaracteristica == null) {
+            btnAdicionarCaracteristica = new JButton("Add Característica [F4]");
+            btnAdicionarCaracteristica.setIcon(new ImageIcon(getClass().getResource("/imagens/product.png")));
         }
-        return btnSalvarProduto;
-    }
-
-    public JButton getBtnListar() {
-        if (btnListar == null) {
-            btnListar = getBotaoListarPadrao(controller);
-        }
-        return btnListar;
-    }
-
-    public JButton getBtnLimpar() {
-        if (btnLimpar == null) {
-            btnLimpar = getBotaoLimparPadrao(controller);
-        }
-        return btnLimpar;
-    }
-
-    public JButton getBtnCaracteristica() {
-        if (btnCaracteristica == null) {
-            btnCaracteristica = new JButton("Add Característica [F4]");
-            btnCaracteristica.setIcon(new ImageIcon(getClass().getResource("/imagens/product.png")));
-            btnCaracteristica.addActionListener(a -> controller.adicionaCaracteristica());
-            btnCaracteristica.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F4, 0), EVENTO);
-            btnCaracteristica.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnCaracteristica.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.adicionaCaracteristica();
-                }
-            });
-        }
-        return btnCaracteristica;
+        return btnAdicionarCaracteristica;
     }
 
     public JButton getBtnSalvarCaracteristica() {
         if (btnSalvarCaracteristica == null) {
             btnSalvarCaracteristica = new JButton("Salvar [F5]");
             btnSalvarCaracteristica.setIcon(new ImageIcon(getClass().getResource("/imagens/save.png")));
-            btnSalvarCaracteristica.addActionListener(a -> controller.salvaCaracteristica());
-            btnSalvarCaracteristica.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F5, 0), EVENTO);
-            btnSalvarCaracteristica.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnSalvarCaracteristica.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.salvaCaracteristica();
-                }
-            });
         }
         return btnSalvarCaracteristica;
     }
@@ -769,15 +642,6 @@ public class CadastroProdutoView extends ControllerView {
         if (btnEditarProduto == null) {
             btnEditarProduto = new JButton("Editar Produto [F6]");
             btnEditarProduto.setIcon(new ImageIcon(getClass().getResource("/imagens/product.png")));
-            btnEditarProduto.addActionListener(a -> controller.editaProduto());
-            btnEditarProduto.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F6, 0), EVENTO);
-            btnEditarProduto.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnEditarProduto.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.editaProduto();
-                }
-            });
         }
         return btnEditarProduto;
     }
@@ -786,29 +650,14 @@ public class CadastroProdutoView extends ControllerView {
         if (btnNovoProduto == null) {
             btnNovoProduto = new JButton("Novo Produto [F7]");
             btnNovoProduto.setIcon(new ImageIcon(getClass().getResource("/imagens/product.png")));
-            btnNovoProduto.addActionListener(a -> controller.novoProduto());
-            btnNovoProduto.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F7, 0), EVENTO);
-            btnNovoProduto.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnNovoProduto.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.novoProduto();
-                }
-            });
         }
         return btnNovoProduto;
     }
 
-    public JButton getBtnSair() {
-        if (btnSair == null) {
-            btnSair = getBotaoSairPadrao();
-        }
-        return btnSair;
-    }
-
     public JButton getBtnSairCaracteristica() {
         if (btnSairCaracteristica == null) {
-            btnSairCaracteristica = getBotaoSairPadrao();
+            btnSairCaracteristica = new JButton("Sair [Esc]");
+            btnSairCaracteristica.setIcon(new ImageIcon(getClass().getResource("/imagens/exit.png")));
         }
         return btnSairCaracteristica;
     }

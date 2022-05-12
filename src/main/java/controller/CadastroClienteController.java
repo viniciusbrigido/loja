@@ -22,9 +22,9 @@ public class CadastroClienteController extends CadastroController {
     private ClienteService clienteService;
     private EnderecoService enderecoService;
 
-    public CadastroClienteController() {
-        super();
-        setView(new CadastroClienteView(this));
+    public CadastroClienteController(CadastroClienteView view) {
+        super(view);
+        setView(view);
         getView().setVisible(true);
         preencheListas();
         verificaEnderecoCadastrado();
@@ -57,7 +57,8 @@ public class CadastroClienteController extends CadastroController {
         preencheCamposTela(getClientes().get(index));
     }
 
-    public void buscaCliente() {
+    @Override
+    public void buscaPorCodigo() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             limpaTela();
             return;

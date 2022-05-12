@@ -1,7 +1,5 @@
 package view;
 
-import controller.CadastroFoneFornecedorController;
-import model.bo.FoneFornecedor;
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.text.MaskFormatter;
@@ -10,13 +8,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import static java.awt.Cursor.getDefaultCursor;
-import static util.Formatador.*;
 
 public class CadastroFoneFornecedorView extends ControllerView {
 
     private JScrollPane jScrollPaneGrid;
-    private JTable tableGrid;
-    private AbstractTableModel grid;
+    private JTable tabelaFones;
 
     private JPanel panelFornecedor;
     private JPanel panelFoneSalvar;
@@ -33,11 +29,8 @@ public class CadastroFoneFornecedorView extends ControllerView {
     private JButton btnSalvar;
     private JButton btnSair;
 
-    private CadastroFoneFornecedorController controller;
-
-    public CadastroFoneFornecedorView(CadastroFoneFornecedorController controller) {
+    public CadastroFoneFornecedorView() {
         setTitle("Cadastro de Fones de Fornecedor");
-        this.controller = controller;
         initialize();
     }
 
@@ -161,28 +154,27 @@ public class CadastroFoneFornecedorView extends ControllerView {
     public JScrollPane getjScrollPaneGrid() {
         if (jScrollPaneGrid == null) {
             jScrollPaneGrid = new JScrollPane();
-            jScrollPaneGrid.setViewportView(getPanelGrid());
+            jScrollPaneGrid.setViewportView(getTabelaFones());
         }
         return jScrollPaneGrid;
     }
 
-    public JTable getPanelGrid() {
-        if (tableGrid == null) {
-            tableGrid = new JTable();
+    public JTable getTabelaFones() {
+        if (tabelaFones == null) {
+            tabelaFones = new JTable();
 
             GridBagLayout gblPanelGrid = new GridBagLayout();
             gblPanelGrid.columnWidths = new int[]{300};
             gblPanelGrid.rowHeights = new int[]{0};
             gblPanelGrid.columnWeights = new double[]{0.0};
             gblPanelGrid.rowWeights = new double[]{0.0};
-            tableGrid.setLayout(gblPanelGrid);
-            tableGrid.setModel(getGrid());
-            tableGrid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            tabelaFones.setLayout(gblPanelGrid);
+            tabelaFones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
             DefaultTableCellRenderer meio = new DefaultTableCellRenderer();
             meio.setHorizontalAlignment(SwingConstants.CENTER);
 
-            TableColumnModel columnModel = tableGrid.getColumnModel();
+            TableColumnModel columnModel = tabelaFones.getColumnModel();
             columnModel.getColumn(0).setCellRenderer(meio);
 
             DefaultTableCellRenderer dcrExcluir = new DefaultTableCellRenderer();
@@ -190,73 +182,19 @@ public class CadastroFoneFornecedorView extends ControllerView {
             columnModel.getColumn(1).setCellRenderer(dcrExcluir);
             columnModel.getColumn(1).setMaxWidth(20);
 
-            tableGrid.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    int colunaSelecionada = ((JTable) e.getSource()).getSelectedColumn();
-                    int index = ((JTable) e.getSource()).getSelectedRow();
-
-                    switch (colunaSelecionada) {
-                        case 1:
-                            controller.excluiFornecedor(index);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    setCursor(getDefaultCursor());
-                }
-            });
-
-            tableGrid.addMouseMotionListener(new MouseAdapter() {
+            tabelaFones.addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
                     setCursor(isIconeExcluirSelecionado(e) ? new Cursor(HAND_CURSOR) : getDefaultCursor());
                 }
             });
         }
-        return tableGrid;
+        return tabelaFones;
     }
 
     private boolean isIconeExcluirSelecionado(MouseEvent e) {
         int colunaSelecionada = ((JTable) e.getSource()).columnAtPoint(e.getPoint());
         return colunaSelecionada == 1;
-    }
-
-    public AbstractTableModel getGrid() {
-        if (grid == null) {
-
-            grid = new AbstractTableModel() {
-                public final String[] columnNames = {"Fone", ""};
-
-                public int getColumnCount() {
-                    return columnNames.length;
-                }
-
-                public String getColumnName(int column) {
-                    return columnNames[column];
-                }
-
-                public int getRowCount() {
-                    return controller.getFones().size();
-                }
-
-                public Object getValueAt(int row, int column) {
-                    FoneFornecedor fone = controller.getFones().get(row);
-
-                    switch (column) {
-                        case 0:
-                            return formataTelefone(fone.getNumFone());
-                        default:
-                            return null;
-                    }
-                }
-            };
-        }
-        return grid;
     }
 
     private JPanel getPanelBotoes() {
@@ -274,13 +212,9 @@ public class CadastroFoneFornecedorView extends ControllerView {
             gbcBtnSair.insets = new Insets(10, 5, 5, 5);
             gbcBtnSair.gridx = 0;
             gbcBtnSair.gridy = 0;
-            panelBotoes.add(getbtnSair(), gbcBtnSair);
+            panelBotoes.add(getBtnSair(), gbcBtnSair);
         }
         return panelBotoes;
-    }
-
-    public void fireTableDataChanged() {
-        getGrid().fireTableDataChanged();
     }
 
     private GridBagConstraints getGbcPanelFornecedor() {
@@ -357,19 +291,5 @@ public class CadastroFoneFornecedorView extends ControllerView {
             lblFornecedor = new JLabel("Fornecedor:");
         }
         return lblFornecedor;
-    }
-
-    public JButton getBtnSalvar() {
-        if (btnSalvar == null) {
-            btnSalvar = getBotaoSalvarPadrao(controller);
-        }
-        return btnSalvar;
-    }
-
-    public JButton getbtnSair() {
-        if (btnSair == null) {
-            btnSair = getBotaoSairPadrao();
-        }
-        return btnSair;
     }
 }
