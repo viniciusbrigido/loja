@@ -639,6 +639,7 @@ public class VendaController extends Controller {
         condicao = null;
         getItens().clear();
         atualizaGridValores();
+        setaFocoTela();
     }
 
     private void excluiVenda() {
