@@ -282,7 +282,7 @@ public class TelaPrincipal extends JFrame {
             menuItemVenda = new JMenuItem();
             menuItemVenda.setText("Venda");
             menuItemVenda.setAccelerator(getKeyStroke(VK_F1, SHIFT_DOWN_MASK));
-            menuItemVenda.addActionListener(a -> new VendaController());
+            menuItemVenda.addActionListener(a -> new VendaController(new VendaView()));
             menuItemVenda.setIcon(new ImageIcon(getClass().getResource("/imagens/client.png")));
         }
         return menuItemVenda;

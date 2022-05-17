@@ -170,31 +170,8 @@ public class CadastroFoneFornecedorView extends ControllerView {
             gblPanelGrid.rowWeights = new double[]{0.0};
             tabelaFones.setLayout(gblPanelGrid);
             tabelaFones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-            DefaultTableCellRenderer meio = new DefaultTableCellRenderer();
-            meio.setHorizontalAlignment(SwingConstants.CENTER);
-
-            TableColumnModel columnModel = tabelaFones.getColumnModel();
-            columnModel.getColumn(0).setCellRenderer(meio);
-
-            DefaultTableCellRenderer dcrExcluir = new DefaultTableCellRenderer();
-            dcrExcluir.setIcon(new ImageIcon(getClass().getResource("/imagens/remover.png")));
-            columnModel.getColumn(1).setCellRenderer(dcrExcluir);
-            columnModel.getColumn(1).setMaxWidth(20);
-
-            tabelaFones.addMouseMotionListener(new MouseAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    setCursor(isIconeExcluirSelecionado(e) ? new Cursor(HAND_CURSOR) : getDefaultCursor());
-                }
-            });
         }
         return tabelaFones;
-    }
-
-    private boolean isIconeExcluirSelecionado(MouseEvent e) {
-        int colunaSelecionada = ((JTable) e.getSource()).columnAtPoint(e.getPoint());
-        return colunaSelecionada == 1;
     }
 
     private JPanel getPanelBotoes() {

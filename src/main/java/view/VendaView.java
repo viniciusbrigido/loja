@@ -1,7 +1,5 @@
 package view;
 
-import controller.VendaController;
-import model.bo.ItemVenda;
 import personalizado.*;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -9,12 +7,7 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import static java.awt.Cursor.getDefaultCursor;
-import static java.awt.event.KeyEvent.*;
-import static javax.swing.JComponent.WHEN_FOCUSED;
-import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
-import static javax.swing.KeyStroke.getKeyStroke;
 import static util.Cores.*;
-import static util.Formatador.*;
 
 public class VendaView extends ControllerView {
 
@@ -42,7 +35,6 @@ public class VendaView extends ControllerView {
 
     private JScrollPane scrollTabela;
     private JTable tabelaProdutos;
-    private AbstractTableModel grid;
 
     private JLabel lblLeitura;
     private JLabel lblQuantidade;
@@ -79,15 +71,12 @@ public class VendaView extends ControllerView {
     private JButton btnExcluiVenda;
     private JButton btnSair;
 
-    private VendaController controller;
-
-    public VendaView(VendaController controller) {
+    public VendaView() {
         setTitle("Venda");
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         larguraTela = dimension.width - 200;
         setSize(new Dimension(dimension.width, dimension.height - 40));
         setPreferredSize(new Dimension(dimension.width, dimension.height - 40));
-        this.controller = controller;
         initialize();
     }
 
@@ -580,145 +569,9 @@ public class VendaView extends ControllerView {
             tabelaProdutos.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 14));
             tabelaProdutos.getTableHeader().setBackground(new Color(255, 255, 255));
             tabelaProdutos.setFont(new Font("Tahoma", Font.PLAIN, 16));
-            tabelaProdutos.setModel(getGrid());
             tabelaProdutos.setRowHeight(20);
-
-            TableColumnModel columnModel = tabelaProdutos.getColumnModel();
-            columnModel.getColumn(0).setPreferredWidth(50);
-            columnModel.getColumn(1).setPreferredWidth(225);
-            columnModel.getColumn(2).setPreferredWidth(125);
-            columnModel.getColumn(3).setPreferredWidth(50);
-            columnModel.getColumn(4).setPreferredWidth(100);
-            columnModel.getColumn(5).setPreferredWidth(100);
-            columnModel.getColumn(6).setPreferredWidth(100);
-
-            DefaultTableCellRenderer dtcrEditar = new DefaultTableCellRenderer();
-            dtcrEditar.setIcon(new ImageIcon(getClass().getResource("/imagens/editar.png")));
-            columnModel.getColumn(7).setCellRenderer(dtcrEditar);
-            columnModel.getColumn(7).setMaxWidth(20);
-
-            DefaultTableCellRenderer dtcrExcluir = new DefaultTableCellRenderer();
-            dtcrExcluir.setIcon(new ImageIcon(getClass().getResource("/imagens/remover.png")));
-            columnModel.getColumn(8).setCellRenderer(dtcrExcluir);
-            columnModel.getColumn(8).setMaxWidth(20);
-
-            for (int i = 0; i < columnModel.getColumnCount(); i++) {
-                VendaTableCellRenderer vendaTableCellRenderer = new VendaTableCellRenderer();
-                if (i == 2) {
-                    vendaTableCellRenderer.setHorizontalAlignment(VendaTableCellRenderer.CENTER);
-                } else if (Number.class.isAssignableFrom(tabelaProdutos.getColumnClass(i))) {
-                    vendaTableCellRenderer.setHorizontalAlignment(VendaTableCellRenderer.RIGHT);
-                }
-                columnModel.getColumn(i).setCellRenderer(
-                        VendaCellRenderer.class.isAssignableFrom(tabelaProdutos.getColumnClass(i)) ? VendaCellRenderer.criarIconTableCellRendered(i) : vendaTableCellRenderer);
-            }
-
-            tabelaProdutos.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F2, 0), EVENTO);
-            tabelaProdutos.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.editaItem();
-                }
-            });
-
-            tabelaProdutos.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    int colunaSelecionada = ((JTable) e.getSource()).getSelectedColumn();
-
-                    if (colunaSelecionada == 7) {
-                        controller.editaItem();
-                    } else if (colunaSelecionada == 8) {
-                        controller.excluiItem();
-                    }
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    setCursor(getDefaultCursor());
-                }
-            });
-
-            tabelaProdutos.addMouseMotionListener(new MouseAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    setCursor(isIconeExcluirEditarSelecionado(e) ? new Cursor(Cursor.HAND_CURSOR) : getDefaultCursor());
-                }
-            });
         }
         return tabelaProdutos;
-    }
-
-    class VendaTableCellRenderer extends DefaultTableCellRenderer {
-        public VendaTableCellRenderer() {
-            super();
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            return VendaCellRenderer.defineCorLinhaGrid(table, isSelected, row, component);
-        }
-    }
-
-    private boolean isIconeExcluirEditarSelecionado(MouseEvent e) {
-        int colunaSelecionada = ((JTable) e.getSource()).columnAtPoint(e.getPoint());
-        return colunaSelecionada == 7 || colunaSelecionada == 8;
-    }
-
-    public AbstractTableModel getGrid() {
-        if (grid == null) {
-
-            grid = new AbstractTableModel() {
-                public final String[] columnNames = {"Código", "Produto", "Código de Barras", "Quantidade", "Valor Unitário", "Percentual (%)", "Valor Total", "", ""};
-                private Class<?>[] columnClasses = new Class<?>[] {Number.class, String.class, String.class, Number.class, Number.class, Number.class, Number.class, VendaCellRenderer.class, VendaCellRenderer.class};
-
-                public int getColumnCount() {
-                    return columnNames.length;
-                }
-
-                public String getColumnName(int column) {
-                    return columnNames[column];
-                }
-
-                @Override
-                public Class<?> getColumnClass(int columnIndex) {
-                    return columnClasses[columnIndex];
-                }
-
-                public int getRowCount() {
-                    return controller.getItens().size();
-                }
-
-                public Object getValueAt(int row, int column) {
-                    ItemVenda item = controller.getItens().get(row);
-
-                    switch (column) {
-                        case 0:
-                            return item.getCaracteristicaProduto().getProduto().getId();
-                        case 1:
-                            return item.getCaracteristicaProduto().getProduto().getNomProduto();
-                        case 2:
-                            return item.getCaracteristicaProduto().getCodBarras();
-                        case 3:
-                            return item.getQtdProduto();
-                        case 4:
-                            return formataDouble(item.getVlrUnitario());
-                        case 5:
-                            return formataDouble(item.getPrcDesconto());
-                        case 6:
-                            return formataDouble(item.getVlrLiquido());
-                        default:
-                            return "";
-                    }
-                }
-            };
-        }
-        return grid;
-    }
-
-    public void fireTableDataChanged() {
-        getGrid().fireTableDataChanged();
     }
 
     private GridBagConstraints getGbcPanelProdutoImagem() {
@@ -919,7 +772,6 @@ public class VendaView extends ControllerView {
         if (txtLeitura == null) {
             txtLeitura = new JTextField();
             txtLeitura.setFont(FONTE_CAMPO);
-            txtLeitura.addActionListener(a -> controller.buscaProduto());
         }
         return txtLeitura;
     }
@@ -939,7 +791,6 @@ public class VendaView extends ControllerView {
             txtPrcDesconto = new JTextFieldPorcentagem();
             txtPrcDesconto.setFont(FONTE_CAMPO);
             txtPrcDesconto.setHorizontalAlignment(SwingConstants.RIGHT);
-            txtPrcDesconto.addActionListener(a -> controller.preencheItem());
         }
         return txtPrcDesconto;
     }
@@ -949,7 +800,6 @@ public class VendaView extends ControllerView {
             txtQuantidade = new JTextFieldSomenteNumeros(3);
             txtQuantidade.setFont(FONTE_CAMPO);
             txtQuantidade.setHorizontalAlignment(SwingConstants.RIGHT);
-            txtQuantidade.addActionListener(a -> controller.setaFocoPrcDesconto());
         }
         return txtQuantidade;
     }
@@ -1003,15 +853,6 @@ public class VendaView extends ControllerView {
     public JButton getBtnFinalizar() {
         if (btnFinalizar == null) {
             btnFinalizar = new JButtonTelaDeVendas("Finalizar", "F1", "Clique para finalizar a venda", new ImageIcon(getClass().getResource("/imagens/finalizar.png")));
-            btnFinalizar.addActionListener(a -> controller.finalizar());
-            btnFinalizar.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, 0), EVENTO);
-            btnFinalizar.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnFinalizar.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.finalizar();
-                }
-            });
         }
         return btnFinalizar;
     }
@@ -1019,15 +860,6 @@ public class VendaView extends ControllerView {
     public JButton getBtnEditaItem() {
         if (btnEditaItem == null) {
             btnEditaItem = new JButtonTelaDeVendas("Edita Item", "F2", "Clique para editar o item", new ImageIcon(getClass().getResource("/imagens/edita.png")));
-            btnEditaItem.addActionListener(a -> controller.editaItem());
-            btnEditaItem.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F2, 0), EVENTO);
-            btnEditaItem.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnEditaItem.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.editaItem();
-                }
-            });
         }
         return btnEditaItem;
     }
@@ -1035,15 +867,6 @@ public class VendaView extends ControllerView {
     public JButton getBtnExcluiItem() {
         if (btnExcluiItem == null) {
             btnExcluiItem = new JButtonTelaDeVendas("Exclui Item", "F3", "Clique para excluir um item", new ImageIcon(getClass().getResource("/imagens/excluir.png")));
-            btnExcluiItem.addActionListener(a -> controller.excluiItem());
-            btnExcluiItem.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F3, 0), EVENTO);
-            btnExcluiItem.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnExcluiItem.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.excluiItem();
-                }
-            });
         }
         return btnExcluiItem;
     }
@@ -1051,15 +874,6 @@ public class VendaView extends ControllerView {
     public JButton getBtnSelecionaItem() {
         if (btnSelecionaItem == null) {
             btnSelecionaItem = new JButtonTelaDeVendas("Seleciona Item", "F4", "Clique para selecionar um item", new ImageIcon(getClass().getResource("/imagens/selecione.png")));
-            btnSelecionaItem.addActionListener(a -> controller.selecionaItem());
-            btnSelecionaItem.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F4, 0), EVENTO);
-            btnSelecionaItem.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnSelecionaItem.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.selecionaItem();
-                }
-            });
         }
         return btnSelecionaItem;
     }
@@ -1067,15 +881,6 @@ public class VendaView extends ControllerView {
     public JButton getBtnIncluiItem() {
         if (btnIncluiItem == null) {
             btnIncluiItem = new JButtonTelaDeVendas("Inclui Item", "F5", "Clique para incluir um item", new ImageIcon(getClass().getResource("/imagens/inclui.png")));
-            btnIncluiItem.addActionListener(a -> controller.incluiItem());
-            btnIncluiItem.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F5, 0), EVENTO);
-            btnIncluiItem.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnIncluiItem.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.incluiItem();
-                }
-            });
         }
         return btnIncluiItem;
     }
@@ -1083,15 +888,6 @@ public class VendaView extends ControllerView {
     public JButton getBtnExcluiVenda() {
         if (btnExcluiVenda == null) {
             btnExcluiVenda = new JButtonTelaDeVendas("Excluir Venda", "F6", "Clique para excluir a venda", new ImageIcon(getClass().getResource("/imagens/excluir.png")));
-            btnExcluiVenda.addActionListener(a -> controller.excluiVenda());
-            btnExcluiVenda.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F6, 0), EVENTO);
-            btnExcluiVenda.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnExcluiVenda.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.excluiVenda();
-                }
-            });
         }
         return btnExcluiVenda;
     }
@@ -1099,15 +895,6 @@ public class VendaView extends ControllerView {
     public JButton getBtnSair() {
         if (btnSair == null) {
             btnSair = new JButtonTelaDeVendas("Sair", "Esc", "Clique para fechar", new ImageIcon(getClass().getResource("/imagens/sair.png")));
-            btnSair.addActionListener(a -> dispose());
-            btnSair.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), EVENTO);
-            btnSair.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnSair.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                }
-            });
         }
         return btnSair;
     }

@@ -5,11 +5,12 @@ import model.bo.Fornecedor;
 import service.FoneFornecedorService;
 import view.CadastroFoneFornecedorView;
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
+import javax.swing.table.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-import static java.awt.Cursor.getDefaultCursor;
+import static java.awt.Cursor.*;
 import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
 import static util.Formatador.*;
@@ -26,10 +27,10 @@ public class CadastroFoneFornecedorController extends CadastroController {
     public CadastroFoneFornecedorController(CadastroFoneFornecedorView view, Fornecedor fornecedor) {
         super(view);
         this.fornecedor = fornecedor;
-        setFones(getFoneFornecedorService().buscaFonesPorFornecedor(fornecedor.getId()));
         setView(view);
-        adicionaAcoesGrid();
         getView().setVisible(true);
+        setFones(getFoneFornecedorService().buscaFonesPorFornecedor(fornecedor.getId()));
+        adicionaAcoesGrid();
         preencheFornecedor();
         getView().getTxtFone().requestFocus();
     }
@@ -37,6 +38,32 @@ public class CadastroFoneFornecedorController extends CadastroController {
     private void adicionaAcoesGrid() {
         getView().getTabelaFones().setModel(getGrid());
         getView().getTabelaFones().addMouseListener(getMouseListenerTableGrid());
+        adicionaRegrasAlinhamentoGrid();
+    }
+
+    private void adicionaRegrasAlinhamentoGrid() {
+        DefaultTableCellRenderer meio = new DefaultTableCellRenderer();
+        meio.setHorizontalAlignment(SwingConstants.CENTER);
+
+        TableColumnModel columnModel = getView().getTabelaFones().getColumnModel();
+        columnModel.getColumn(0).setCellRenderer(meio);
+
+        DefaultTableCellRenderer dcrExcluir = new DefaultTableCellRenderer();
+        dcrExcluir.setIcon(new ImageIcon(getClass().getResource("/imagens/remover.png")));
+        columnModel.getColumn(1).setCellRenderer(dcrExcluir);
+        columnModel.getColumn(1).setMaxWidth(20);
+
+        getView().getTabelaFones().addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                getView().setCursor(isIconeExcluirSelecionado(e) ? new Cursor(HAND_CURSOR) : getDefaultCursor());
+            }
+        });
+    }
+
+    private boolean isIconeExcluirSelecionado(MouseEvent e) {
+        int colunaSelecionada = ((JTable) e.getSource()).columnAtPoint(e.getPoint());
+        return colunaSelecionada == 1;
     }
 
     public AbstractTableModel getGrid() {

@@ -5,13 +5,13 @@ import model.bo.*;
 import service.*;
 import view.CadastroProdutoView;
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import static java.awt.Cursor.getDefaultCursor;
+import static java.awt.Cursor.*;
 import static java.awt.event.KeyEvent.*;
 import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
@@ -124,6 +124,42 @@ public class CadastroProdutoController extends CadastroController {
     private void adicionaAcoesGrid() {
         getView().getTabelaCaracteristicas().setModel(getGrid());
         getView().getTabelaCaracteristicas().addMouseListener(getMouseListenerTableGrid());
+        adicionaRegrasAlinhamentoGrid();
+    }
+
+    private void adicionaRegrasAlinhamentoGrid() {
+        DefaultTableCellRenderer dtcrRight = new DefaultTableCellRenderer();
+        dtcrRight.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        TableColumnModel columnModel = getView().getTabelaCaracteristicas().getColumnModel();
+        columnModel.getColumn(0).setCellRenderer(dtcrRight);
+        columnModel.getColumn(1).setCellRenderer(dtcrRight);
+        columnModel.getColumn(0).setPreferredWidth(150);
+        columnModel.getColumn(1).setPreferredWidth(160);
+        columnModel.getColumn(2).setPreferredWidth(200);
+        columnModel.getColumn(3).setPreferredWidth(150);
+
+        DefaultTableCellRenderer dtcrEditar = new DefaultTableCellRenderer();
+        dtcrEditar.setIcon(new ImageIcon(getClass().getResource("/imagens/editar.png")));
+        columnModel.getColumn(4).setCellRenderer(dtcrEditar);
+        columnModel.getColumn(4).setMaxWidth(20);
+
+        DefaultTableCellRenderer dtcrExcluir = new DefaultTableCellRenderer();
+        dtcrExcluir.setIcon(new ImageIcon(getClass().getResource("/imagens/remover.png")));
+        columnModel.getColumn(5).setCellRenderer(dtcrExcluir);
+        columnModel.getColumn(5).setMaxWidth(20);
+
+        getView().getTabelaCaracteristicas().addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                getView().setCursor(isIconeExcluirEditarSelecionado(e) ? new Cursor(HAND_CURSOR) : getDefaultCursor());
+            }
+        });
+    }
+
+    private boolean isIconeExcluirEditarSelecionado(MouseEvent e) {
+        int colunaSelecionada = ((JTable) e.getSource()).columnAtPoint(e.getPoint());
+        return colunaSelecionada == 4 || colunaSelecionada == 5;
     }
 
     public AbstractTableModel getGrid() {
@@ -415,7 +451,7 @@ public class CadastroProdutoController extends CadastroController {
         caracteristicaProduto.setCor(getCorSelecionada());
         caracteristicaProduto.setCodBarras(getView().getTxtBarra().getText());
         caracteristicaProduto.setNumTamanho(getView().getTxtTamanho().getText());
-        caracteristicaProduto.setQtdEstoque(getView().getTxtEstoque().getDoubleValue());
+        caracteristicaProduto.setQtdEstoque(asInteger(getView().getTxtEstoque().getText()).doubleValue());
 
         try {
             String msg = format("Característica do Produto %s com sucesso.", isEmpty(codigoCaracteristica) ? "cadastrada" : "alterada");
@@ -434,7 +470,7 @@ public class CadastroProdutoController extends CadastroController {
         codigoCaracteristica = caracteristica.getId();
         getView().getComboCor().setSelectedIndex(getCores().indexOf(caracteristica.getCor()) + 1);
         getView().getTxtBarra().setText(caracteristica.getCodBarras());
-        getView().getTxtEstoque().setValue(BigDecimal.valueOf(caracteristica.getQtdEstoque()));
+        getView().getTxtEstoque().setText(String.valueOf(caracteristica.getQtdEstoque().intValue()));
         getView().getTxtTamanho().setText(caracteristica.getNumTamanho());
         getView().getTxtBarra().requestFocus();
     }

@@ -39,7 +39,7 @@ public class CadastroProdutoView extends ControllerView {
     private JComboBox<String> comboCor;
     private JTextFieldLimitador txtBarra;
     private JTextFieldLimitador txtTamanho;
-    private JTextFieldPorcentagem txtEstoque;
+    private JTextFieldSomenteNumeros txtEstoque;
 
     private JButton btnAdicionarCaracteristica;
     private JButton btnSalvarCaracteristica;
@@ -369,41 +369,8 @@ public class CadastroProdutoView extends ControllerView {
             gblPanelGrid.rowWeights = new double[]{0.0};
             tabelaCaracteristicas.setLayout(gblPanelGrid);
             tabelaCaracteristicas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-            DefaultTableCellRenderer dtcrRight = new DefaultTableCellRenderer();
-            dtcrRight.setHorizontalAlignment(SwingConstants.RIGHT);
-
-            TableColumnModel columnModel = tabelaCaracteristicas.getColumnModel();
-            columnModel.getColumn(0).setCellRenderer(dtcrRight);
-            columnModel.getColumn(1).setCellRenderer(dtcrRight);
-            columnModel.getColumn(0).setPreferredWidth(150);
-            columnModel.getColumn(1).setPreferredWidth(160);
-            columnModel.getColumn(2).setPreferredWidth(200);
-            columnModel.getColumn(3).setPreferredWidth(150);
-
-            DefaultTableCellRenderer dtcrEditar = new DefaultTableCellRenderer();
-            dtcrEditar.setIcon(new ImageIcon(getClass().getResource("/imagens/editar.png")));
-            columnModel.getColumn(4).setCellRenderer(dtcrEditar);
-            columnModel.getColumn(4).setMaxWidth(20);
-
-            DefaultTableCellRenderer dtcrExcluir = new DefaultTableCellRenderer();
-            dtcrExcluir.setIcon(new ImageIcon(getClass().getResource("/imagens/remover.png")));
-            columnModel.getColumn(5).setCellRenderer(dtcrExcluir);
-            columnModel.getColumn(5).setMaxWidth(20);
-
-            tabelaCaracteristicas.addMouseMotionListener(new MouseAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    setCursor(isIconeExcluirEditarSelecionado(e) ? new Cursor(HAND_CURSOR) : getDefaultCursor());
-                }
-            });
         }
         return tabelaCaracteristicas;
-    }
-
-    private boolean isIconeExcluirEditarSelecionado(MouseEvent e) {
-        int colunaSelecionada = ((JTable) e.getSource()).columnAtPoint(e.getPoint());
-        return colunaSelecionada == 4 || colunaSelecionada == 5;
     }
 
     private GridBagConstraints getGbcPanelCodigo() {
@@ -536,9 +503,9 @@ public class CadastroProdutoView extends ControllerView {
         return txtTamanho;
     }
 
-    public JTextFieldPorcentagem getTxtEstoque() {
+    public JTextFieldSomenteNumeros getTxtEstoque() {
         if (txtEstoque == null) {
-            txtEstoque = new JTextFieldPorcentagem();
+            txtEstoque = new JTextFieldSomenteNumeros(8);
             txtEstoque.setFont(new Font("Tahoma", Font.PLAIN, 14));
         }
         return txtEstoque;

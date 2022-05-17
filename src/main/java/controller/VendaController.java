@@ -2,19 +2,24 @@ package controller;
 
 import dto.ColunaDto;
 import model.bo.*;
+import personalizado.VendaCellRenderer;
 import service.CaracteristicaProdutoService;
 import service.ProdutoService;
 import view.FinalizacaoView;
 import view.VendaView;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.sql.Time;
 import java.util.*;
+import java.util.List;
+import static java.awt.Cursor.getDefaultCursor;
+import static java.awt.event.KeyEvent.*;
 import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
+import static javax.swing.KeyStroke.getKeyStroke;
 import static util.Formatador.*;
-import static util.Formatador.formatHora;
-import static util.Formatador.formataDouble;
 import static util.ValueUtil.*;
 
 public class VendaController extends Controller {
@@ -38,14 +43,273 @@ public class VendaController extends Controller {
     private Double valorTotalLiquido = ZEROD;
     private Double valorTotalBruto = ZEROD;
 
+    private AbstractTableModel grid;
+
     private VendaView view;
 
-    public VendaController() {
+    public VendaController(VendaView view) {
         super();
-        setView(new VendaView(this));
+        setView(view);
         getView().setVisible(true);
+        adicionaAcoesGrid();
+        adicionaAcoesCampos();
+        adicionaAcaoAosBotoes();
         limpaCamposProduto();
         setaInformativo();
+    }
+
+    private void adicionaAcoesCampos() {
+        adicionaAcaoLeitura();
+        adicionaAcaoPrcDesconto();
+        adicionaAcaoQuantidade();
+    }
+
+    private void adicionaAcaoLeitura() {
+        getView().getTxtLeitura().addActionListener(a -> buscaProduto());
+    }
+
+    private void adicionaAcaoPrcDesconto() {
+        getView().getTxtPrcDesconto().addActionListener(a -> preencheItem());
+    }
+
+    private void adicionaAcaoQuantidade() {
+        getView().getTxtQuantidade().addActionListener(a -> setaFocoPrcDesconto());
+    }
+
+    private void adicionaAcaoAosBotoes() {
+        adicionaAcaoBotaoFinalizar();
+        adicionaAcaoBotaoEditaItem();
+        adicionaAcaoBotaoExcluiItem();
+        adicionaAcaoBotaoSelecionaItem();
+        adicionaAcaoBotaoIncluiItem();
+        adicionaAcaoBotaoExcluiVenda();
+        adicionaAcaoBotaoSair();
+    }
+
+    private void adicionaAcaoBotaoFinalizar() {
+        getView().getBtnFinalizar().addActionListener(a -> finalizar());
+        getView().getBtnFinalizar().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, 0), EVENTO);
+        getView().getBtnFinalizar().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnFinalizar().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                finalizar();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoEditaItem() {
+        getView().getBtnEditaItem().addActionListener(a -> editaItem());
+        getView().getBtnEditaItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F2, 0), EVENTO);
+        getView().getBtnEditaItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnEditaItem().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editaItem();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoExcluiItem() {
+        getView().getBtnExcluiItem().addActionListener(a -> excluiItem());
+        getView().getBtnExcluiItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F3, 0), EVENTO);
+        getView().getBtnExcluiItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnExcluiItem().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                excluiItem();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoSelecionaItem() {
+        getView().getBtnSelecionaItem().addActionListener(a -> selecionaItem());
+        getView().getBtnSelecionaItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F4, 0), EVENTO);
+        getView().getBtnSelecionaItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnSelecionaItem().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selecionaItem();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoIncluiItem() {
+        getView().getBtnIncluiItem().addActionListener(a -> incluiItem());
+        getView().getBtnIncluiItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F5, 0), EVENTO);
+        getView().getBtnIncluiItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnIncluiItem().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                incluiItem();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoExcluiVenda() {
+        getView().getBtnExcluiVenda().addActionListener(a -> excluiVenda());
+        getView().getBtnExcluiVenda().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F6, 0), EVENTO);
+        getView().getBtnExcluiVenda().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnExcluiVenda().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                excluiVenda();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoSair() {
+        getView().getBtnSair().addActionListener(a -> getView().dispose());
+        getView().getBtnSair().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), EVENTO);
+        getView().getBtnSair().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnSair().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getView().dispose();
+            }
+        });
+    }
+
+    private void adicionaAcoesGrid() {
+        getView().getTabelaProdutos().setModel(getGrid());
+        getView().getTabelaProdutos().addMouseListener(getMouseListenerTableGrid());
+        getView().getTabelaProdutos().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F2, 0), EVENTO);
+        getView().getTabelaProdutos().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editaItem();
+            }
+        });
+        adicionaRegrasAlinhamentoGrid();
+    }
+
+    private void adicionaRegrasAlinhamentoGrid() {
+        TableColumnModel columnModel = getView().getTabelaProdutos().getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(50);
+        columnModel.getColumn(1).setPreferredWidth(225);
+        columnModel.getColumn(2).setPreferredWidth(125);
+        columnModel.getColumn(3).setPreferredWidth(50);
+        columnModel.getColumn(4).setPreferredWidth(100);
+        columnModel.getColumn(5).setPreferredWidth(100);
+        columnModel.getColumn(6).setPreferredWidth(100);
+
+        DefaultTableCellRenderer dtcrEditar = new DefaultTableCellRenderer();
+        dtcrEditar.setIcon(new ImageIcon(getClass().getResource("/imagens/editar.png")));
+        columnModel.getColumn(7).setCellRenderer(dtcrEditar);
+        columnModel.getColumn(7).setMaxWidth(20);
+
+        DefaultTableCellRenderer dtcrExcluir = new DefaultTableCellRenderer();
+        dtcrExcluir.setIcon(new ImageIcon(getClass().getResource("/imagens/remover.png")));
+        columnModel.getColumn(8).setCellRenderer(dtcrExcluir);
+        columnModel.getColumn(8).setMaxWidth(20);
+
+        for (int i = 0; i < columnModel.getColumnCount(); i++) {
+            VendaTableCellRenderer vendaTableCellRenderer = new VendaTableCellRenderer();
+            if (i == 2) {
+                vendaTableCellRenderer.setHorizontalAlignment(VendaTableCellRenderer.CENTER);
+            } else if (Number.class.isAssignableFrom(getView().getTabelaProdutos().getColumnClass(i))) {
+                vendaTableCellRenderer.setHorizontalAlignment(VendaTableCellRenderer.RIGHT);
+            }
+            columnModel.getColumn(i).setCellRenderer(VendaCellRenderer.class.isAssignableFrom(getView().getTabelaProdutos().getColumnClass(i)) ? VendaCellRenderer.criarIconTableCellRendered(i) : vendaTableCellRenderer);
+        }
+
+        getView().getTabelaProdutos().addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                getView().setCursor(isIconeExcluirEditarSelecionado(e) ? new Cursor(Cursor.HAND_CURSOR) : getDefaultCursor());
+            }
+        });
+    }
+
+    class VendaTableCellRenderer extends DefaultTableCellRenderer {
+        public VendaTableCellRenderer() {
+            super();
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            return VendaCellRenderer.defineCorLinhaGrid(table, isSelected, row, component);
+        }
+    }
+
+    private boolean isIconeExcluirEditarSelecionado(MouseEvent e) {
+        int colunaSelecionada = ((JTable) e.getSource()).columnAtPoint(e.getPoint());
+        return colunaSelecionada == 7 || colunaSelecionada == 8;
+    }
+
+    public AbstractTableModel getGrid() {
+        if (grid == null) {
+            grid = new AbstractTableModel() {
+                public final String[] columnNames = {"Código", "Produto", "Código de Barras", "Quantidade", "Valor Unitário", "Percentual (%)", "Valor Total", "", ""};
+                private Class<?>[] columnClasses = new Class<?>[] {Number.class, String.class, String.class, Number.class, Number.class, Number.class, Number.class, VendaCellRenderer.class, VendaCellRenderer.class};
+
+                public int getColumnCount() {
+                    return columnNames.length;
+                }
+
+                public String getColumnName(int column) {
+                    return columnNames[column];
+                }
+
+                @Override
+                public Class<?> getColumnClass(int columnIndex) {
+                    return columnClasses[columnIndex];
+                }
+
+                public int getRowCount() {
+                    return getItens().size();
+                }
+
+                public Object getValueAt(int row, int column) {
+                    ItemVenda item = getItens().get(row);
+
+                    switch (column) {
+                        case 0:
+                            return item.getCaracteristicaProduto().getProduto().getId();
+                        case 1:
+                            return item.getCaracteristicaProduto().getProduto().getNomProduto();
+                        case 2:
+                            return item.getCaracteristicaProduto().getCodBarras();
+                        case 3:
+                            return item.getQtdProduto().intValue();
+                        case 4:
+                            return formataDouble(item.getVlrUnitario());
+                        case 5:
+                            return formataDouble(item.getPrcDesconto());
+                        case 6:
+                            return formataDouble(item.getVlrLiquido());
+                        default:
+                            return "";
+                    }
+                }
+            };
+        }
+        return grid;
+    }
+
+    public void fireTableDataChanged() {
+        getGrid().fireTableDataChanged();
+    }
+
+    private MouseListener getMouseListenerTableGrid() {
+        return new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                int colunaSelecionada = ((JTable) e.getSource()).getSelectedColumn();
+
+                if (colunaSelecionada == 7) {
+                    editaItem();
+                } else if (colunaSelecionada == 8) {
+                    excluiItem();
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                getView().setCursor(getDefaultCursor());
+            }
+        };
     }
 
     private void setaInformativo() {
@@ -291,7 +555,7 @@ public class VendaController extends Controller {
 
     private void atualizaGridValores() {
         atualizaTotalizadores();
-        getView().fireTableDataChanged();
+        fireTableDataChanged();
     }
 
     public void limpaCamposProduto() {

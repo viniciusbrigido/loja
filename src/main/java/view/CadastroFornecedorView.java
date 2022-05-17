@@ -478,7 +478,7 @@ public class CadastroFornecedorView extends ControllerView {
 
     public JLabel getLblEndereco() {
         if (lblEndereco == null) {
-            lblEndereco = new JLabel("Enderço:*");
+            lblEndereco = new JLabel("Endereço:*");
         }
         return lblEndereco;
     }

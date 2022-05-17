@@ -28,11 +28,11 @@ INSERT INTO endereco (nom_cep, nom_logradouro, id_bairro, id_cidade) VALUES
 ('88701610', 'CASA DA ESQUINA', 3, 3),
 ('9987231', 'PERTO DO MERCADO', 4, 4),
 ('6546549', 'RUA TAL', 5, 5),
-('2544694', 'ACABOU A CRIATICIDADE', 6, 6),
+('2544694', 'ACABOU A CRIA', 6, 6),
 ('5465446', 'SLA', 7, 7),
 ('6544948', 'TA', 8, 8),
-('5132498', 'ONDE JUDAS PERDEU AS BOTAS', 9, 9),
-('4984989', 'PERTO DA CASA DO CARALHO', 10, 10);
+('5132498', 'ONDE JUDAS', 9, 9),
+('4984989', 'PERTO DAI', 10, 10);
 
 INSERT INTO tipo (nom_tipo) VALUES 
 ('ROUPA'), 
@@ -106,14 +106,14 @@ INSERT INTO produto (nom_produto, vlr_produto, id_marca, id_tipo, id_tamanho) VA
 ('AR CONDICIONADO', 1900.0, 9, 9, 9),
 ('CADEIRA', 25.0, 10, 10, 10);
 
-INSERT INTO caracteristica_produto (num_tamanho, cod_barras, qtd_estoque, id_produto, id_cor) VALUES 
-('1', '', 2500.0, 1, 1),
-('2', '', 125.0, 1, 2),
-('3', '', 50.0, 1, 3),
-('4', '', 25.0, 1, 4),
-('5', '', 5500.0, 1, 5),
-('6', '', 80.0, 1, 6),
-('7', '', 0.25, 1, 7),
-('8', '', 500.0, 1, 8),
-('9', '', 1900.0, 1, 9),
-('10', '', 25.0, 1, 10);
+INSERT INTO caracteristica_produto (num_tamanho, cod_barras, qtd_estoque, id_produto, id_cor) VALUES
+('1', '7891182026710', 2500.0, 1, 1),
+('2', '7891182026734', 125.0, 1, 2),
+('3', '7896422504225', 50.0, 1, 3),
+('4', '7898040320508', 25.0, 1, 4),
+('5', '7896112169900', 5500.0, 1, 5),
+('6', '7891000089798', 80.0, 1, 6),
+('7', '7891000089981', 25.0, 1, 7),
+('8', '7895465464644', 500.0, 1, 8),
+('9', '7896112165539', 1900.0, 1, 9),
+('10', '7891268402022', 25.0, 1, 10);
