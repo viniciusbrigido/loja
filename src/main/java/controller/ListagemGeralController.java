@@ -41,7 +41,9 @@ public class ListagemGeralController extends ListagemController {
         this.colunas = colunas;
         setView(new ListagemGeralView(titulo));
         getView().setVisible(true);
+        adicionaRegrasView();
         getView().getPanelProduto().setVisible(false);
+        fireTableDataChanged();
         selecionaItemGrid();
     }
 
@@ -55,6 +57,7 @@ public class ListagemGeralController extends ListagemController {
         getView().setVisible(true);
         adicionaRegrasView();
         getView().getPanelProduto().setVisible(false);
+        fireTableDataChanged();
         selecionaItemGrid();
     }
 
@@ -66,6 +69,7 @@ public class ListagemGeralController extends ListagemController {
         getView().setVisible(true);
         adicionaRegrasView();
         getView().getPanelProduto().setVisible(false);
+        fireTableDataChanged();
         selecionaItemGrid();
     }
 
@@ -80,6 +84,7 @@ public class ListagemGeralController extends ListagemController {
         adicionaRegrasView();
         getView().getPanelProduto().setVisible(isNotNull(produto));
         atualizaTelaChamadaVenda();
+        fireTableDataChanged();
         selecionaItemGrid();
     }
 
