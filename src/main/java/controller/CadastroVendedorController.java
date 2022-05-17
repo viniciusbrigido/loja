@@ -14,7 +14,6 @@ import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
 import static util.Formatador.*;
 import static util.ValueUtil.*;
-import static util.ValueUtil.isNull;
 
 public class CadastroVendedorController extends CadastroController {
 

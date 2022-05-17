@@ -4,11 +4,14 @@ import dto.ColunaDto;
 import model.bo.*;
 import service.*;
 import view.FinalizacaoView;
-import java.sql.Time;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.util.*;
+import static java.awt.event.KeyEvent.*;
 import static java.lang.Integer.*;
 import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
+import static javax.swing.KeyStroke.getKeyStroke;
 import static util.Formatador.*;
 import static util.ValueUtil.*;
 
@@ -34,13 +37,132 @@ public class FinalizacaoController extends Controller {
 
     private FinalizacaoView view;
 
-    public FinalizacaoController(VendaController vendaController) {
+    public FinalizacaoController(FinalizacaoView view, VendaController vendaController) {
+        setView(view);
+        getView().setVisible(true);
+        adicionaAcaoCamposCodigo();
+        adicionaAcaoAosBotoes();
         this.vendaController = vendaController;
         itens = vendaController.getItens();
-        setView(new FinalizacaoView(this));
-        getView().setVisible(true);
         preencheCamposTela();
         setaFocoInicial();
+    }
+
+    private void adicionaAcaoCamposCodigo() {
+        adicionaAcaoCampoCodigoVendedor();
+        adicionaAcaoCampoCodigoCliente();
+        adicionaAcaoCampoCodigoCondicao();
+    }
+
+    private void adicionaAcaoCampoCodigoVendedor() {
+        getView().getTxtCodVendedor().addActionListener(a -> buscaVendedor());
+        getView().getTxtCodVendedor().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F4, ZERO), EVENTO);
+        getView().getTxtCodVendedor().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listaVendedores();
+            }
+        });
+    }
+
+    private void adicionaAcaoCampoCodigoCliente() {
+        getView().getTxtCodCliente().addActionListener(a -> buscaCliente());
+        getView().getTxtCodCliente().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F4, ZERO), EVENTO);
+        getView().getTxtCodCliente().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listaClientes();
+            }
+        });
+    }
+
+    private void adicionaAcaoCampoCodigoCondicao() {
+        getView().getTxtCodCondicao().addActionListener(a -> buscaCondicao());
+        getView().getTxtCodCondicao().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F4, ZERO), EVENTO);
+        getView().getTxtCodCondicao().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listaCondicoes();
+            }
+        });
+    }
+
+    private void adicionaAcaoAosBotoes() {
+        adicionaAcaoBotaoVendedor();
+        adicionaAcaoBotaoCliente();
+        adicionaAcaoBotaoCondicao();
+        adicionaAcaoBotaoFinalizar();
+        adicionaAcaoBotaoLimpar();
+        adicionaAcaoBotaoSair();
+    }
+
+    private void adicionaAcaoBotaoVendedor() {
+        getView().getBtnVendedor().addActionListener(a -> listaVendedores());
+        getView().getBtnVendedor().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnVendedor().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listaVendedores();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoCliente() {
+        getView().getBtnCliente().addActionListener(a -> listaClientes());
+        getView().getBtnCliente().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnCliente().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listaClientes();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoCondicao() {
+        getView().getBtnCondicao().addActionListener(a -> listaCondicoes());
+        getView().getBtnCondicao().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnCondicao().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listaCondicoes();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoFinalizar() {
+        getView().getBtnFinalizar().addActionListener(a -> finalizar());
+        getView().getBtnFinalizar().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, ZERO), EVENTO);
+        getView().getBtnFinalizar().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnFinalizar().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                finalizar();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoLimpar() {
+        getView().getBtnLimpar().addActionListener(a -> limpaTela());
+        getView().getBtnLimpar().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F2, ZERO), EVENTO);
+        getView().getBtnLimpar().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getBtnLimpar().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                limpaTela();
+            }
+        });
+    }
+
+    private void adicionaAcaoBotaoSair() {
+        getView().getBtnSair().addActionListener(a -> sairTela());
+        getView().getBtnSair().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), EVENTO);
+        getView().getBtnSair().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnSair().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sairTela();
+            }
+        });
     }
 
     private void preencheCamposTela() {
@@ -225,7 +347,7 @@ public class FinalizacaoController extends Controller {
         }
     }
 
-    public void listaVendedores() {
+    private void listaVendedores() {
         getVendedores().clear();
         getVendedores().addAll(getVendedorService().buscar());
 
@@ -236,7 +358,7 @@ public class FinalizacaoController extends Controller {
         new ListagemGeralController(this, "Listagem de Vendedores", getItensVendedor(), getColunasVendedor(), TIPO_LISTAGEM_VENDEDOR);
     }
 
-    public void listaClientes() {
+    private void listaClientes() {
         getClientes().clear();
         getClientes().addAll(getClienteService().buscar());
 
@@ -247,7 +369,7 @@ public class FinalizacaoController extends Controller {
         new ListagemGeralController(this, "Listagem de Clientes", getItensCliente(), getColunasCliente(), TIPO_LISTAGEM_CLIENTE);
     }
 
-    public void listaCondicoes() {
+    private void listaCondicoes() {
         getCondicoes().clear();
         getCondicoes().addAll(getCondicaoPagamentoService().buscar());
 

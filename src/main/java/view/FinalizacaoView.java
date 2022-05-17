@@ -1,23 +1,15 @@
 package view;
 
-import controller.FinalizacaoController;
 import personalizado.JButtonTelaDeVendas;
 import personalizado.JTextFieldSomenteNumeros;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import static java.awt.event.KeyEvent.*;
-import static javax.swing.JComponent.*;
-import static javax.swing.KeyStroke.getKeyStroke;
 
 public class FinalizacaoView extends ControllerView {
 
     private static final Font FONTE_LABEL = new Font("Tahoma", Font.BOLD, 12);
     private static final Font FONTE_CAMPO = new Font("Tahoma", Font.PLAIN, 22);
     private static final Dimension DIMENSION_BOTAO = new Dimension(25, 25);
-    public static final String VALOR_ZERO = "0,00";
-
-    private FinalizacaoController controller;
 
     private JPanel panelCampos;
     private JPanel panelBotoes;
@@ -40,11 +32,10 @@ public class FinalizacaoView extends ControllerView {
     private JButton btnLimpar;
     private JButton btnSair;
 
-    public FinalizacaoView(FinalizacaoController controller) {
+    public FinalizacaoView() {
         setTitle("Finalização da Venda");
         setSize(new Dimension(620, 290));
         setPreferredSize(new Dimension(620, 290));
-        this.controller = controller;
         initialize();
     }
 
@@ -222,14 +213,6 @@ public class FinalizacaoView extends ControllerView {
             txtCodVendedor = new JTextFieldSomenteNumeros();
             txtCodVendedor.setFont(FONTE_CAMPO);
             txtCodVendedor.setHorizontalAlignment(SwingConstants.RIGHT);
-            txtCodVendedor.addActionListener(a -> controller.buscaVendedor());
-            txtCodVendedor.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F4, 0), EVENTO);
-            txtCodVendedor.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.listaVendedores();
-                }
-            });
         }
         return txtCodVendedor;
     }
@@ -239,14 +222,6 @@ public class FinalizacaoView extends ControllerView {
             txtCodCliente = new JTextFieldSomenteNumeros();
             txtCodCliente.setFont(FONTE_CAMPO);
             txtCodCliente.setHorizontalAlignment(SwingConstants.RIGHT);
-            txtCodCliente.addActionListener(a -> controller.buscaCliente());
-            txtCodCliente.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F4, 0), EVENTO);
-            txtCodCliente.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.listaClientes();
-                }
-            });
         }
         return txtCodCliente;
     }
@@ -256,14 +231,6 @@ public class FinalizacaoView extends ControllerView {
             txtCodCondicao = new JTextFieldSomenteNumeros();
             txtCodCondicao.setFont(FONTE_CAMPO);
             txtCodCondicao.setHorizontalAlignment(SwingConstants.RIGHT);
-            txtCodCondicao.addActionListener(a -> controller.buscaCondicao());
-            txtCodCondicao.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F4, 0), EVENTO);
-            txtCodCondicao.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.listaCondicoes();
-                }
-            });
         }
         return txtCodCondicao;
     }
@@ -301,14 +268,6 @@ public class FinalizacaoView extends ControllerView {
             btnVendedor.setPreferredSize(DIMENSION_BOTAO);
             btnVendedor.setMinimumSize(DIMENSION_BOTAO);
             btnVendedor.setFocusable(false);
-            btnVendedor.addActionListener(a -> controller.listaVendedores());
-            btnVendedor.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnVendedor.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.listaVendedores();
-                }
-            });
         }
         return btnVendedor;
     }
@@ -319,14 +278,6 @@ public class FinalizacaoView extends ControllerView {
             btnCliente.setPreferredSize(DIMENSION_BOTAO);
             btnCliente.setMinimumSize(DIMENSION_BOTAO);
             btnCliente.setFocusable(false);
-            btnCliente.addActionListener(a -> controller.listaClientes());
-            btnCliente.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnCliente.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.listaClientes();
-                }
-            });
         }
         return btnCliente;
     }
@@ -337,14 +288,6 @@ public class FinalizacaoView extends ControllerView {
             btnCondicao.setPreferredSize(DIMENSION_BOTAO);
             btnCondicao.setMinimumSize(DIMENSION_BOTAO);
             btnCondicao.setFocusable(false);
-            btnCondicao.addActionListener(a -> controller.listaCondicoes());
-            btnCondicao.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnCondicao.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.listaCondicoes();
-                }
-            });
         }
         return btnCondicao;
     }
@@ -352,15 +295,6 @@ public class FinalizacaoView extends ControllerView {
     public JButton getBtnFinalizar() {
         if (btnFinalizar == null) {
             btnFinalizar = new JButtonTelaDeVendas("Finalizar", "F1", "Clique para finalizar a venda", new ImageIcon(getClass().getResource("/imagens/finalizar.png")));
-            btnFinalizar.addActionListener(a -> controller.finalizar());
-            btnFinalizar.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, 0), EVENTO);
-            btnFinalizar.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnFinalizar.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.finalizar();
-                }
-            });
         }
         return btnFinalizar;
     }
@@ -368,15 +302,6 @@ public class FinalizacaoView extends ControllerView {
     public JButton getBtnLimpar() {
         if (btnLimpar == null) {
             btnLimpar = new JButtonTelaDeVendas("Limpar", "F2", "Clique para limpar a tela", new ImageIcon(getClass().getResource("/imagens/excluir.png")));
-            btnLimpar.addActionListener(a -> controller.limpaTela());
-            btnLimpar.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F2, 0), EVENTO);
-            btnLimpar.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnLimpar.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.limpaTela();
-                }
-            });
         }
         return btnLimpar;
     }
@@ -384,15 +309,6 @@ public class FinalizacaoView extends ControllerView {
     public JButton getBtnSair() {
         if (btnSair == null) {
             btnSair = new JButtonTelaDeVendas("Sair", "Esc", "Clique para fechar", new ImageIcon(getClass().getResource("/imagens/sair.png")));
-            btnSair.addActionListener(a -> controller.sairTela());
-            btnSair.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), EVENTO);
-            btnSair.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-            btnSair.getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    controller.sairTela();
-                }
-            });
         }
         return btnSair;
     }

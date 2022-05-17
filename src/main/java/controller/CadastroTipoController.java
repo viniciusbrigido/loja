@@ -8,7 +8,6 @@ import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
 import static util.ValueUtil.*;
-import static util.ValueUtil.VAZIO;
 
 public class CadastroTipoController extends CadastroController {
 

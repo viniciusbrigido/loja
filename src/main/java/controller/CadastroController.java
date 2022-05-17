@@ -12,8 +12,6 @@ import static util.ValueUtil.ZERO;
 
 public abstract class CadastroController extends Controller {
 
-    public static final String EVENTO = "EVENTO";
-
     private ControllerView view;
 
     public abstract void preencheItem();

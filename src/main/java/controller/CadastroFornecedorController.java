@@ -12,16 +12,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.List;
-import static java.awt.event.KeyEvent.VK_ENTER;
-import static java.awt.event.KeyEvent.VK_F1;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 import static javax.swing.JOptionPane.*;
 import static javax.swing.KeyStroke.getKeyStroke;
+import static java.awt.event.KeyEvent.*;
 import static util.Formatador.*;
 import static util.ValueUtil.*;
-import static util.ValueUtil.isNull;
 
 public class CadastroFornecedorController extends CadastroController {
 

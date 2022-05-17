@@ -4,6 +4,7 @@ import dto.ColunaDto;
 import model.bo.*;
 import service.CaracteristicaProdutoService;
 import service.ProdutoService;
+import view.FinalizacaoView;
 import view.VendaView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -157,9 +158,9 @@ public class VendaController extends Controller {
         }
 
         if (getCaracteristicas().size() == 1) {
-            setCaracteristica(getCaracteristicas().get(0));
+            setCaracteristica(getCaracteristicas().get(ZERO));
         } else {
-            new ListagemGeralController(this, "Listagem de Características de Produto", getItensCaracteristicas(), getColunasCaracteristicas(), getCaracteristicas().get(0).getProduto());
+            new ListagemGeralController(this, "Listagem de Características de Produto", getItensCaracteristicas(), getColunasCaracteristicas(), getCaracteristicas().get(ZERO).getProduto());
         }
     }
 
@@ -342,7 +343,7 @@ public class VendaController extends Controller {
             setaFocoTela();
             return;
         }
-        new FinalizacaoController(this);
+        new FinalizacaoController(new FinalizacaoView(),this);
     }
 
     public void selecionaItem() {
