@@ -23,13 +23,14 @@ public class CadastroBairroController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         Bairro bairro = getBairros().get(index);
         if (getEnderecoService().isEnderecoCadastradoComBairro(bairro.getId())) {
             showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Produtos cadastrados com essa Marca.", ATENCAO, ERROR_MESSAGE);
-            return;
+            return false;
         }
         getBairroService().apagar(bairro);
+        return true;
     }
 
     @Override

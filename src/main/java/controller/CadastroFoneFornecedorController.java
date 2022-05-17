@@ -187,7 +187,8 @@ public class CadastroFoneFornecedorController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
+        return true;
     }
 
     @Override

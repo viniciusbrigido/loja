@@ -24,13 +24,14 @@ public class CadastroCidadeController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         Cidade cidade = getCidades().get(index);
         if (getEnderecoService().isEnderecoCadastradoComCidade(cidade.getId())) {
             showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Endereços cadastrados com essa Cidade.", ATENCAO, ERROR_MESSAGE);
-            return;
+            return false;
         }
         getCidadeService().apagar(cidade);
+        return true;
     }
 
     @Override

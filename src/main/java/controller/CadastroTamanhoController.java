@@ -24,13 +24,14 @@ public class CadastroTamanhoController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         Tamanho tamanho = getTamanhos().get(index);
         if (getProdutoService().isProdutoCadastradoComTamanho(tamanho.getId())) {
             showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Produtos cadastrados com esse Tamanho.", ATENCAO, ERROR_MESSAGE);
-            return;
+            return false;
         }
         getTamanhoService().apagar(tamanho);
+        return true;
     }
 
     @Override

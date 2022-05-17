@@ -48,8 +48,9 @@ public class CadastroClienteController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         getClienteService().apagar(getClientes().get(index));
+        return true;
     }
 
     @Override

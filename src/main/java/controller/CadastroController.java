@@ -15,7 +15,7 @@ public abstract class CadastroController extends Controller {
     private ControllerView view;
 
     public abstract void preencheItem();
-    public abstract void excluiItem();
+    public abstract boolean excluiItem();
     public abstract void cadastraNovoItem();
     public abstract void limpaTela();
     public abstract void listaItens();

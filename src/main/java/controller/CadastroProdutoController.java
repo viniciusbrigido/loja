@@ -268,11 +268,12 @@ public class CadastroProdutoController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         Produto produto = getProdutos().get(index);
         List<CaracteristicaProduto> caracteristicas = getCaracteristicaProdutoService().buscaCaracteristicasPorProduto(produto.getId());
         caracteristicas.forEach(caracteristica -> getCaracteristicaProdutoService().apagar(caracteristica));
         getProdutoService().apagar(produto);
+        return true;
     }
 
     @Override

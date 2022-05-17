@@ -313,9 +313,11 @@ public class ListagemGeralController extends ListagemController {
             return;
         }
 
-        getItens().remove(getView().getTableGrid().getSelectedRow());
         index = getView().getTableGrid().getSelectedRow();
-        getParent().excluiItem();
+        boolean isExclusaoCompleta = getParent().excluiItem();
+        if (isExclusaoCompleta) {
+            getItens().remove(getView().getTableGrid().getSelectedRow());
+        }
 
         if (getItens().isEmpty()) {
             getView().closeView();

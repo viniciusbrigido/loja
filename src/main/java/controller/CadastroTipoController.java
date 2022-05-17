@@ -23,13 +23,14 @@ public class CadastroTipoController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         Tipo tipo = getTipos().get(index);
         if (getProdutoService().isProdutoCadastradoComTipo(tipo.getId())) {
             showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Produtos cadastrados com esse Tipo de Produto.", ATENCAO, ERROR_MESSAGE);
-            return;
+            return false;
         }
         getTipoService().apagar(tipo);
+        return true;
     }
 
     @Override

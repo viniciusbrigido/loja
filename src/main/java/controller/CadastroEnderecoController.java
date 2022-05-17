@@ -60,21 +60,22 @@ public class CadastroEnderecoController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         Endereco endereco = getEnderecos().get(index);
         if (getClienteService().isClienteCadastradoComEndereco(endereco.getId())) {
             showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Clientes cadastrados com esse Endereço.", ATENCAO, ERROR_MESSAGE);
-            return;
+            return false;
         }
         if (getFornecedorService().isFornecedorCadastradoComEndereco(endereco.getId())) {
             showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Fornecedores cadastrados com esse Endereço.", ATENCAO, ERROR_MESSAGE);
-            return;
+            return false;
         }
         if (getVendedorService().isVendedorCadastradoComEndereco(endereco.getId())) {
             showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Vendedores cadastrados com esse Endereço.", ATENCAO, ERROR_MESSAGE);
-            return;
+            return false;
         }
         getEnderecoService().apagar(endereco);
+        return true;
     }
 
     @Override

@@ -24,13 +24,14 @@ public class CadastroCorController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         Cor cor = getCores().get(index);
         if (getCaracteristicaProdutoService().isCaracteristicaCadastradaComCor(cor.getId())) {
             showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Características de Produto cadastradas com essa Cor.", ATENCAO, ERROR_MESSAGE);
-            return;
+            return false;
         }
         getCorService().apagar(cor);
+        return true;
     }
 
     @Override

@@ -49,8 +49,9 @@ public class CadastroVendedorController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         getVendedorService().apagar(getVendedores().get(index));
+        return true;
     }
 
     @Override

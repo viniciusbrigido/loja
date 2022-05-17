@@ -24,13 +24,14 @@ public class CadastroMarcaController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         Marca marca = getMarcas().get(index);
         if (getProdutoService().isProdutoCadastradoComMarca(marca.getId())) {
             showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Endereços cadastrados com esse Bairro.", ATENCAO, ERROR_MESSAGE);
-            return;
+            return false;
         }
         getMarcaService().apagar(marca);
+        return true;
     }
 
     @Override

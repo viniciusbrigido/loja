@@ -22,8 +22,9 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
     }
 
     @Override
-    public void excluiItem() {
+    public boolean excluiItem() {
         getCondicaoPagamentoService().apagar(getCondicoes().get(index));
+        return true;
     }
 
     @Override
