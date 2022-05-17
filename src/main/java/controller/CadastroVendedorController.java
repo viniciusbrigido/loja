@@ -38,7 +38,7 @@ public class CadastroVendedorController extends CadastroController {
 
     private void verificaEnderecoCadastrado() {
         if (getEnderecos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Endereços cadastrados.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Endereços cadastrados.", ATENCAO, INFORMATION_MESSAGE);
             getView().dispose();
         }
     }
@@ -68,7 +68,7 @@ public class CadastroVendedorController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -76,7 +76,7 @@ public class CadastroVendedorController extends CadastroController {
         if (isNotNull(vendedor) && isNotEmpty(vendedor.getId())) {
             preencheCamposTela(vendedor);
         } else {
-            showMessageDialog(getView(), "Vendedor não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Vendedor não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -90,7 +90,7 @@ public class CadastroVendedorController extends CadastroController {
                 verificaVendedorJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtNome().requestFocus();
         }
     }
@@ -121,7 +121,7 @@ public class CadastroVendedorController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -130,7 +130,7 @@ public class CadastroVendedorController extends CadastroController {
             preencheSalvaVendedor(vendedor);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Vendedor não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Vendedor não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -154,7 +154,7 @@ public class CadastroVendedorController extends CadastroController {
         getVendedores().addAll(getVendedorService().buscar());
 
         if (getVendedores().isEmpty()) {
-            showMessageDialog(getView(), "Não há Vendedores para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Vendedores para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Vendedores", getItens(), getColunas());
@@ -209,7 +209,7 @@ public class CadastroVendedorController extends CadastroController {
         String msg = format("Vendedor %s com sucesso.", isEmpty(vendedor.getId()) ? "cadastrado" : "alterado");
         getVendedorService().createOrUpdate(vendedor);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 

@@ -27,7 +27,7 @@ public class CadastroCorController extends CadastroController {
     public void excluiItem() {
         Cor cor = getCores().get(index);
         if (getCaracteristicaProdutoService().isCaracteristicaCadastradaComCor(cor.getId())) {
-            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Características de Produto cadastradas com essa Cor.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Características de Produto cadastradas com essa Cor.", ATENCAO, ERROR_MESSAGE);
             return;
         }
         getCorService().apagar(cor);
@@ -48,7 +48,7 @@ public class CadastroCorController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -56,7 +56,7 @@ public class CadastroCorController extends CadastroController {
         if (isNotNull(cor) && isNotEmpty(cor.getId())) {
             preencheCamposTela(cor);
         } else {
-            showMessageDialog(getView(), "Cor não encontrada.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cor não encontrada.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -70,7 +70,7 @@ public class CadastroCorController extends CadastroController {
                 verificaCorJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -81,7 +81,7 @@ public class CadastroCorController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -90,7 +90,7 @@ public class CadastroCorController extends CadastroController {
             preencheSalvaCor(cor);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar uma nova Cor não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar uma nova Cor não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -108,7 +108,7 @@ public class CadastroCorController extends CadastroController {
         getCores().addAll(getCorService().buscar());
 
         if (getCores().isEmpty()) {
-            showMessageDialog(getView(), "Não há Cores para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Cores para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Cores", getItens());
@@ -141,7 +141,7 @@ public class CadastroCorController extends CadastroController {
         String msg = format("Cor %s com sucesso.", isEmpty(cor.getId()) ? "cadastrada" : "alterada");
         getCorService().createOrUpdate(cor);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 

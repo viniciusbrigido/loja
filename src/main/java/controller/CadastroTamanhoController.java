@@ -27,7 +27,7 @@ public class CadastroTamanhoController extends CadastroController {
     public void excluiItem() {
         Tamanho tamanho = getTamanhos().get(index);
         if (getProdutoService().isProdutoCadastradoComTamanho(tamanho.getId())) {
-            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Produtos cadastrados com esse Tamanho.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Produtos cadastrados com esse Tamanho.", ATENCAO, ERROR_MESSAGE);
             return;
         }
         getTamanhoService().apagar(tamanho);
@@ -48,7 +48,7 @@ public class CadastroTamanhoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -56,7 +56,7 @@ public class CadastroTamanhoController extends CadastroController {
         if (isNotNull(tamanho) && isNotEmpty(tamanho.getId())) {
             preencheCamposTela(tamanho);
         } else {
-            showMessageDialog(getView(), "Tamanho não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Tamanho não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -70,7 +70,7 @@ public class CadastroTamanhoController extends CadastroController {
                 verificaTamanhoJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -80,7 +80,7 @@ public class CadastroTamanhoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -89,7 +89,7 @@ public class CadastroTamanhoController extends CadastroController {
             preencheSalvaTamanho(tamanho);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Tamanho não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Tamanho não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -107,7 +107,7 @@ public class CadastroTamanhoController extends CadastroController {
         getTamanhos().addAll(getTamanhoService().buscar());
 
         if (getTamanhos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Tamanhos para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Tamanhos para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Tamanhos", getItens());
@@ -135,7 +135,7 @@ public class CadastroTamanhoController extends CadastroController {
         String msg = format("Tamanho %s com sucesso.", isEmpty(tamanho.getId()) ? "cadastrado" : "alterado");
         getTamanhoService().createOrUpdate(tamanho);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 

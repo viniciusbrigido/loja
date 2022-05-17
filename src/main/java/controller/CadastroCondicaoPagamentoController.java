@@ -41,7 +41,7 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -50,7 +50,7 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
         if (isNotNull(condicao) && isNotEmpty(condicao.getId())) {
             preencheCamposTela(condicao);
         } else {
-            showMessageDialog(getView(), "Condição de Pagamento não encontrada.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Condição de Pagamento não encontrada.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -64,7 +64,7 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
                 verificaCondicaoJaCadastrada();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -74,7 +74,7 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -84,7 +84,7 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
             preencheSalvaCondicao(condicao);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar uma nova Condição de Pagamento não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar uma nova Condição de Pagamento não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -104,7 +104,7 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
         getCondicoes().addAll(getCondicaoPagamentoService().buscar());
 
         if (getCondicoes().isEmpty()) {
-            showMessageDialog(getView(), "Não há Condições de Pagamento para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Condições de Pagamento para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Condições de Pagamento", getItens(), getColunas());
@@ -147,7 +147,7 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
         String msg = format("Condição de Pagamento %s com sucesso.", isEmpty(condicao.getId()) ? "cadastrada" : "alterada");
         getCondicaoPagamentoService().createOrUpdate(condicao);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 

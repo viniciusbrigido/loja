@@ -37,13 +37,13 @@ public class CadastroClienteController extends CadastroController {
 
     private void verificaEnderecoCadastrado() {
         if (getEnderecos().isEmpty()) {
-            showMessageDialog(getView(), "N�o h� Endere�os cadastrados.", "Aten��o", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Endereços cadastrados.", ATENCAO, INFORMATION_MESSAGE);
             getView().dispose();
         }
     }
 
     private void populaCombos() {
-        getView().getComboEndereco().addItem("Selecione um Endere�o");
+        getView().getComboEndereco().addItem("Selecione um Endereço");
         getEnderecos().forEach(e -> getView().getComboEndereco().addItem(format("%s - %s", formataCep(e.getNomCep()), e.getNomLogradouro())));
     }
 
@@ -67,7 +67,7 @@ public class CadastroClienteController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "C�digo: Valor Inv�lido.", "Aten��o", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -76,7 +76,7 @@ public class CadastroClienteController extends CadastroController {
         if (isNotNull(cliente) && isNotEmpty(cliente.getId())) {
             preencheCamposTela(cliente);
         } else {
-            showMessageDialog(getView(), "Cliente n�o encontrado.", "Aten��o", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cliente não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -90,7 +90,7 @@ public class CadastroClienteController extends CadastroController {
                 verificaClienteJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Aten��o", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtNome().requestFocus();
         }
     }
@@ -126,7 +126,7 @@ public class CadastroClienteController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "C�digo: Valor Inv�lido.", "Aten��o", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -135,7 +135,7 @@ public class CadastroClienteController extends CadastroController {
             preencheSalvaCliente(cliente);
             return;
         }
-        showMessageDialog(getView(), "C�digo n�o encontrado.\nPara cadastrar um novo Cliente n�o preencha o campo de c�digo.", "Aten��o", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Cliente não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -161,7 +161,7 @@ public class CadastroClienteController extends CadastroController {
         getClientes().addAll(getClienteService().buscar());
 
         if (getClientes().isEmpty()) {
-            showMessageDialog(getView(), "N�o h� Clientes para listar.", "Aten��o", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Clientes para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Clientes", getItens(), getColunas());
@@ -182,7 +182,7 @@ public class CadastroClienteController extends CadastroController {
 
     private List<ColunaDto> getColunas() {
         List<ColunaDto> colunas = new ArrayList<>();
-        colunas.add(new ColunaDto("C�digo", DIREITA, 40));
+        colunas.add(new ColunaDto("Código", DIREITA, 40));
         colunas.add(new ColunaDto("Nome", ESQUERDA, 160));
         colunas.add(new ColunaDto("CPF", MEIO, 60));
         colunas.add(new ColunaDto("Fone", MEIO, 40));
@@ -216,7 +216,7 @@ public class CadastroClienteController extends CadastroController {
         String msg = format("Cliente %s com sucesso.", isEmpty(cliente.getId()) ? "cadastrado" : "alterado");
         getClienteService().createOrUpdate(cliente);
 
-        showMessageDialog(getView(), msg, "Aten��o", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 

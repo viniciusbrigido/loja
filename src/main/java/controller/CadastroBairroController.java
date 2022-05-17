@@ -26,7 +26,7 @@ public class CadastroBairroController extends CadastroController {
     public void excluiItem() {
         Bairro bairro = getBairros().get(index);
         if (getEnderecoService().isEnderecoCadastradoComBairro(bairro.getId())) {
-            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Produtos cadastrados com essa Marca.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Produtos cadastrados com essa Marca.", ATENCAO, ERROR_MESSAGE);
             return;
         }
         getBairroService().apagar(bairro);
@@ -47,7 +47,7 @@ public class CadastroBairroController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -56,7 +56,7 @@ public class CadastroBairroController extends CadastroController {
         if (isNotNull(bairro) && isNotEmpty(bairro.getId())) {
             preencheCamposTela(bairro);
         } else {
-            showMessageDialog(getView(), "Bairro não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Bairro não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -70,7 +70,7 @@ public class CadastroBairroController extends CadastroController {
                 verificaBairroJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -80,7 +80,7 @@ public class CadastroBairroController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -90,7 +90,7 @@ public class CadastroBairroController extends CadastroController {
             preencheSalvaBairro(bairro);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Bairro não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Bairro não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -108,7 +108,7 @@ public class CadastroBairroController extends CadastroController {
         getBairros().addAll(getBairroService().buscar());
 
         if (getBairros().isEmpty()) {
-            showMessageDialog(getView(), "Não há Bairros para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Bairros para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Bairros", getItens());
@@ -141,7 +141,7 @@ public class CadastroBairroController extends CadastroController {
         String msg = format("Bairro %s com sucesso.", isEmpty(bairro.getId()) ? "cadastrado" : "alterado");
         getBairroService().createOrUpdate(bairro);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 

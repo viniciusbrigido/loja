@@ -57,7 +57,7 @@ public class CadastroFornecedorController extends CadastroController {
 
     private void verificaEnderecoCadastrado() {
         if (getEnderecos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Endereços cadastrados.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Endereços cadastrados.", ATENCAO, INFORMATION_MESSAGE);
             getView().dispose();
         }
     }
@@ -87,7 +87,7 @@ public class CadastroFornecedorController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -96,7 +96,7 @@ public class CadastroFornecedorController extends CadastroController {
         if (isNotNull(fornecedor) && isNotEmpty(fornecedor.getId())) {
             preencheCamposTela(fornecedor);
         } else {
-            showMessageDialog(getView(), "Fornecedor não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Fornecedor não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -110,7 +110,7 @@ public class CadastroFornecedorController extends CadastroController {
                 verificaFornecedorJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtNome().requestFocus();
         }
     }
@@ -120,7 +120,7 @@ public class CadastroFornecedorController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -129,7 +129,7 @@ public class CadastroFornecedorController extends CadastroController {
             preencheSalvaFornecedor(fornecedor);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Fornecedor não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Fornecedor não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -153,7 +153,7 @@ public class CadastroFornecedorController extends CadastroController {
         getFornecedores().addAll(getFornecedorService().buscar());
 
         if (getFornecedores().isEmpty()) {
-            showMessageDialog(getView(), "Não há Fornecedores para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Fornecedores para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Fornecedores", getItens(), getColunas());
@@ -206,7 +206,7 @@ public class CadastroFornecedorController extends CadastroController {
         String msg = format("Fornecedor %s com sucesso.", isEmpty(fornecedor.getId()) ? "cadastrado" : "alterado");
         getFornecedorService().createOrUpdate(fornecedor);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 
@@ -216,14 +216,14 @@ public class CadastroFornecedorController extends CadastroController {
 
     public void cadastraFone() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
-            showMessageDialog(getView(), "Filtre um Fornecedor para cadastrar os telefones.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Filtre um Fornecedor para cadastrar os telefones.", ATENCAO, ERROR_MESSAGE);
             getView().getTxtCodigo().requestFocus();
             return;
         }
 
         Fornecedor fornecedor = getFornecedorService().buscar(Integer.parseInt(getView().getTxtCodigo().getText()));
         if (isNull(fornecedor) || isEmpty(fornecedor.getId())) {
-            showMessageDialog(getView(), "Fornecedor não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Fornecedor não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }

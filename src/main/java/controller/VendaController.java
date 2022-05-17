@@ -88,8 +88,8 @@ public class VendaController extends Controller {
 
     private void adicionaAcaoBotaoFinalizar() {
         getView().getBtnFinalizar().addActionListener(a -> finalizar());
-        getView().getBtnFinalizar().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, 0), EVENTO);
-        getView().getBtnFinalizar().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnFinalizar().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, ZERO), EVENTO);
+        getView().getBtnFinalizar().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
         getView().getBtnFinalizar().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,8 +100,8 @@ public class VendaController extends Controller {
 
     private void adicionaAcaoBotaoEditaItem() {
         getView().getBtnEditaItem().addActionListener(a -> editaItem());
-        getView().getBtnEditaItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F2, 0), EVENTO);
-        getView().getBtnEditaItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnEditaItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F2, ZERO), EVENTO);
+        getView().getBtnEditaItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
         getView().getBtnEditaItem().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,8 +112,8 @@ public class VendaController extends Controller {
 
     private void adicionaAcaoBotaoExcluiItem() {
         getView().getBtnExcluiItem().addActionListener(a -> excluiItem());
-        getView().getBtnExcluiItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F3, 0), EVENTO);
-        getView().getBtnExcluiItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnExcluiItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F3, ZERO), EVENTO);
+        getView().getBtnExcluiItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
         getView().getBtnExcluiItem().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,8 +124,8 @@ public class VendaController extends Controller {
 
     private void adicionaAcaoBotaoSelecionaItem() {
         getView().getBtnSelecionaItem().addActionListener(a -> selecionaItem());
-        getView().getBtnSelecionaItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F4, 0), EVENTO);
-        getView().getBtnSelecionaItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnSelecionaItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F4, ZERO), EVENTO);
+        getView().getBtnSelecionaItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
         getView().getBtnSelecionaItem().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -136,8 +136,8 @@ public class VendaController extends Controller {
 
     private void adicionaAcaoBotaoIncluiItem() {
         getView().getBtnIncluiItem().addActionListener(a -> incluiItem());
-        getView().getBtnIncluiItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F5, 0), EVENTO);
-        getView().getBtnIncluiItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnIncluiItem().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F5, ZERO), EVENTO);
+        getView().getBtnIncluiItem().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
         getView().getBtnIncluiItem().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,8 +148,8 @@ public class VendaController extends Controller {
 
     private void adicionaAcaoBotaoExcluiVenda() {
         getView().getBtnExcluiVenda().addActionListener(a -> excluiVenda());
-        getView().getBtnExcluiVenda().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F6, 0), EVENTO);
-        getView().getBtnExcluiVenda().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnExcluiVenda().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F6, ZERO), EVENTO);
+        getView().getBtnExcluiVenda().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
         getView().getBtnExcluiVenda().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -160,8 +160,8 @@ public class VendaController extends Controller {
 
     private void adicionaAcaoBotaoSair() {
         getView().getBtnSair().addActionListener(a -> getView().dispose());
-        getView().getBtnSair().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), EVENTO);
-        getView().getBtnSair().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnSair().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, ZERO), EVENTO);
+        getView().getBtnSair().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
         getView().getBtnSair().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -173,7 +173,7 @@ public class VendaController extends Controller {
     private void adicionaAcoesGrid() {
         getView().getTabelaProdutos().setModel(getGrid());
         getView().getTabelaProdutos().addMouseListener(getMouseListenerTableGrid());
-        getView().getTabelaProdutos().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F2, 0), EVENTO);
+        getView().getTabelaProdutos().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_F2, ZERO), EVENTO);
         getView().getTabelaProdutos().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -320,7 +320,7 @@ public class VendaController extends Controller {
 
     private void setaUsuario() {
         Random random = new Random();
-        getView().getTxtUsuario().setText(random.nextInt() % 2 == 0 ? "Vinícius" : "Jonatas");
+        getView().getTxtUsuario().setText(random.nextInt() % 2 == ZERO ? "Vinícius" : "Jonatas");
     }
 
     public void preencheItem() {
@@ -508,7 +508,7 @@ public class VendaController extends Controller {
     }
 
     public void editaItem() {
-        if (getView().getTabelaProdutos().getSelectedRow() < 0) {
+        if (getView().getTabelaProdutos().getSelectedRow() < ZERO) {
             showMessageDialog(getView(), "Selecione um item para editar.", "Atenção", ERROR_MESSAGE);
             return;
         }
@@ -523,7 +523,7 @@ public class VendaController extends Controller {
     }
 
     public void excluiItem() {
-        if (getView().getTabelaProdutos().getSelectedRow() < 0) {
+        if (getView().getTabelaProdutos().getSelectedRow() < ZERO) {
             showMessageDialog(getView(), "Selecione um item para excluir.", "Atenção", ERROR_MESSAGE);
             limpaCamposProduto();
             return;

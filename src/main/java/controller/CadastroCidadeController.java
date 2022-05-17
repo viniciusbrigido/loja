@@ -27,7 +27,7 @@ public class CadastroCidadeController extends CadastroController {
     public void excluiItem() {
         Cidade cidade = getCidades().get(index);
         if (getEnderecoService().isEnderecoCadastradoComCidade(cidade.getId())) {
-            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Endereços cadastrados com essa Cidade.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Endereços cadastrados com essa Cidade.", ATENCAO, ERROR_MESSAGE);
             return;
         }
         getCidadeService().apagar(cidade);
@@ -48,7 +48,7 @@ public class CadastroCidadeController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -57,7 +57,7 @@ public class CadastroCidadeController extends CadastroController {
         if (isNotNull(cidade) && isNotEmpty(cidade.getId())) {
             preencheCamposTela(cidade);
         } else {
-            showMessageDialog(getView(), "Cidade não encontrada.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cidade não encontrada.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -71,7 +71,7 @@ public class CadastroCidadeController extends CadastroController {
                 verificaCidadeJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -81,7 +81,7 @@ public class CadastroCidadeController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -90,7 +90,7 @@ public class CadastroCidadeController extends CadastroController {
             preencheSalvaCidade(cidade);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar uma nova Cidade não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar uma nova Cidade não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -108,7 +108,7 @@ public class CadastroCidadeController extends CadastroController {
         getCidades().clear();
         getCidades().addAll(getCidadeService().buscar());
         if (getCidades().isEmpty()) {
-            showMessageDialog(getView(), "Não há Cidades para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Cidades para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Cidades", getItens(), getColunas());
@@ -147,7 +147,7 @@ public class CadastroCidadeController extends CadastroController {
         String msg = format("Cidade %s com sucesso.", isEmpty(cidade.getId()) ? "cadastrada" : "alterada");
         getCidadeService().createOrUpdate(cidade);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 

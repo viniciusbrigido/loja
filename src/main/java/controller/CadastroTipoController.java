@@ -26,7 +26,7 @@ public class CadastroTipoController extends CadastroController {
     public void excluiItem() {
         Tipo tipo = getTipos().get(index);
         if (getProdutoService().isProdutoCadastradoComTipo(tipo.getId())) {
-            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Produtos cadastrados com esse Tipo de Produto.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Produtos cadastrados com esse Tipo de Produto.", ATENCAO, ERROR_MESSAGE);
             return;
         }
         getTipoService().apagar(tipo);
@@ -47,7 +47,7 @@ public class CadastroTipoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -55,7 +55,7 @@ public class CadastroTipoController extends CadastroController {
         if (isNotNull(tipo) && isNotEmpty(tipo.getId())) {
             preencheCamposTela(tipo);
         } else {
-            showMessageDialog(getView(), "Tipo de Produto não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Tipo de Produto não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -69,7 +69,7 @@ public class CadastroTipoController extends CadastroController {
                 verificaTipoJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -79,7 +79,7 @@ public class CadastroTipoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -88,7 +88,7 @@ public class CadastroTipoController extends CadastroController {
             preencheSalvaTipo(tipo);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Tipo de Produto não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Tipo de Produto não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -106,7 +106,7 @@ public class CadastroTipoController extends CadastroController {
         getTipos().addAll(getTipoService().buscar());
 
         if (getTipos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Tipos de Produto para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Tipos de Produto para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Tipos de Produto", getItens());
@@ -134,7 +134,7 @@ public class CadastroTipoController extends CadastroController {
         String msg = format("Tipo de Produto %s com sucesso.", isEmpty(tipo.getId()) ? "cadastrado" : "alterado");
         getTipoService().createOrUpdate(tipo);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 

@@ -6,8 +6,6 @@ import java.awt.*;
 
 public class ControllerView extends JFrame {
 
-    public static final String EVENTO = "EVENTO";
-
     private JTextFieldSomenteNumeros txtCodigo;
 
     private JButton btnSalvar;

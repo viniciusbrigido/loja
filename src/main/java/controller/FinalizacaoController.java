@@ -290,7 +290,7 @@ public class FinalizacaoController extends Controller {
         try {
             codigo = parseInt(getView().getTxtCodVendedor().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaVendedorSetaFoco();
             return;
         }
@@ -298,7 +298,7 @@ public class FinalizacaoController extends Controller {
         if (isNotNull(vendedor) && isNotEmpty(vendedor.getId())) {
             preencheVendedorSetaFoco(vendedor);
         } else {
-            showMessageDialog(getView(), "Vendedor não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Vendedor não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaVendedorSetaFoco();
         }
     }
@@ -312,7 +312,7 @@ public class FinalizacaoController extends Controller {
         try {
             codigo = parseInt(getView().getTxtCodCliente().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaClienteSetaFoco();
             return;
         }
@@ -320,7 +320,7 @@ public class FinalizacaoController extends Controller {
         if (isNotNull(cliente) && isNotEmpty(cliente.getId())) {
             preencheClienteSetaFoco(cliente);
         } else {
-            showMessageDialog(getView(), "Cliente não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cliente não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaClienteSetaFoco();
         }
     }
@@ -334,7 +334,7 @@ public class FinalizacaoController extends Controller {
         try {
             codigo = parseInt(getView().getTxtCodCondicao().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaCondicaoSetaFoco();
             return;
         }
@@ -342,7 +342,7 @@ public class FinalizacaoController extends Controller {
         if (isNotNull(condicao) && isNotEmpty(condicao.getId())) {
             preencheCondicaoSetaFoco(condicao);
         } else {
-            showMessageDialog(getView(), "Condição de Pagamento não encontrada.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Condição de Pagamento não encontrada.", ATENCAO, ERROR_MESSAGE);
             limpaCondicaoSetaFoco();
         }
     }
@@ -352,7 +352,7 @@ public class FinalizacaoController extends Controller {
         getVendedores().addAll(getVendedorService().buscar());
 
         if (getVendedores().isEmpty()) {
-            showMessageDialog(getView(), "Não há Vendedores para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Vendedores para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Vendedores", getItensVendedor(), getColunasVendedor(), TIPO_LISTAGEM_VENDEDOR);
@@ -363,7 +363,7 @@ public class FinalizacaoController extends Controller {
         getClientes().addAll(getClienteService().buscar());
 
         if (getClientes().isEmpty()) {
-            showMessageDialog(getView(), "Não há Clientes para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Clientes para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Clientes", getItensCliente(), getColunasCliente(), TIPO_LISTAGEM_CLIENTE);
@@ -374,7 +374,7 @@ public class FinalizacaoController extends Controller {
         getCondicoes().addAll(getCondicaoPagamentoService().buscar());
 
         if (getCondicoes().isEmpty()) {
-            showMessageDialog(getView(), "Não há Condições de Pagamento para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Condições de Pagamento para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Condições de Pagamento", getItensConsicaoPagamento(), getColunasCondicaoPagamento(), TIPO_LISTAGEM_CONDICAO);
@@ -458,7 +458,7 @@ public class FinalizacaoController extends Controller {
             msg.append("Cliente: Campo com preenchimento Obrigatório.\n");
         }
         if (isNotEmpty(msg.toString())) {
-            showMessageDialog(getView(), msg.toString(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), msg.toString(), ATENCAO, ERROR_MESSAGE);
             return;
         }
 
@@ -474,7 +474,7 @@ public class FinalizacaoController extends Controller {
         atualizaSalvaItensVenda(venda);
         criaRecebimento(venda);
 
-        showMessageDialog(getView(), "Venda efetuada com sucesso!", "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), "Venda efetuada com sucesso!", ATENCAO, INFORMATION_MESSAGE);
         getView().dispose();
         vendaController.limpaTransacao();
     }

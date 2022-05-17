@@ -7,6 +7,7 @@ import static javax.swing.JOptionPane.*;
 public abstract class Controller {
 
     public static final String EVENTO = "EVENTO";
+    public static final String ATENCAO = "Atenção";
 
     public final String SEPARADOR = "separador";
     public final Integer DIREITA = SwingConstants.RIGHT;

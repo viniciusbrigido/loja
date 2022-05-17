@@ -1,24 +1,13 @@
 package view;
 
-import controller.ListagemGeralController;
-import dto.ColunaDto;
-
 import javax.swing.*;
-import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
-import static java.awt.Cursor.getDefaultCursor;
-import static java.awt.event.KeyEvent.VK_ENTER;
-import static javax.swing.JComponent.WHEN_FOCUSED;
-import static javax.swing.KeyStroke.getKeyStroke;
 
-public class ListagemGeralView extends ListagemView {
+public class ListagemGeralView extends JFrame {
 
     private JPanel panelProduto;
     private JScrollPane scrollTabela;
     private JTable tableGrid;
-    private AbstractTableModel grid;
     private JPanel panelBotoes;
 
     private JLabel lblProduto;
@@ -31,10 +20,11 @@ public class ListagemGeralView extends ListagemView {
     private JButton btnExcluir;
     private JButton btnSair;
 
-    private ListagemGeralController controller;
-
-    public ListagemGeralView(ListagemGeralController controller, String titulo) {
-        this.controller = controller;
+    public ListagemGeralView(String titulo) {
+        setLocationRelativeTo(null);
+        setAlwaysOnTop(true);
+        setResizable(true);
+        setLayout(new GridBagLayout());
         setTitle(titulo);
         initialize();
     }
@@ -47,41 +37,6 @@ public class ListagemGeralView extends ListagemView {
         add(getPanelBotoes(), getGbcPanelBotoes());
     }
 
-    public AbstractTableModel getGrid() {
-        if (grid == null) {
-
-            grid = new AbstractTableModel() {
-                public final String[] columnNames = controller.getNomeColunas();
-
-                public int getColumnCount() {
-                    return columnNames.length;
-                }
-
-                public String getColumnName(int column) {
-                    return columnNames[column];
-                }
-
-                public int getRowCount() {
-                    return controller.getItens().size();
-                }
-
-                public Object getValueAt(int row, int column) {
-                    List<String> linhas = controller.getItens();
-                    String[] linha = linhas.get(row).split(controller.SEPARADOR);
-                    if (column == getColunaEditar() || column == getColunaExcluir()) {
-                        return null;
-                    }
-                    return linha[column];
-                }
-            };
-        }
-        return grid;
-    }
-
-    public void fireTableDataChanged() {
-        getGrid().fireTableDataChanged();
-    }
-
     public JTable getTableGrid() {
         if (tableGrid == null) {
             tableGrid = new JTable();
@@ -92,79 +47,9 @@ public class ListagemGeralView extends ListagemView {
             gblPanelGrid.columnWeights = new double[]{0.0};
             gblPanelGrid.rowWeights = new double[]{0.0};
             tableGrid.setLayout(gblPanelGrid);
-            tableGrid.setModel(getGrid());
             tableGrid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-            TableColumnModel columnModel = tableGrid.getColumnModel();
-            for (ColunaDto dto : controller.getColunas()) {
-                DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer();
-                defaultTableCellRenderer.setHorizontalAlignment(dto.getAlinhamento());
-                int coluna = controller.getColunas().indexOf(dto);
-
-                columnModel.getColumn(coluna).setCellRenderer(defaultTableCellRenderer);
-                columnModel.getColumn(coluna).setPreferredWidth(dto.getTamanho());
-            }
-
-            if (controller.isTelaChamadaNaVendaOuFinalizacao()) {
-                tableGrid.getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
-                tableGrid.getActionMap().put(EVENTO, new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        controller.selecionaItem();
-                    }
-                });
-
-            } else {
-                DefaultTableCellRenderer dtcrEditar = new DefaultTableCellRenderer();
-                dtcrEditar.setIcon(new ImageIcon(getClass().getResource("/imagens/editar.png")));
-                columnModel.getColumn(getColunaEditar()).setCellRenderer(dtcrEditar);
-                columnModel.getColumn(getColunaEditar()).setMaxWidth(20);
-
-                DefaultTableCellRenderer dtcrExcluir = new DefaultTableCellRenderer();
-                dtcrExcluir.setIcon(new ImageIcon(getClass().getResource("/imagens/remover.png")));
-                columnModel.getColumn(getColunaExcluir()).setCellRenderer(dtcrExcluir);
-                columnModel.getColumn(getColunaExcluir()).setMaxWidth(20);
-
-                tableGrid.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        int colunaSelecionada = ((JTable) e.getSource()).getSelectedColumn();
-
-                        if (colunaSelecionada == getColunaEditar()) {
-                            controller.selecionaItem();
-                        } else if (colunaSelecionada == getColunaExcluir()) {
-                            controller.excluiItem();
-                        }
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        setCursor(getDefaultCursor());
-                    }
-                });
-
-                tableGrid.addMouseMotionListener(new MouseAdapter() {
-                    @Override
-                    public void mouseMoved(MouseEvent e) {
-                        setCursor(isIconeExcluirEditarSelecionado(e) ? new Cursor(HAND_CURSOR) : getDefaultCursor());
-                    }
-                });
-            }
         }
         return tableGrid;
-    }
-
-    private int getColunaEditar() {
-        return controller.getColunas().size();
-    }
-
-    private int getColunaExcluir() {
-        return controller.getColunas().size() + 1;
-    }
-
-    private boolean isIconeExcluirEditarSelecionado(MouseEvent e) {
-        int colunaSelecionada = ((JTable) e.getSource()).columnAtPoint(e.getPoint());
-        return colunaSelecionada == getColunaEditar() || colunaSelecionada == getColunaExcluir();
     }
 
     public JScrollPane getScrollTabela() {
@@ -202,7 +87,7 @@ public class ListagemGeralView extends ListagemView {
             gbcBtnSair.insets = new Insets(10, 5, 5, 5);
             gbcBtnSair.gridx = 2;
             gbcBtnSair.gridy = 0;
-            panelBotoes.add(getbtnSair(), gbcBtnSair);
+            panelBotoes.add(getBtnSair(), gbcBtnSair);
         }
         return panelBotoes;
     }
@@ -318,24 +203,24 @@ public class ListagemGeralView extends ListagemView {
 
     public JButton getBtnCarregar() {
         if (btnCarregar == null) {
-            btnCarregar = getBotaoCarregarPadrao(controller);
-            if (controller.isTelaChamadaNaVendaOuFinalizacao()) {
-                btnCarregar.setText("Selecionar [F2]");
-            }
+            btnCarregar = new JButton("Carregar [F2]");
+            btnCarregar.setIcon(new ImageIcon(getClass().getResource("/imagens/select.png")));
         }
         return btnCarregar;
     }
 
     public JButton getBtnExcluir() {
         if (btnExcluir == null) {
-            btnExcluir = getBotaoExcluirPadrao(controller);
+            btnExcluir = new JButton("Excluir [F3]");
+            btnExcluir.setIcon(new ImageIcon(getClass().getResource("/imagens/bin.png")));
         }
         return btnExcluir;
     }
 
-    public JButton getbtnSair() {
+    public JButton getBtnSair() {
         if (btnSair == null) {
-            btnSair = getBotaoSairPadrao(controller);
+            btnSair = new JButton("Sair [Esc]");
+            btnSair.setIcon(new ImageIcon(getClass().getResource("/imagens/exit.png")));
         }
         return btnSair;
     }

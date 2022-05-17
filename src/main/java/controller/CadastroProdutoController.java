@@ -233,22 +233,22 @@ public class CadastroProdutoController extends CadastroController {
 
     private void verificaMarcaTipoTamanhoCorCadastrados() {
         if (getMarcas().isEmpty()) {
-            showMessageDialog(getView(), "Não há Marcas cadastradas.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Marcas cadastradas.", ATENCAO, INFORMATION_MESSAGE);
             getView().dispose();
             return;
         }
         if (getTipos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Tipos de Produto cadastrados.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Tipos de Produto cadastrados.", ATENCAO, INFORMATION_MESSAGE);
             getView().dispose();
             return;
         }
         if (getTamanhos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Tamanhos cadastrados.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Tamanhos cadastrados.", ATENCAO, INFORMATION_MESSAGE);
             getView().dispose();
             return;
         }
         if (getCores().isEmpty()) {
-            showMessageDialog(getView(), "Não há Cores cadastradas.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Cores cadastradas.", ATENCAO, INFORMATION_MESSAGE);
             getView().dispose();
         }
     }
@@ -290,7 +290,7 @@ public class CadastroProdutoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -301,7 +301,7 @@ public class CadastroProdutoController extends CadastroController {
             habilitaBotaoAddCaracteristica(true);
             limpaCamposCaracteristica();
         } else {
-            showMessageDialog(getView(), "Produto não encontrado.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Produto não encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -315,7 +315,7 @@ public class CadastroProdutoController extends CadastroController {
                 verificaProdutoJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -325,7 +325,7 @@ public class CadastroProdutoController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -334,7 +334,7 @@ public class CadastroProdutoController extends CadastroController {
             preencheSalvaProduto(produto);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Produto não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar um novo Produto não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -359,7 +359,7 @@ public class CadastroProdutoController extends CadastroController {
         getProdutos().addAll(getProdutoService().buscar());
 
         if (getProdutos().isEmpty()) {
-            showMessageDialog(getView(), "Não há Produtos para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Produtos para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Produtos", getItens(), getColunas());
@@ -410,7 +410,7 @@ public class CadastroProdutoController extends CadastroController {
         String msg = format("Produto %s com sucesso.", isEmpty(produto.getId()) ? "cadastrado" : "alterado");
         getProdutoService().createOrUpdate(produto);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 
@@ -456,10 +456,10 @@ public class CadastroProdutoController extends CadastroController {
         try {
             String msg = format("Característica do Produto %s com sucesso.", isEmpty(codigoCaracteristica) ? "cadastrada" : "alterada");
             getCaracteristicaProdutoService().createOrUpdate(caracteristicaProduto);
-            showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
             limpaCamposCaracteristica();
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtBarra().requestFocus();
         }
     }

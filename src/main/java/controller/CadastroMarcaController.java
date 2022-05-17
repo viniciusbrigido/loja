@@ -27,7 +27,7 @@ public class CadastroMarcaController extends CadastroController {
     public void excluiItem() {
         Marca marca = getMarcas().get(index);
         if (getProdutoService().isProdutoCadastradoComMarca(marca.getId())) {
-            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Endereços cadastrados com esse Bairro.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "O item não pode ser excluído pois já há um ou mais Endereços cadastrados com esse Bairro.", ATENCAO, ERROR_MESSAGE);
             return;
         }
         getMarcaService().apagar(marca);
@@ -48,7 +48,7 @@ public class CadastroMarcaController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -57,7 +57,7 @@ public class CadastroMarcaController extends CadastroController {
         if (isNotNull(marca) && isNotEmpty(marca.getId())) {
             preencheCamposTela(marca);
         } else {
-            showMessageDialog(getView(), "Marca não encontrada.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Marca não encontrada.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -71,7 +71,7 @@ public class CadastroMarcaController extends CadastroController {
                 verificaMarcaJaCadastrado();
             }
         } catch (Exception e) {
-            showMessageDialog(getView(), e.getMessage(), "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), e.getMessage(), ATENCAO, ERROR_MESSAGE);
             getView().getTxtDescricao().requestFocus();
         }
     }
@@ -81,7 +81,7 @@ public class CadastroMarcaController extends CadastroController {
         try {
             codigo = Integer.parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "Código: Valor Inválido.", "Atenção", ERROR_MESSAGE);
+            showMessageDialog(getView(), "Código: Valor Inválido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -91,7 +91,7 @@ public class CadastroMarcaController extends CadastroController {
             preencheSalvaMarca(marca);
             return;
         }
-        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar uma nova Marca não preencha o campo de código.", "Atenção", ERROR_MESSAGE);
+        showMessageDialog(getView(), "Código não encontrado.\nPara cadastrar uma nova Marca não preencha o campo de código.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -109,7 +109,7 @@ public class CadastroMarcaController extends CadastroController {
         getMarcas().addAll(getMarcaService().buscar());
 
         if (getMarcas().isEmpty()) {
-            showMessageDialog(getView(), "Não há Marcas para listar.", "Atenção", INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "Não há Marcas para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Marcas", getItens());
@@ -137,7 +137,7 @@ public class CadastroMarcaController extends CadastroController {
         String msg = format("Marca %s com sucesso.", isEmpty(marca.getId()) ? "cadastrada" : "alterada");
         getMarcaService().createOrUpdate(marca);
 
-        showMessageDialog(getView(), msg, "Atenção", INFORMATION_MESSAGE);
+        showMessageDialog(getView(), msg, ATENCAO, INFORMATION_MESSAGE);
         limpaTela();
     }
 
