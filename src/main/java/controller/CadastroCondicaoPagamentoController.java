@@ -1,6 +1,8 @@
 package controller;
 
 import dto.ColunaDto;
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.CondicaoPagamento;
 import service.*;
 import view.CadastroCondicaoPagamentoView;
@@ -11,7 +13,10 @@ import static javax.swing.JOptionPane.*;
 import static util.ValueUtil.*;
 
 public class CadastroCondicaoPagamentoController extends CadastroController {
+
+    @Getter @Setter
     private CadastroCondicaoPagamentoView view;
+
     private List<CondicaoPagamento> condicoes;
     private CondicaoPagamentoService condicaoPagamentoService;
 
@@ -124,7 +129,7 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
         return itens;
     }
 
-    public List<ColunaDto> getColunas() {
+    private List<ColunaDto> getColunas() {
         List<ColunaDto> colunas = new ArrayList<>();
         colunas.add(new ColunaDto("Código", DIREITA, 30));
         colunas.add(new ColunaDto("Descrição", ESQUERDA, 130));
@@ -152,15 +157,7 @@ public class CadastroCondicaoPagamentoController extends CadastroController {
         limpaTela();
     }
 
-    public void setView(CadastroCondicaoPagamentoView view) {
-        this.view = view;
-    }
-
-    public CadastroCondicaoPagamentoView getView() {
-        return view;
-    }
-
-    public List<CondicaoPagamento> getCondicoes() {
+    private List<CondicaoPagamento> getCondicoes() {
         if (isNull(condicoes)) {
             condicoes = new ArrayList<>();
         }

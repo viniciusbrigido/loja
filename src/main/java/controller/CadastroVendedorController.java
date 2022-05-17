@@ -1,6 +1,8 @@
 package controller;
 
 import dto.ColunaDto;
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.*;
 import service.VendedorService;
 import service.EnderecoService;
@@ -17,7 +19,9 @@ import static util.ValueUtil.*;
 
 public class CadastroVendedorController extends CadastroController {
 
+    @Getter @Setter
     private CadastroVendedorView view;
+
     private List<Vendedor> vendedores;
     private List<Endereco> enderecos;
     private VendedorService vendedorService;
@@ -218,22 +222,14 @@ public class CadastroVendedorController extends CadastroController {
         return getView().getComboEndereco().getSelectedIndex() <= ZERO ? null : getEnderecos().get(getView().getComboEndereco().getSelectedIndex() - 1);
     }
 
-    public CadastroVendedorView getView() {
-        return view;
-    }
-
-    public void setView(CadastroVendedorView view) {
-        this.view = view;
-    }
-
-    public List<Vendedor> getVendedores() {
+    private List<Vendedor> getVendedores() {
         if (isNull(vendedores)) {
             vendedores = new ArrayList<>();
         }
         return vendedores;
     }
 
-    public List<Endereco> getEnderecos() {
+    private List<Endereco> getEnderecos() {
         if (isNull(enderecos)) {
             enderecos = new ArrayList<>();
         }

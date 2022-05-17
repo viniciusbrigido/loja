@@ -203,7 +203,7 @@ public class ListagemGeralView extends JFrame {
 
     public JButton getBtnCarregar() {
         if (btnCarregar == null) {
-            btnCarregar = new JButton("Carregar [F2]");
+            btnCarregar = new JButton("Carregar [F1]");
             btnCarregar.setIcon(new ImageIcon(getClass().getResource("/imagens/select.png")));
         }
         return btnCarregar;

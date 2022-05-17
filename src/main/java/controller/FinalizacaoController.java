@@ -1,6 +1,8 @@
 package controller;
 
 import dto.ColunaDto;
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.*;
 import service.*;
 import view.FinalizacaoView;
@@ -16,6 +18,9 @@ import static util.Formatador.*;
 import static util.ValueUtil.*;
 
 public class FinalizacaoController extends Controller {
+
+    @Getter @Setter
+    private FinalizacaoView view;
 
     private List<ItemVenda> itens;
     private List<Vendedor> vendedores;
@@ -35,15 +40,13 @@ public class FinalizacaoController extends Controller {
     private Cliente cliente;
     private CondicaoPagamento condicao;
 
-    private FinalizacaoView view;
-
-    public FinalizacaoController(FinalizacaoView view, VendaController vendaController) {
+    public FinalizacaoController(FinalizacaoView view, List<ItemVenda> itens, VendaController vendaController) {
         setView(view);
         getView().setVisible(true);
         adicionaAcaoCamposCodigo();
         adicionaAcaoAosBotoes();
         this.vendaController = vendaController;
-        itens = vendaController.getItens();
+        this.itens = itens;
         preencheCamposTela();
         setaFocoInicial();
     }
@@ -155,8 +158,8 @@ public class FinalizacaoController extends Controller {
 
     private void adicionaAcaoBotaoSair() {
         getView().getBtnSair().addActionListener(a -> sairTela());
-        getView().getBtnSair().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, 0), EVENTO);
-        getView().getBtnSair().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, 0), EVENTO);
+        getView().getBtnSair().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_ESCAPE, ZERO), EVENTO);
+        getView().getBtnSair().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
         getView().getBtnSair().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -222,13 +225,13 @@ public class FinalizacaoController extends Controller {
         getView().getTxtCodCondicao().requestFocus();
     }
 
-    public void limpaTela() {
+    private void limpaTela() {
         limpaCliente();
         limpaCondicao();
         limpaVendedorSetaFoco();
     }
 
-    public void sairTela() {
+    private void sairTela() {
         getView().dispose();
         vendaController.setVendedor(vendedor);
         vendaController.setCliente(cliente);
@@ -281,7 +284,7 @@ public class FinalizacaoController extends Controller {
         preencheCondicaoSetaFoco(getCondicoes().get(index));
     }
 
-    public void buscaVendedor() {
+    private void buscaVendedor() {
         if (isEmpty(getView().getTxtCodVendedor().getText())) {
             limpaVendedor();
             return;
@@ -303,7 +306,7 @@ public class FinalizacaoController extends Controller {
         }
     }
 
-    public void buscaCliente() {
+    private void buscaCliente() {
         if (isEmpty(getView().getTxtCodCliente().getText())) {
             limpaCliente();
             return;
@@ -325,7 +328,7 @@ public class FinalizacaoController extends Controller {
         }
     }
 
-    public void buscaCondicao() {
+    private void buscaCondicao() {
         if (isEmpty(getView().getTxtCodCondicao().getText())) {
             limpaCondicao();
             return;
@@ -437,7 +440,7 @@ public class FinalizacaoController extends Controller {
         return colunas;
     }
 
-    public List<ColunaDto> getColunasCondicaoPagamento() {
+    private List<ColunaDto> getColunasCondicaoPagamento() {
         List<ColunaDto> colunas = new ArrayList<>();
         colunas.add(new ColunaDto("Código", DIREITA, 30));
         colunas.add(new ColunaDto("Descrição", ESQUERDA, 130));
@@ -446,7 +449,7 @@ public class FinalizacaoController extends Controller {
         return colunas;
     }
 
-    public void finalizar() {
+    private void finalizar() {
         StringBuilder msg = new StringBuilder();
         if (isEmpty(getView().getTxtCodVendedor().getText())) {
             msg.append("Vendedor: Campo com preenchimento Obrigatório.\n");
@@ -503,40 +506,32 @@ public class FinalizacaoController extends Controller {
         getCaracteristicaProdutoService().atualizar(caracteristica);
     }
 
-    public List<ItemVenda> getItens() {
+    private List<ItemVenda> getItens() {
         if (isNull(itens)) {
             itens = new ArrayList<>();
         }
         return itens;
     }
 
-    public List<Vendedor> getVendedores() {
+    private List<Vendedor> getVendedores() {
         if (isNull(vendedores)) {
             vendedores = new ArrayList<>();
         }
         return vendedores;
     }
 
-    public List<Cliente> getClientes() {
+    private List<Cliente> getClientes() {
         if (isNull(clientes)) {
             clientes = new ArrayList<>();
         }
         return clientes;
     }
 
-    public List<CondicaoPagamento> getCondicoes() {
+    private List<CondicaoPagamento> getCondicoes() {
         if (isNull(condicoes)) {
             condicoes = new ArrayList<>();
         }
         return condicoes;
-    }
-
-    public FinalizacaoView getView() {
-        return view;
-    }
-
-    public void setView(FinalizacaoView view) {
-        this.view = view;
     }
 
     private VendaService getVendaService() {

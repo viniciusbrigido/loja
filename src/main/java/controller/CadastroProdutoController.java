@@ -1,6 +1,8 @@
 package controller;
 
 import dto.ColunaDto;
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.*;
 import service.*;
 import view.CadastroProdutoView;
@@ -22,7 +24,9 @@ import static util.ValueUtil.*;
 
 public class CadastroProdutoController extends CadastroController {
 
+    @Getter @Setter
     private CadastroProdutoView view;
+
     private List<Produto> produtos;
     private List<Marca> marcas;
     private List<Tipo> tipos;
@@ -131,8 +135,11 @@ public class CadastroProdutoController extends CadastroController {
         DefaultTableCellRenderer dtcrRight = new DefaultTableCellRenderer();
         dtcrRight.setHorizontalAlignment(SwingConstants.RIGHT);
 
+        DefaultTableCellRenderer dtcrCenter = new DefaultTableCellRenderer();
+        dtcrRight.setHorizontalAlignment(SwingConstants.CENTER);
+
         TableColumnModel columnModel = getView().getTabelaCaracteristicas().getColumnModel();
-        columnModel.getColumn(0).setCellRenderer(dtcrRight);
+        columnModel.getColumn(0).setCellRenderer(dtcrCenter);
         columnModel.getColumn(1).setCellRenderer(dtcrRight);
         columnModel.getColumn(0).setPreferredWidth(150);
         columnModel.getColumn(1).setPreferredWidth(160);
@@ -162,7 +169,7 @@ public class CadastroProdutoController extends CadastroController {
         return colunaSelecionada == 4 || colunaSelecionada == 5;
     }
 
-    public AbstractTableModel getGrid() {
+    private AbstractTableModel getGrid() {
         if (grid == null) {
             grid = new AbstractTableModel() {
                 public final String[] columnNames = {"Código Barra", "Estoque", "Tamanho", "Cor", "", ""};
@@ -200,7 +207,7 @@ public class CadastroProdutoController extends CadastroController {
         return grid;
     }
 
-    public void fireTableDataChanged() {
+    private void fireTableDataChanged() {
         getGrid().fireTableDataChanged();
     }
 
@@ -279,6 +286,9 @@ public class CadastroProdutoController extends CadastroController {
     @Override
     public void preencheItem() {
         preencheCamposTela(getProdutos().get(index));
+        habilitaBotaoAddCaracteristica(true);
+        limpaCamposCaracteristica();
+        getView().getTxtDescricao().requestFocus();
     }
 
     @Override
@@ -435,14 +445,14 @@ public class CadastroProdutoController extends CadastroController {
         getView().getBtnAdicionarCaracteristica().setEnabled(isHabilitar);
     }
 
-    public void adicionaCaracteristica() {
+    private void adicionaCaracteristica() {
         getView().setSize(new Dimension(710, 480));
         getView().setPreferredSize(new Dimension(710, 480));
         escondeCamposProduto(false);
         desabilitaCamposProduto(false);
     }
 
-    public void salvaCaracteristica() {
+    private void salvaCaracteristica() {
         Produto produto = getProdutoService().buscar(Integer.parseInt(getView().getTxtCodigo().getText()));
         CaracteristicaProduto caracteristicaProduto = new CaracteristicaProduto();
         if (isNotEmpty(codigoCaracteristica)) {
@@ -465,7 +475,7 @@ public class CadastroProdutoController extends CadastroController {
         }
     }
 
-    public void editaCaracteristica() {
+    private void editaCaracteristica() {
         adicionaCaracteristica();
         CaracteristicaProduto caracteristica = getCaracteristicaSelecionada();
         codigoCaracteristica = caracteristica.getId();
@@ -476,7 +486,7 @@ public class CadastroProdutoController extends CadastroController {
         getView().getTxtBarra().requestFocus();
     }
 
-    public void excluiCaracteristica() {
+    private void excluiCaracteristica() {
         getCaracteristicaProdutoService().apagar(getCaracteristicaSelecionada());
         limpaCamposCaracteristica();
     }
@@ -485,13 +495,13 @@ public class CadastroProdutoController extends CadastroController {
         return getCaracteristicas().get(getView().getTabelaCaracteristicas().getSelectedRow());
     }
 
-    public void editaProduto() {
+    private void editaProduto() {
         retornaValoresPadraoTela();
         getView().getTxtDescricao().requestFocus();
         habilitaBotaoAddCaracteristica(true);
     }
 
-    public void novoProduto() {
+    private void novoProduto() {
         retornaValoresPadraoTela();
         limpaTela();
     }
@@ -539,50 +549,42 @@ public class CadastroProdutoController extends CadastroController {
         fireTableDataChanged();
     }
 
-    public void setView(CadastroProdutoView view) {
-        this.view = view;
-    }
-
-    public CadastroProdutoView getView() {
-        return view;
-    }
-
-    public List<Produto> getProdutos() {
+    private List<Produto> getProdutos() {
         if (isNull(produtos)) {
             produtos = new ArrayList<>();
         }
         return produtos;
     }
 
-    public List<Tamanho> getTamanhos() {
+    private List<Tamanho> getTamanhos() {
         if (isNull(tamanhos)) {
             tamanhos = new ArrayList<>();
         }
         return tamanhos;
     }
 
-    public List<Tipo> getTipos() {
+    private List<Tipo> getTipos() {
         if (isNull(tipos)) {
             tipos = new ArrayList<>();
         }
         return tipos;
     }
 
-    public List<Marca> getMarcas() {
+    private List<Marca> getMarcas() {
         if (isNull(marcas)) {
             marcas = new ArrayList<>();
         }
         return marcas;
     }
 
-    public List<Cor> getCores() {
+    private List<Cor> getCores() {
         if (isNull(cores)) {
             cores = new ArrayList<>();
         }
         return cores;
     }
 
-    public List<CaracteristicaProduto> getCaracteristicas() {
+    private List<CaracteristicaProduto> getCaracteristicas() {
         if (isNull(caracteristicas)) {
             caracteristicas = new ArrayList<>();
         }

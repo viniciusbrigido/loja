@@ -1,5 +1,7 @@
 package controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.Cor;
 import service.CaracteristicaProdutoService;
 import service.CorService;
@@ -12,7 +14,9 @@ import static util.ValueUtil.*;
 
 public class CadastroCorController extends CadastroController {
 
+    @Getter @Setter
     private CadastroCorView view;
+
     private List<Cor> cores;
     private CorService corService;
     private CaracteristicaProdutoService caracteristicaProdutoService;
@@ -146,15 +150,7 @@ public class CadastroCorController extends CadastroController {
         limpaTela();
     }
 
-    public CadastroCorView getView() {
-        return view;
-    }
-
-    public void setView(CadastroCorView view) {
-        this.view = view;
-    }
-
-    public List<Cor> getCores() {
+    private List<Cor> getCores() {
         if (isNull(cores)) {
             cores = new ArrayList<>();
         }

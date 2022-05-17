@@ -1,6 +1,8 @@
 package controller;
 
 import dto.ColunaDto;
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.Endereco;
 import model.bo.Fornecedor;
 import service.FornecedorService;
@@ -23,7 +25,9 @@ import static util.ValueUtil.*;
 
 public class CadastroFornecedorController extends CadastroController {
 
+    @Getter @Setter
     private CadastroFornecedorView view;
+
     private List<Fornecedor> fornecedores;
     private List<Endereco> enderecos;
     private FornecedorService fornecedorService;
@@ -215,7 +219,7 @@ public class CadastroFornecedorController extends CadastroController {
         return getView().getComboEndereco().getSelectedIndex() <= ZERO ? null : getEnderecos().get(getView().getComboEndereco().getSelectedIndex() - 1);
     }
 
-    public void cadastraFone() {
+    private void cadastraFone() {
         if (isEmpty(getView().getTxtCodigo().getText())) {
             showMessageDialog(getView(), "Filtre um Fornecedor para cadastrar os telefones.", ATENCAO, ERROR_MESSAGE);
             getView().getTxtCodigo().requestFocus();
@@ -231,22 +235,14 @@ public class CadastroFornecedorController extends CadastroController {
         new CadastroFoneFornecedorController(new CadastroFoneFornecedorView(), fornecedor);
     }
 
-    public CadastroFornecedorView getView() {
-        return view;
-    }
-
-    public void setView(CadastroFornecedorView view) {
-        this.view = view;
-    }
-
-    public List<Fornecedor> getFornecedores() {
+    private List<Fornecedor> getFornecedores() {
         if (isNull(fornecedores)) {
             fornecedores = new ArrayList<>();
         }
         return fornecedores;
     }
 
-    public List<Endereco> getEnderecos() {
+    private List<Endereco> getEnderecos() {
         if (isNull(enderecos)) {
             enderecos = new ArrayList<>();
         }

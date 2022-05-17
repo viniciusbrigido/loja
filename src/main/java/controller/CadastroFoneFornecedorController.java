@@ -1,5 +1,7 @@
 package controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.FoneFornecedor;
 import model.bo.Fornecedor;
 import service.FoneFornecedorService;
@@ -18,7 +20,9 @@ import static util.ValueUtil.*;
 
 public class CadastroFoneFornecedorController extends CadastroController {
 
+    @Getter @Setter
     private CadastroFoneFornecedorView view;
+
     private Fornecedor fornecedor;
     private List<FoneFornecedor> fones;
     private FoneFornecedorService foneFornecedorService;
@@ -66,7 +70,7 @@ public class CadastroFoneFornecedorController extends CadastroController {
         return colunaSelecionada == 1;
     }
 
-    public AbstractTableModel getGrid() {
+    private AbstractTableModel getGrid() {
         if (grid == null) {
 
             grid = new AbstractTableModel() {
@@ -122,7 +126,7 @@ public class CadastroFoneFornecedorController extends CadastroController {
         };
     }
 
-    public void fireTableDataChanged() {
+    private void fireTableDataChanged() {
         getGrid().fireTableDataChanged();
     }
 
@@ -133,7 +137,7 @@ public class CadastroFoneFornecedorController extends CadastroController {
         getView().getTxtFornecedor().setText(String.format("%s - %s", fornecedor.getId(), fornecedor.getNome()));
     }
 
-    public void excluiFornecedor(int index) {
+    private void excluiFornecedor(int index) {
         if (showYesNoConfirmDialog(getView(), "Deseja realmente excluir o item?", "Atenção") == NO_OPTION) {
             return;
         }
@@ -195,23 +199,15 @@ public class CadastroFoneFornecedorController extends CadastroController {
     public void buscaPorCodigo() {
     }
 
-    public List<FoneFornecedor> getFones() {
+    private List<FoneFornecedor> getFones() {
         if (isNull(fones)) {
             fones = new ArrayList<>();
         }
         return fones;
     }
 
-    public void setFones(List<FoneFornecedor> fones) {
+    private void setFones(List<FoneFornecedor> fones) {
         this.fones = fones;
-    }
-
-    public CadastroFoneFornecedorView getView() {
-        return view;
-    }
-
-    public void setView(CadastroFoneFornecedorView view) {
-        this.view = view;
     }
 
     private FoneFornecedorService getFoneFornecedorService() {

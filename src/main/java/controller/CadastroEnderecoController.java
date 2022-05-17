@@ -1,6 +1,8 @@
 package controller;
 
 import dto.ColunaDto;
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.*;
 import service.*;
 import view.CadastroEnderecoView;
@@ -14,7 +16,9 @@ import static util.ValueUtil.*;
 
 public class CadastroEnderecoController extends CadastroController {
 
+    @Getter @Setter
     private CadastroEnderecoView view;
+
     private List<Endereco> enderecos;
     private List<Cidade> cidades;
     private List<Bairro> bairros;
@@ -150,11 +154,11 @@ public class CadastroEnderecoController extends CadastroController {
         getView().getTxtCodigo().requestFocus();
     }
 
-    public void limpaBairro() {
+    private void limpaBairro() {
         getView().getComboBairro().setSelectedIndex(ZERO);
     }
 
-    public void limpaCidade() {
+    private void limpaCidade() {
         getView().getComboCidade().setSelectedIndex(ZERO);
     }
 
@@ -229,29 +233,21 @@ public class CadastroEnderecoController extends CadastroController {
                 .replaceAll("-", VAZIO);
     }
 
-    public CadastroEnderecoView getView() {
-        return view;
-    }
-
-    public void setView(CadastroEnderecoView view) {
-        this.view = view;
-    }
-
-    public List<Endereco> getEnderecos() {
+    private List<Endereco> getEnderecos() {
         if (isNull(enderecos)) {
             enderecos = new ArrayList<>();
         }
         return enderecos;
     }
 
-    public List<Cidade> getCidades() {
+    private List<Cidade> getCidades() {
         if (isNull(cidades)) {
             cidades = new ArrayList<>();
         }
         return cidades;
     }
 
-    public List<Bairro> getBairros() {
+    private List<Bairro> getBairros() {
         if (isNull(bairros)) {
             bairros = new ArrayList<>();
         }

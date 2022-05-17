@@ -1,7 +1,10 @@
 package controller;
 
 import dto.ColunaDto;
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.Produto;
+import view.FinalizacaoView;
 import view.ListagemGeralView;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -21,7 +24,9 @@ public class ListagemGeralController extends ListagemController {
     private static final String COLUNA_EDICAO = VAZIO;
     private static final String COLUNA_EXCLUSAO = VAZIO;
 
+    @Getter @Setter
     private ListagemGeralView view;
+
     private List<String> itens;
     private List<ColunaDto> colunas;
 
@@ -101,7 +106,7 @@ public class ListagemGeralController extends ListagemController {
 
     private void adicionaAcaoBotaoCarregar() {
         getView().getBtnCarregar().addActionListener(a -> selecionaItem());
-        getView().getBtnCarregar().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F2, ZERO), EVENTO);
+        getView().getBtnCarregar().getInputMap(WHEN_IN_FOCUSED_WINDOW).put(getKeyStroke(VK_F1, ZERO), EVENTO);
         getView().getBtnCarregar().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
         getView().getBtnCarregar().getActionMap().put(EVENTO, new AbstractAction() {
             @Override
@@ -110,7 +115,7 @@ public class ListagemGeralController extends ListagemController {
             }
         });
         if (isTelaChamadaNaVendaOuFinalizacao()) {
-            getView().getBtnCarregar().setText("Selecionar [F2]");
+            getView().getBtnCarregar().setText("Selecionar [F1]");
         }
     }
 
@@ -154,16 +159,15 @@ public class ListagemGeralController extends ListagemController {
             columnModel.getColumn(coluna).setPreferredWidth(dto.getTamanho());
         }
 
-        if (isTelaChamadaNaVendaOuFinalizacao()) {
-            getView().getTableGrid().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
-            getView().getTableGrid().getActionMap().put(EVENTO, new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    selecionaItem();
-                }
-            });
+        getView().getTableGrid().getInputMap(WHEN_FOCUSED).put(getKeyStroke(VK_ENTER, ZERO), EVENTO);
+        getView().getTableGrid().getActionMap().put(EVENTO, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selecionaItem();
+            }
+        });
 
-        } else {
+        if (!isTelaChamadaNaVendaOuFinalizacao()) {
             DefaultTableCellRenderer dtcrEditar = new DefaultTableCellRenderer();
             dtcrEditar.setIcon(new ImageIcon(getClass().getResource("/imagens/editar.png")));
             columnModel.getColumn(getColunaEditar()).setCellRenderer(dtcrEditar);
@@ -354,14 +358,6 @@ public class ListagemGeralController extends ListagemController {
     private void prencheCamposProduto(Produto produto) {
         getView().getTxtProduto().setText(String.format("%s - %s", produto.getId(), produto.getNomProduto()));
         getView().getTxtPreco().setText(formataDouble(produto.getVlrProduto()));
-    }
-
-    public ListagemGeralView getView() {
-        return view;
-    }
-
-    public void setView(ListagemGeralView view) {
-        this.view = view;
     }
 
     public List<String> getItens() {

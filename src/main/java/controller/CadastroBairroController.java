@@ -1,5 +1,7 @@
 package controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.Bairro;
 import service.*;
 import view.CadastroBairroView;
@@ -11,7 +13,9 @@ import static util.ValueUtil.*;
 
 public class CadastroBairroController extends CadastroController {
 
+    @Getter @Setter
     private CadastroBairroView view;
+
     private List<Bairro> bairros;
     private BairroService bairroService;
     private EnderecoService enderecoService;
@@ -146,15 +150,7 @@ public class CadastroBairroController extends CadastroController {
         limpaTela();
     }
 
-    public void setView(CadastroBairroView view) {
-        this.view = view;
-    }
-
-    public CadastroBairroView getView() {
-        return view;
-    }
-
-    public List<Bairro> getBairros() {
+    private List<Bairro> getBairros() {
         if (isNull(bairros)) {
             bairros = new ArrayList<>();
         }

@@ -1,6 +1,8 @@
 package controller;
 
 import dto.ColunaDto;
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.*;
 import personalizado.VendaCellRenderer;
 import service.CaracteristicaProdutoService;
@@ -26,8 +28,14 @@ public class VendaController extends Controller {
 
     private static final String VAZIO_NOME_PRODUTO = " ";
 
+    @Getter @Setter
+    private VendaView view;
+
+    @Getter @Setter
     private Vendedor vendedor;
+    @Getter @Setter
     private Cliente cliente;
+    @Getter @Setter
     private CondicaoPagamento condicao;
 
     private List<CaracteristicaProduto> caracteristicas;
@@ -40,12 +48,12 @@ public class VendaController extends Controller {
 
     private Integer linhaSelecionada;
 
+    @Getter
     private Double valorTotalLiquido = ZEROD;
+    @Getter
     private Double valorTotalBruto = ZEROD;
 
     private AbstractTableModel grid;
-
-    private VendaView view;
 
     public VendaController(VendaView view) {
         super();
@@ -238,7 +246,7 @@ public class VendaController extends Controller {
         return colunaSelecionada == 7 || colunaSelecionada == 8;
     }
 
-    public AbstractTableModel getGrid() {
+    private AbstractTableModel getGrid() {
         if (grid == null) {
             grid = new AbstractTableModel() {
                 public final String[] columnNames = {"Código", "Produto", "Código de Barras", "Quantidade", "Valor Unitário", "Percentual (%)", "Valor Total", "", ""};
@@ -288,7 +296,7 @@ public class VendaController extends Controller {
         return grid;
     }
 
-    public void fireTableDataChanged() {
+    private void fireTableDataChanged() {
         getGrid().fireTableDataChanged();
     }
 
@@ -323,7 +331,7 @@ public class VendaController extends Controller {
         getView().getTxtUsuario().setText(random.nextInt() % 2 == ZERO ? "Vinícius" : "Jonatas");
     }
 
-    public void preencheItem() {
+    private void preencheItem() {
         if (getView().getTxtCodigoBarras().getText().isEmpty()) {
             showMessageDialog(getView(), "Pesquise um produto para lança-lo.", "Atenção", ERROR_MESSAGE);
             setaFocoTela();
@@ -346,7 +354,7 @@ public class VendaController extends Controller {
         atualizaGridValores();
     }
 
-    public void setaFocoPrcDesconto() {
+    private void setaFocoPrcDesconto() {
         getView().getTxtPrcDesconto().requestFocus();
     }
 
@@ -364,7 +372,7 @@ public class VendaController extends Controller {
         }
     }
 
-    public void buscaProduto() {
+    private void buscaProduto() {
         linhaSelecionada = null;
         String leitura = getView().getTxtLeitura().getText();
         if (isEmpty(leitura)) {
@@ -507,7 +515,7 @@ public class VendaController extends Controller {
         }
     }
 
-    public void editaItem() {
+    private void editaItem() {
         if (getView().getTabelaProdutos().getSelectedRow() < ZERO) {
             showMessageDialog(getView(), "Selecione um item para editar.", "Atenção", ERROR_MESSAGE);
             return;
@@ -522,7 +530,7 @@ public class VendaController extends Controller {
         getView().getTxtQuantidade().requestFocus();
     }
 
-    public void excluiItem() {
+    private void excluiItem() {
         if (getView().getTabelaProdutos().getSelectedRow() < ZERO) {
             showMessageDialog(getView(), "Selecione um item para excluir.", "Atenção", ERROR_MESSAGE);
             limpaCamposProduto();
@@ -579,12 +587,12 @@ public class VendaController extends Controller {
         setCaracteristica(getCaracteristicas().get(index));
     }
 
-    public void setCaracteristica(CaracteristicaProduto caracteristica) {
+    private void setCaracteristica(CaracteristicaProduto caracteristica) {
         this.caracteristica = caracteristica;
         preencheDadosCaracteristica(caracteristica);
     }
 
-    public void preencheDadosCaracteristica(CaracteristicaProduto caracteristica) {
+    private void preencheDadosCaracteristica(CaracteristicaProduto caracteristica) {
         getView().getTxtLeitura().setText(VAZIO);
         if (isNull(caracteristica) || isEmpty(caracteristica.getId())) {
             getView().getTxtVlrUnitario().setText(VAZIO);
@@ -601,16 +609,16 @@ public class VendaController extends Controller {
         getView().getTxtQuantidade().requestFocus();
     }
 
-    public void finalizar() {
+    private void finalizar() {
         if (getItens().isEmpty()) {
             showMessageDialog(getView(), "Não há itens para finalizar a venda.", "Atenção", ERROR_MESSAGE);
             setaFocoTela();
             return;
         }
-        new FinalizacaoController(new FinalizacaoView(),this);
+        new FinalizacaoController(new FinalizacaoView(), getItens(), this);
     }
 
-    public void selecionaItem() {
+    private void selecionaItem() {
         if (getItens().isEmpty()) {
             setaFocoTela();
             return;
@@ -619,7 +627,7 @@ public class VendaController extends Controller {
         getView().getTabelaProdutos().setRowSelectionInterval(ZERO, ZERO);
     }
 
-    public void incluiItem() {
+    private void incluiItem() {
         limpaCamposProduto();
     }
 
@@ -633,7 +641,7 @@ public class VendaController extends Controller {
         atualizaGridValores();
     }
 
-    public void excluiVenda() {
+    private void excluiVenda() {
         if (!getItens().isEmpty() && showYesNoConfirmDialog(getView(), "Deseja realmente excluir a venda?", "Atenção") != YES_OPTION) {
             limpaCamposProduto();
             return;
@@ -641,69 +649,33 @@ public class VendaController extends Controller {
         limpaTransacao();
     }
 
-    public List<ItemVenda> getItens() {
+    private List<ItemVenda> getItens() {
         if (isNull(itens)) {
             itens = new ArrayList<>();
         }
         return itens;
     }
 
-    public List<CaracteristicaProduto> getCaracteristicas() {
+    private List<CaracteristicaProduto> getCaracteristicas() {
         if (isNull(caracteristicas)) {
             caracteristicas = new ArrayList<>();
         }
         return caracteristicas;
     }
 
-    public void setCaracteristicas(List<CaracteristicaProduto> caracteristicas) {
+    private void setCaracteristicas(List<CaracteristicaProduto> caracteristicas) {
         this.caracteristicas = caracteristicas;
     }
 
-    public List<Produto> getProdutos() {
+    private List<Produto> getProdutos() {
         if (isNull(produtos)) {
             produtos = new ArrayList<>();
         }
         return produtos;
     }
 
-    public void setProdutos(List<Produto> produtos) {
+    private void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
-    }
-
-    public VendaView getView() {
-        return view;
-    }
-
-    public void setView(VendaView view) {
-        this.view = view;
-    }
-
-    public Double getValorTotalLiquido() {
-        return valorTotalLiquido;
-    }
-
-    public Vendedor getVendedor() {
-        return vendedor;
-    }
-
-    public void setVendedor(Vendedor vendedor) {
-        this.vendedor = vendedor;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public CondicaoPagamento getCondicao() {
-        return condicao;
-    }
-
-    public void setCondicao(CondicaoPagamento condicao) {
-        this.condicao = condicao;
     }
 
     private CaracteristicaProdutoService getCaracteristicaProdutoService() {

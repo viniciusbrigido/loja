@@ -1,6 +1,8 @@
 package controller;
 
 import dto.ColunaDto;
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.Cidade;
 import service.*;
 import view.CadastroCidadeView;
@@ -12,7 +14,9 @@ import static util.ValueUtil.*;
 
 public class CadastroCidadeController extends CadastroController {
 
+    @Getter @Setter
     private CadastroCidadeView view;
+
     private List<Cidade> cidades;
     private CidadeService cidadeService;
     private EnderecoService enderecoService;
@@ -152,15 +156,7 @@ public class CadastroCidadeController extends CadastroController {
         limpaTela();
     }
 
-    public void setView(CadastroCidadeView view) {
-        this.view = view;
-    }
-
-    public CadastroCidadeView getView() {
-        return view;
-    }
-
-    public List<Cidade> getCidades() {
+    private List<Cidade> getCidades() {
         if (isNull(cidades)) {
             cidades = new ArrayList<>();
         }

@@ -1,5 +1,7 @@
 package controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.Tamanho;
 import service.ProdutoService;
 import service.TamanhoService;
@@ -12,7 +14,9 @@ import static util.ValueUtil.*;
 
 public class CadastroTamanhoController extends CadastroController {
 
+    @Getter @Setter
     private CadastroTamanhoView view;
+
     private List<Tamanho> tamanhos;
     private TamanhoService tamanhoService;
     private ProdutoService produtoService;
@@ -140,15 +144,7 @@ public class CadastroTamanhoController extends CadastroController {
         limpaTela();
     }
 
-    public void setView(CadastroTamanhoView view) {
-        this.view = view;
-    }
-
-    public CadastroTamanhoView getView() {
-        return view;
-    }
-
-    public List<Tamanho> getTamanhos() {
+    private List<Tamanho> getTamanhos() {
         if (isNull(tamanhos)) {
             tamanhos = new ArrayList<>();
         }

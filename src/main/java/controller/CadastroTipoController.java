@@ -1,5 +1,7 @@
 package controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.bo.*;
 import service.*;
 import view.CadastroTipoView;
@@ -11,7 +13,9 @@ import static util.ValueUtil.*;
 
 public class CadastroTipoController extends CadastroController {
 
+    @Getter @Setter
     private CadastroTipoView view;
+
     private List<Tipo> tipos;
     private TipoService tipoService;
     private ProdutoService produtoService;
@@ -139,15 +143,7 @@ public class CadastroTipoController extends CadastroController {
         limpaTela();
     }
 
-    public void setView(CadastroTipoView view) {
-        this.view = view;
-    }
-
-    public CadastroTipoView getView() {
-        return view;
-    }
-
-    public List<Tipo> getTipos() {
+    private List<Tipo> getTipos() {
         if (isNull(tipos)) {
             tipos = new ArrayList<>();
         }
