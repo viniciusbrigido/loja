@@ -41,13 +41,13 @@ public class CadastroClienteController extends CadastroController {
 
     private void verificaEnderecoCadastrado() {
         if (getEnderecos().isEmpty()) {
-            showMessageDialog(getView(), "N√£o h√° Endere√ßos cadastrados.", ATENCAO, INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "N„o h· EndereÁos cadastrados.", ATENCAO, INFORMATION_MESSAGE);
             getView().dispose();
         }
     }
 
     private void populaCombos() {
-        getView().getComboEndereco().addItem("Selecione um Endere√ßo");
+        getView().getComboEndereco().addItem("Selecione um EndereÁo");
         getEnderecos().forEach(e -> getView().getComboEndereco().addItem(format("%s - %s", formataCep(e.getNomCep()), e.getNomLogradouro())));
     }
 
@@ -72,7 +72,7 @@ public class CadastroClienteController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "C√≥digo: Valor Inv√°lido.", ATENCAO, ERROR_MESSAGE);
+            showMessageDialog(getView(), "CÛdigo: Valor Inv·lido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -81,7 +81,7 @@ public class CadastroClienteController extends CadastroController {
         if (isNotNull(cliente) && isNotEmpty(cliente.getId())) {
             preencheCamposTela(cliente);
         } else {
-            showMessageDialog(getView(), "Cliente n√£o encontrado.", ATENCAO, ERROR_MESSAGE);
+            showMessageDialog(getView(), "Cliente n„o encontrado.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
         }
     }
@@ -131,7 +131,7 @@ public class CadastroClienteController extends CadastroController {
         try {
             codigo = parseInt(getView().getTxtCodigo().getText());
         } catch (NumberFormatException e) {
-            showMessageDialog(getView(), "C√≥digo: Valor Inv√°lido.", ATENCAO, ERROR_MESSAGE);
+            showMessageDialog(getView(), "CÛdigo: Valor Inv·lido.", ATENCAO, ERROR_MESSAGE);
             limpaTela();
             return;
         }
@@ -140,7 +140,7 @@ public class CadastroClienteController extends CadastroController {
             preencheSalvaCliente(cliente);
             return;
         }
-        showMessageDialog(getView(), "C√≥digo n√£o encontrado.\nPara cadastrar um novo Cliente n√£o preencha o campo de c√≥digo.", ATENCAO, ERROR_MESSAGE);
+        showMessageDialog(getView(), "CÛdigo n„o encontrado.\nPara cadastrar um novo Cliente n„o preencha o campo de cÛdigo.", ATENCAO, ERROR_MESSAGE);
         getView().getTxtCodigo().requestFocus();
     }
 
@@ -166,7 +166,7 @@ public class CadastroClienteController extends CadastroController {
         getClientes().addAll(getClienteService().buscar());
 
         if (getClientes().isEmpty()) {
-            showMessageDialog(getView(), "N√£o h√° Clientes para listar.", ATENCAO, INFORMATION_MESSAGE);
+            showMessageDialog(getView(), "N„o h· Clientes para listar.", ATENCAO, INFORMATION_MESSAGE);
             return;
         }
         new ListagemGeralController(this, "Listagem de Clientes", getItens(), getColunas());
@@ -187,7 +187,7 @@ public class CadastroClienteController extends CadastroController {
 
     private List<ColunaDto> getColunas() {
         List<ColunaDto> colunas = new ArrayList<>();
-        colunas.add(new ColunaDto("C√≥digo", DIREITA, 40));
+        colunas.add(new ColunaDto("CÛdigo", DIREITA, 40));
         colunas.add(new ColunaDto("Nome", ESQUERDA, 160));
         colunas.add(new ColunaDto("CPF", MEIO, 60));
         colunas.add(new ColunaDto("Fone", MEIO, 40));
