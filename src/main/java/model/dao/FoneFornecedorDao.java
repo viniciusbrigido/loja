@@ -13,7 +13,7 @@ public class FoneFornecedorDao extends DaoBase<FoneFornecedor> {
 
     public List<FoneFornecedor> buscaFonesPorFornecedor(Integer codigoFornecedor) {
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT fone FROM FoneFornecedor fone WHERE id_fornecedor = :codigoFornecedor");
+        sql.append(" SELECT fone FROM FoneFornecedor fone WHERE id_fornecedor = :codigoFornecedor ");
 
         try {
             TypedQuery<FoneFornecedor> query = getEntityManager().createQuery(sql.toString(), FoneFornecedor.class);

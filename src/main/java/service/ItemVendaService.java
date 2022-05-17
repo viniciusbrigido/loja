@@ -37,4 +37,8 @@ public class ItemVendaService implements InterfaceService<ItemVenda> {
     @Override
     public void createOrUpdate(ItemVenda itemVenda) throws Exception {
     }
+
+    public boolean isProdutoJaVendido(Integer codigoProduto) {
+        return new ItemVendaDao().isProdutoJaVendido(codigoProduto);
+    }
 }

@@ -15,7 +15,7 @@ public class CaracteristicaProdutoDao extends DaoBase<CaracteristicaProduto> {
 
     public List<CaracteristicaProduto> buscaCaracteristicasPorProduto(Integer codigoProduto) {
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT caracteristica FROM CaracteristicaProduto caracteristica WHERE id_produto = :codigoProduto");
+        sql.append(" SELECT caracteristica FROM CaracteristicaProduto caracteristica WHERE id_produto = :codigoProduto ");
 
         try {
             TypedQuery<CaracteristicaProduto> query = getEntityManager().createQuery(sql.toString(), CaracteristicaProduto.class);
@@ -28,7 +28,7 @@ public class CaracteristicaProdutoDao extends DaoBase<CaracteristicaProduto> {
 
     public CaracteristicaProduto buscaPorCodigoBarras(String codigoBarra) {
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT caracteristica FROM CaracteristicaProduto caracteristica WHERE codBarras = :codigoBarra");
+        sql.append(" SELECT caracteristica FROM CaracteristicaProduto caracteristica WHERE codBarras = :codigoBarra ");
 
         try {
             TypedQuery<CaracteristicaProduto> query = getEntityManager().createQuery(sql.toString(), CaracteristicaProduto.class);
@@ -41,7 +41,7 @@ public class CaracteristicaProdutoDao extends DaoBase<CaracteristicaProduto> {
 
     public boolean isCaracteristicaCadastradaComCor(Integer codigoCor) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT caracteristica FROM CaracteristicaProduto caracteristica WHERE id_cor = :codigoCor");
+        sql.append(" SELECT caracteristica FROM CaracteristicaProduto caracteristica WHERE id_cor = :codigoCor ");
 
         try {
             TypedQuery<CaracteristicaProduto> query = getEntityManager().createQuery(sql.toString(), CaracteristicaProduto.class);

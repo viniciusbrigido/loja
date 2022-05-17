@@ -12,7 +12,7 @@ public class ClienteDao extends DaoBase<Cliente> {
 
     public boolean isClienteCadastradoComEndereco(Integer codigoEndereco) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT cliente FROM Cliente cliente WHERE id_endereco = :codigoEndereco");
+        sql.append(" SELECT cliente FROM Cliente cliente WHERE id_endereco = :codigoEndereco ");
 
         try {
             TypedQuery<Cliente> query = getEntityManager().createQuery(sql.toString(), Cliente.class);

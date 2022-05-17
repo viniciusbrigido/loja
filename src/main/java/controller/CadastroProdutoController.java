@@ -40,6 +40,7 @@ public class CadastroProdutoController extends CadastroController {
     private TamanhoService tamanhoService;
     private CaracteristicaProdutoService caracteristicaProdutoService;
     private CorService corService;
+    private ItemVendaService itemVendaService;
 
     private AbstractTableModel grid;
 
@@ -277,6 +278,10 @@ public class CadastroProdutoController extends CadastroController {
     @Override
     public boolean excluiItem() {
         Produto produto = getProdutos().get(index);
+        if (getItemVendaService().isProdutoJaVendido(produto.getId())) {
+            showMessageDialog(getView(), "O item não pode ser excluído pois já há uma ou mais Vendas com esse produto.", ATENCAO, ERROR_MESSAGE);
+            return false;
+        }
         List<CaracteristicaProduto> caracteristicas = getCaracteristicaProdutoService().buscaCaracteristicasPorProduto(produto.getId());
         caracteristicas.forEach(caracteristica -> getCaracteristicaProdutoService().apagar(caracteristica));
         getProdutoService().apagar(produto);
@@ -613,5 +618,9 @@ public class CadastroProdutoController extends CadastroController {
 
     private CorService getCorService() {
         return ofNullable(corService).orElseGet(() -> corService = new CorService());
+    }
+
+    private ItemVendaService getItemVendaService() {
+        return ofNullable(itemVendaService).orElseGet(() -> itemVendaService = new ItemVendaService());
     }
 }

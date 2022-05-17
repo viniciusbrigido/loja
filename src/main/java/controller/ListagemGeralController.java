@@ -318,7 +318,7 @@ public class ListagemGeralController extends ListagemController {
             showMessageDialog(getView(), "Selecione um item para excluir.", ATENCAO, ERROR_MESSAGE);
             return;
         }
-        if (showYesNoConfirmDialog(getView(), "Deseja realmente exlcuir o item?", ATENCAO) == NO_OPTION) {
+        if (showYesNoConfirmDialog(getView(), "Deseja realmente excluir o item?", ATENCAO) == NO_OPTION) {
             return;
         }
 

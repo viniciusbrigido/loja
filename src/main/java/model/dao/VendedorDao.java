@@ -11,7 +11,7 @@ public class VendedorDao extends DaoBase<Vendedor> {
 
     public boolean isVendedorCadastradoComEndereco(Integer codigoEndereco) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT vendedor FROM Vendedor vendedor WHERE id_endereco = :codigoEndereco");
+        sql.append(" SELECT vendedor FROM Vendedor vendedor WHERE id_endereco = :codigoEndereco ");
 
         try {
             TypedQuery<Vendedor> query = getEntityManager().createQuery(sql.toString(), Vendedor.class);

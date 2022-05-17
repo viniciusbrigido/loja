@@ -14,7 +14,7 @@ public class ProdutoDao extends DaoBase<Produto> {
 
     public List<Produto> buscaPorNome(String descricao) {
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT produto FROM Produto produto WHERE produto.nomProduto LIKE :descricao");
+        sql.append(" SELECT produto FROM Produto produto WHERE produto.nomProduto LIKE :descricao ");
 
         try {
             TypedQuery<Produto> query = getEntityManager().createQuery(sql.toString(), Produto.class);
@@ -27,7 +27,7 @@ public class ProdutoDao extends DaoBase<Produto> {
 
     public boolean isProdutoCadastradoComMarca(Integer codigoMarca) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT produto FROM Produto produto WHERE id_marca = :codigoMarca");
+        sql.append(" SELECT produto FROM Produto produto WHERE id_marca = :codigoMarca ");
 
         try {
             TypedQuery<Produto> query = getEntityManager().createQuery(sql.toString(), Produto.class);
@@ -40,7 +40,7 @@ public class ProdutoDao extends DaoBase<Produto> {
 
     public boolean isProdutoCadastradoComTipo(Integer codigoTipo) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT produto FROM Produto produto WHERE id_tipo = :codigoTipo");
+        sql.append(" SELECT produto FROM Produto produto WHERE id_tipo = :codigoTipo ");
 
         try {
             TypedQuery<Produto> query = getEntityManager().createQuery(sql.toString(), Produto.class);
@@ -53,7 +53,7 @@ public class ProdutoDao extends DaoBase<Produto> {
 
     public boolean isProdutoCadastradoComTamanho(Integer codigoTamanho) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT produto FROM Produto produto WHERE id_tamanho = :codigoTamanho");
+        sql.append(" SELECT produto FROM Produto produto WHERE id_tamanho = :codigoTamanho ");
 
         try {
             TypedQuery<Produto> query = getEntityManager().createQuery(sql.toString(), Produto.class);

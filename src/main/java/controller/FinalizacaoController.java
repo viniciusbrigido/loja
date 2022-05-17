@@ -472,6 +472,7 @@ public class FinalizacaoController extends Controller {
         venda.setCondicaoPagamento(condicao);
         venda.setDatEmissao(new Date());
         venda.setVlrTotal(vendaController.getValorTotalLiquido());
+        venda.setDiaVencimentoParcela(condicao.getNumDiasAtePrimeiraParcela());
 
         venda = getVendaService().salvarRetornandoVenda(venda);
         atualizaSalvaItensVenda(venda);
