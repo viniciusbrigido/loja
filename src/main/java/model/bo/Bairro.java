@@ -16,6 +16,6 @@ public class Bairro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_bairro")
+    @Column(name = "nom_bairro", nullable = false)
     private String nomBairro;
 }

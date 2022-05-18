@@ -16,16 +16,16 @@ public class Endereco implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_cep")
+    @Column(name = "nom_cep", nullable = false)
     private String nomCep;
-    @Column(name = "nom_logradouro")
+    @Column(name = "nom_logradouro", nullable = false)
     private String nomLogradouro;
 
     @ManyToOne
-    @JoinColumn(name = "id_bairro")
+    @JoinColumn(name = "id_bairro", nullable = false)
     private Bairro bairro;
 
     @ManyToOne
-    @JoinColumn(name = "id_cidade")
+    @JoinColumn(name = "id_cidade", nullable = false)
     private Cidade cidade;
 }

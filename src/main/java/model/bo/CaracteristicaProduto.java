@@ -17,18 +17,18 @@ public class CaracteristicaProduto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "num_tamanho")
+    @Column(name = "num_tamanho", nullable = false)
     private String numTamanho;
-    @Column(name = "qtd_estoque")
+    @Column(name = "qtd_estoque", nullable = false)
     private Double qtdEstoque;
-    @Column(name = "cod_barras")
+    @Column(name = "cod_barras", nullable = false)
     private String codBarras;
 
     @ManyToOne
-    @JoinColumn(name = "id_produto")
+    @JoinColumn(name = "id_produto", nullable = false)
     private Produto produto;
 
     @ManyToOne
-    @JoinColumn(name = "id_cor")
+    @JoinColumn(name = "id_cor", nullable = false)
     private Cor cor;
 }

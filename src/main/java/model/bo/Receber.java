@@ -35,6 +35,6 @@ public class Receber implements Serializable {
     private Date datPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "id_venda")
+    @JoinColumn(name = "id_venda", nullable = false)
     private Venda venda;
 }

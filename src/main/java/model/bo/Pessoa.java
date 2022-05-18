@@ -13,6 +13,6 @@ public class Pessoa {
     private String nomEmail;
 
     @ManyToOne
-    @JoinColumn(name = "id_endereco")
+    @JoinColumn(name = "id_endereco", nullable = false)
     private Endereco endereco;
 }

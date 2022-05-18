@@ -23,4 +23,19 @@ public class ItemVendaDao extends DaoBase<ItemVenda> {
             return false;
         }
     }
+
+    public boolean isCaracteristicaJaVendida(Integer codigoCaracteristica) {
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT item FROM ItemVenda item ")
+           .append(" INNER JOIN CaracteristicaProduto caracteristica ON (caracteristica.id = item.caracteristicaProduto.id) ")
+           .append(" WHERE caracteristica.id = :codigoCaracteristica ");
+
+        try {
+            TypedQuery<ItemVenda> query = getEntityManager().createQuery(sql.toString(), ItemVenda.class);
+            query.setParameter("codigoCaracteristica", codigoCaracteristica);
+            return !query.getResultList().isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

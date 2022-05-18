@@ -48,8 +48,8 @@ CREATE TABLE endereco (
      id INTEGER NOT NULL DEFAULT nextval('endereco_id_seq'),
      nom_cep VARCHAR(10) NOT NULL,
      nom_logradouro VARCHAR(100) NOT NULL,
-     id_bairro INTEGER,
-     id_cidade INTEGER,
+     id_bairro INTEGER NOT NULL,
+     id_cidade INTEGER NOT NULL,
      PRIMARY KEY (id),
      CONSTRAINT bairro_fkey FOREIGN KEY(id_bairro) REFERENCES bairro(id),
      CONSTRAINT cidade_fkey FOREIGN KEY(id_cidade) REFERENCES cidade(id)
@@ -59,14 +59,14 @@ CREATE SEQUENCE cliente_id_seq;
 CREATE TABLE cliente (
      id INTEGER NOT NULL DEFAULT nextval('cliente_id_seq'),
      nom_cliente VARCHAR(100) NOT NULL,
-     nom_complemento VARCHAR(100),
+     nom_complemento VARCHAR(100) NOT NULL,
      nom_email VARCHAR(100),
      num_cpf VARCHAR(14) NOT NULL,
      num_rg VARCHAR(12) NOT NULL,
      num_fone VARCHAR(14) NOT NULL,
      num_fone2 VARCHAR(14),
      dat_nascimento DATE NOT NULL,
-     id_endereco INTEGER,
+     id_endereco INTEGER NOT NULL,
      PRIMARY KEY (id),
      CONSTRAINT endereco_fkey FOREIGN KEY(id_endereco) REFERENCES endereco(id)
 );
@@ -76,11 +76,11 @@ CREATE TABLE fornecedor (
      id INTEGER NOT NULL DEFAULT nextval('fornecedor_id_seq'),
      nom_fornecedor VARCHAR(100) NOT NULL,
      nom_razao_social VARCHAR(100) NOT NULL,
-     nom_complemento VARCHAR(100),
+     nom_complemento VARCHAR(100) NOT NULL,
      nom_email VARCHAR(100),
      num_cnpj VARCHAR(18) NOT NULL,
      nom_inscricao_estadual VARCHAR(14) NOT NULL,
-     id_endereco INTEGER,
+     id_endereco INTEGER NOT NULL,
      PRIMARY KEY (id),
      CONSTRAINT endereco_fkey FOREIGN KEY(id_endereco) REFERENCES endereco(id)
 );
@@ -89,14 +89,14 @@ CREATE SEQUENCE vendedor_id_seq;
 CREATE TABLE vendedor (
      id INTEGER NOT NULL DEFAULT nextval('vendedor_id_seq'),
      nom_vendedor VARCHAR(100) NOT NULL,
-     nom_complemento VARCHAR(100),
+     nom_complemento VARCHAR(100) NOT NULL,
      nom_email VARCHAR(100),
      num_cpf VARCHAR(14) NOT NULL,
      num_fone VARCHAR(14) NOT NULL,
      num_fone2 VARCHAR(14),
      prc_comissao_venda NUMERIC,
      prc_comissao_recebimento NUMERIC,
-     id_endereco INTEGER,
+     id_endereco INTEGER NOT NULL,
      PRIMARY KEY (id),
      CONSTRAINT endereco_fkey FOREIGN KEY(id_endereco) REFERENCES endereco(id)
 );
@@ -105,10 +105,10 @@ CREATE SEQUENCE produto_id_seq;
 CREATE TABLE produto (
     id INTEGER NOT NULL DEFAULT nextval('produto_id_seq'),
     nom_produto VARCHAR(100) NOT NULL,
-    vlr_produto NUMERIC,
-    id_marca INTEGER,
-    id_tipo INTEGER,
-    id_tamanho INTEGER,
+    vlr_produto NUMERIC NOT NULL,
+    id_marca INTEGER NOT NULL,
+    id_tipo INTEGER NOT NULL,
+    id_tamanho INTEGER NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT marca_fkey FOREIGN KEY(id_marca) REFERENCES marca(id),
     CONSTRAINT tipo_fkey FOREIGN KEY(id_tipo) REFERENCES tipo(id),
@@ -119,18 +119,19 @@ CREATE SEQUENCE condicao_pagamento_id_seq;
 CREATE TABLE condicao_pagamento (
     id INTEGER NOT NULL DEFAULT nextval('condicao_pagamento_id_seq'),
     nom_condicao_pagamento VARCHAR(100) NOT NULL,
-    num_dias_ate_primeira_parcela INTEGER,
-    num_dias_entre_parcela INTEGER,
+    num_dias_ate_primeira_parcela INTEGER NOT NULL,
+    num_dias_entre_parcela INTEGER NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE SEQUENCE venda_id_seq;
 CREATE TABLE venda (
     id INTEGER NOT NULL DEFAULT nextval('venda_id_seq'),
-    num_serie VARCHAR(5) NOT NULL,
+    num_serie VARCHAR(5),
     dat_emissao DATE NOT NULL,
+    hor_emissao TIME NOT NULL,
     vlr_total NUMERIC NOT NULL,
-    dia_vencimento_parcela INT NOT NULL,
+    dia_vencimento_parcela INT,
     id_cliente INT NOT NULL,
     id_condicao_pagamento INT NOT NULL,
     id_vendedor INT NOT NULL,
@@ -195,9 +196,9 @@ CREATE TABLE compra (
     num_nf INT,
     num_serie_nf VARCHAR(5),
     vlr_total NUMERIC,
-    dat_compra DATE,
-    id_fornecedor INT,
-    id_condicao_pagamento INT,
+    dat_compra DATE NOT NULL,
+    id_fornecedor INT NOT NULL,
+    id_condicao_pagamento INT NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fornecedor_fkey FOREIGN KEY(id_fornecedor) REFERENCES fornecedor(id),
     CONSTRAINT condicao_pagamento_fkey FOREIGN KEY(id_condicao_pagamento) REFERENCES condicao_pagamento(id)
@@ -227,7 +228,7 @@ CREATE TABLE pagar (
    dat_vencimeto DATE,
    dat_pagamento DATE,
    dat_emissao DATE,
-   id_compra INT,
+   id_compra INT NOT NULL,
    PRIMARY KEY (id),
    CONSTRAINT compra_fkey FOREIGN KEY(id_compra) REFERENCES compra(id)
 );

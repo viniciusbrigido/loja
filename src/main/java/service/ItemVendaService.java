@@ -41,4 +41,8 @@ public class ItemVendaService implements InterfaceService<ItemVenda> {
     public boolean isProdutoJaVendido(Integer codigoProduto) {
         return new ItemVendaDao().isProdutoJaVendido(codigoProduto);
     }
+
+    public boolean isCaracteristicaJaVendida(Integer codigoCaracteristica) {
+        return new ItemVendaDao().isCaracteristicaJaVendida(codigoCaracteristica);
+    }
 }

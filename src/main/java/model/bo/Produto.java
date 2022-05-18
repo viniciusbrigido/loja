@@ -16,20 +16,20 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_produto")
+    @Column(name = "nom_produto", nullable = false)
     private String nomProduto;
-    @Column(name = "vlr_produto")
+    @Column(name = "vlr_produto", nullable = false)
     private Double vlrProduto;
 
     @ManyToOne
-    @JoinColumn(name = "id_marca")
+    @JoinColumn(name = "id_marca", nullable = false)
     private Marca marca;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo")
+    @JoinColumn(name = "id_tipo", nullable = false)
     private Tipo tipo;
 
     @ManyToOne
-    @JoinColumn(name = "id_tamanho")
+    @JoinColumn(name = "id_tamanho", nullable = false)
     private Tamanho tamanho;
 }

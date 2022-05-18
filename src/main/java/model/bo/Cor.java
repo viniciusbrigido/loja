@@ -16,6 +16,6 @@ public class Cor implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_cor")
+    @Column(name = "nom_cor", nullable = false)
     private String nomCor;
 }

@@ -16,6 +16,6 @@ public class Tamanho implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_tamanho")
+    @Column(name = "nom_tamanho", nullable = false)
     private String nomTamanho;
 }

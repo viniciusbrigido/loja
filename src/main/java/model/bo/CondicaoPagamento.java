@@ -16,10 +16,10 @@ public class CondicaoPagamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_condicao_pagamento")
+    @Column(name = "nom_condicao_pagamento", nullable = false)
     private String nomCondicaoPagamento;
-    @Column(name = "num_dias_ate_primeira_parcela")
+    @Column(name = "num_dias_ate_primeira_parcela", nullable = false)
     private Integer numDiasAtePrimeiraParcela;
-    @Column(name = "num_dias_entre_parcela")
+    @Column(name = "num_dias_entre_parcela", nullable = false)
     private Integer numDiasEntreParcelas;
 }

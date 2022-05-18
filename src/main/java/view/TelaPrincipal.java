@@ -19,8 +19,7 @@ public class TelaPrincipal extends JFrame {
     private JMenuItem menuItemEndereco;
     private JMenuItem menuItemMarca;
     private JMenuItem menuItemTamanho;
-    private JMenuItem menuItemTipoProduto;
-    private JMenuItem menuItemCor;
+    private JMenuItem menuItemTipoProduto;    private JMenuItem menuItemCor;
     private JMenuItem menuItemProduto;
     private JMenuItem menuItemCondicao;
     private JMenuItem menuItemCliente;

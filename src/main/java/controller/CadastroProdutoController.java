@@ -492,7 +492,12 @@ public class CadastroProdutoController extends CadastroController {
     }
 
     private void excluiCaracteristica() {
-        getCaracteristicaProdutoService().apagar(getCaracteristicaSelecionada());
+        CaracteristicaProduto caracteristica = getCaracteristicaSelecionada();
+        if (getItemVendaService().isCaracteristicaJaVendida(caracteristica.getId())) {
+            showMessageDialog(getView(), "O item não pode ser excluído pois já há uma ou mais Vendas com esse produto.", ATENCAO, ERROR_MESSAGE);
+            return;
+        }
+        getCaracteristicaProdutoService().apagar(caracteristica);
         limpaCamposCaracteristica();
     }
 

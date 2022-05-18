@@ -35,6 +35,6 @@ public class Pagar implements Serializable {
     private Date datEmissao;
 
     @ManyToOne
-    @JoinColumn(name = "id_compra")
+    @JoinColumn(name = "id_compra", nullable = false)
     private Compra compra;
 }

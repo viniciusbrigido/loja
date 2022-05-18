@@ -8,6 +8,7 @@ import service.*;
 import view.FinalizacaoView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.sql.Time;
 import java.util.*;
 import static java.awt.event.KeyEvent.*;
 import static java.lang.Integer.*;
@@ -471,6 +472,7 @@ public class FinalizacaoController extends Controller {
         venda.setCliente(cliente);
         venda.setCondicaoPagamento(condicao);
         venda.setDatEmissao(new Date());
+        venda.setHorEmissao(new Time(new Date().getTime()));
         venda.setVlrTotal(vendaController.getValorTotalLiquido());
         venda.setDiaVencimentoParcela(condicao.getNumDiasAtePrimeiraParcela());
 

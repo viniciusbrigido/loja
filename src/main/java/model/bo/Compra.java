@@ -23,14 +23,14 @@ public class Compra implements Serializable {
     private String numSerieNF;
     @Column(name = "vlr_total")
     private Double vlrTotal;
-    @Column(name = "dat_compra")
+    @Column(name = "dat_compra", nullable = false)
     private Date datCompra;
 
     @ManyToOne
-    @JoinColumn(name = "id_condicao_pagamento")
+    @JoinColumn(name = "id_condicao_pagamento", nullable = false)
     private CondicaoPagamento condicaoPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "id_fornecedor")
+    @JoinColumn(name = "id_fornecedor", nullable = false)
     private Fornecedor fornecedor;
 }

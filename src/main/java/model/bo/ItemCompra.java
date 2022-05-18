@@ -16,18 +16,18 @@ public class ItemCompra implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "qtd_produto")
+    @Column(name = "qtd_produto", nullable = false)
     private Double qtdProduto;
-    @Column(name = "vlr_unitario")
+    @Column(name = "vlr_unitario", nullable = false)
     private Double vlrUnitario;
     @Column(name = "prc_desconto")
     private Double prcDesconto;
 
     @ManyToOne
-    @JoinColumn(name = "id_compra")
+    @JoinColumn(name = "id_compra", nullable = false)
     private Compra compra;
 
     @ManyToOne
-    @JoinColumn(name = "id_caracteristica_produto")
+    @JoinColumn(name = "id_caracteristica_produto", nullable = false)
     private CaracteristicaProduto caracteristicaProduto;
 }

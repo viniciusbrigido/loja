@@ -16,6 +16,6 @@ public class Marca implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "nom_marca")
+    @Column(name = "nom_marca", nullable = false)
     private String nomMarca;
 }
