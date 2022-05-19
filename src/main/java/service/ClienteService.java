@@ -46,6 +46,9 @@ public class ClienteService implements InterfaceService<Cliente> {
         if (isEmpty(cliente.getNumCpf())) {
             msg.append("CPF: Campo com preenchimento Obrigatório.\n");
         }
+        if (isEmpty(cliente.getNumRg())) {
+            msg.append("RG: Campo com preenchimento Obrigatório.\n");
+        }
         if (isNull(cliente.getDatNascimento())) {
             msg.append("Data Nascimento: Campo com preenchimento Obrigatório.\n");
         }
