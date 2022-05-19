@@ -1,6 +1,6 @@
 package view;
 
-import personalizado.UpperCaseDoc;
+import personalizado.*;
 import util.Cores;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -418,7 +418,7 @@ public class CadastroFornecedorView extends ControllerView {
         if (txtEmail == null) {
             txtEmail = new JTextField();
             txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            txtEmail.setDocument(new UpperCaseDoc(100));
+            txtEmail.setDocument(new LimitadorCaseDoc(100));
         }
         return txtEmail;
     }

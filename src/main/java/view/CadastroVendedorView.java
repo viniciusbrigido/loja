@@ -435,7 +435,7 @@ public class CadastroVendedorView extends ControllerView {
         if (txtEmail == null) {
             txtEmail = new JTextField();
             txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            txtEmail.setDocument(new UpperCaseDoc(100));
+            txtEmail.setDocument(new LimitadorCaseDoc(100));
         }
         return txtEmail;
     }
