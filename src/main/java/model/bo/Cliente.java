@@ -9,7 +9,6 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "cliente")
 @AttributeOverride(name = "nome", column = @Column(name = "nom_cliente", nullable = false))

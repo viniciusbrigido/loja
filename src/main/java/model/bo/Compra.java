@@ -3,13 +3,13 @@ package model.bo;
 import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
+import static util.ValueUtil.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "compra")
 public class Compra implements Serializable {
@@ -33,4 +33,15 @@ public class Compra implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_fornecedor", nullable = false)
     private Fornecedor fornecedor;
+
+    @OneToMany(mappedBy = "compra")
+    @OrderBy("id")
+    private List<ItemCompra> itens;
+
+    public List<ItemCompra> getItens() {
+        if (isNull(itens)) {
+            itens = new ArrayList<>();
+        }
+        return itens;
+    }
 }

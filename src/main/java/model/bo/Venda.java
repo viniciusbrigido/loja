@@ -4,13 +4,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
-import java.util.Date;
+import java.util.*;
+import static util.ValueUtil.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "venda")
 public class Venda implements Serializable {
@@ -40,4 +40,15 @@ public class Venda implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_vendedor", nullable = false)
     private Vendedor vendedor;
+
+    @OneToMany(mappedBy = "venda")
+    @OrderBy("id")
+    private List<ItemVenda> itens;
+
+    public List<ItemVenda> getItens() {
+        if (isNull(itens)) {
+            itens = new ArrayList<>();
+        }
+        return itens;
+    }
 }

@@ -1,6 +1,6 @@
 package view;
 
-import personalizado.JTextFieldLimitador;
+import personalizado.UpperCaseDoc;
 import util.Cores;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -28,9 +28,9 @@ public class CadastroClienteView extends ControllerView {
     private JLabel lblFone;
     private JLabel lblFone2;
 
-    private JTextFieldLimitador txtNome;
-    private JTextFieldLimitador txtComplemento;
-    private JTextFieldLimitador txtEmail;
+    private JTextField txtNome;
+    private JTextField txtComplemento;
+    private JTextField txtEmail;
     private JTextField txtCpf;
     private JTextField txtRg;
     private JTextField txtFone;
@@ -387,26 +387,29 @@ public class CadastroClienteView extends ControllerView {
         return gbcPanelBotoes;
     }
 
-    public JTextFieldLimitador getTxtNome() {
+    public JTextField getTxtNome() {
         if (txtNome == null) {
-            txtNome = new JTextFieldLimitador(100);
+            txtNome = new JTextField();
             txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtNome.setDocument(new UpperCaseDoc(100));
         }
         return txtNome;
     }
 
-    public JTextFieldLimitador getTxtComplemento() {
+    public JTextField getTxtComplemento() {
         if (txtComplemento == null) {
-            txtComplemento = new JTextFieldLimitador(100);
+            txtComplemento = new JTextField();
             txtComplemento.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtComplemento.setDocument(new UpperCaseDoc(100));
         }
         return txtComplemento;
     }
 
-    public JTextFieldLimitador getTxtEmail() {
+    public JTextField getTxtEmail() {
         if (txtEmail == null) {
-            txtEmail = new JTextFieldLimitador(100);
+            txtEmail = new JTextField();
             txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtEmail.setDocument(new UpperCaseDoc(100));
         }
         return txtEmail;
     }

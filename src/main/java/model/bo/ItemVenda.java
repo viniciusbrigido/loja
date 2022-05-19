@@ -9,7 +9,6 @@ import static util.ValueUtil.*;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "item_venda")
 public class ItemVenda implements Serializable {

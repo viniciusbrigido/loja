@@ -1,7 +1,6 @@
 package model.bo;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,7 +8,6 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "caracteristica_produto")
 public class CaracteristicaProduto implements Serializable {

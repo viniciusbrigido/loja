@@ -1,5 +1,6 @@
 package view;
 
+import personalizado.UpperCaseDoc;
 import util.Cores;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -245,6 +246,7 @@ public class CadastroEnderecoView extends ControllerView {
         if (txtLogradouro == null) {
             txtLogradouro = new JTextField();
             txtLogradouro.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtLogradouro.setDocument(new UpperCaseDoc(100));
         }
         return txtLogradouro;
     }

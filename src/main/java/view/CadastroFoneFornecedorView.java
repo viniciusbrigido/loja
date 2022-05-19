@@ -1,13 +1,9 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.table.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.ParseException;
-import static java.awt.Cursor.getDefaultCursor;
 
 public class CadastroFoneFornecedorView extends ControllerView {
 
@@ -25,9 +21,6 @@ public class CadastroFoneFornecedorView extends ControllerView {
 
     private JTextField txtFornecedor;
     private JTextField txtFone;
-
-    private JButton btnSalvar;
-    private JButton btnSair;
 
     public CadastroFoneFornecedorView() {
         setTitle("Cadastro de Fones de Fornecedor");

@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "fone_fornecedor")
 public class FoneFornecedor implements Serializable {
@@ -17,7 +16,7 @@ public class FoneFornecedor implements Serializable {
     @Column(name = "num_fone")
     private String numFone;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_fornecedor", nullable = false)
     private Fornecedor fornecedor;
 }

@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "vendedor")
 @AttributeOverride(name = "nome", column = @Column(name = "nom_vendedor", nullable = false))
