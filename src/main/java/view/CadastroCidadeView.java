@@ -1,6 +1,6 @@
 package view;
 
-import personalizado.JTextFieldLimitador;
+import personalizado.UpperCaseDoc;
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public class CadastroCidadeView extends ControllerView {
     private JLabel lblDescricao;
     private JLabel lblUf;
 
-    private JTextFieldLimitador txtDescricao;
+    private JTextField txtDescricao;
     private JComboBox<String> estados;
 
     public CadastroCidadeView() {
@@ -168,10 +168,11 @@ public class CadastroCidadeView extends ControllerView {
         return gbcPanelBotoes;
     }
 
-    public JTextFieldLimitador getTxtDescricao() {
+    public JTextField getTxtDescricao() {
         if (txtDescricao == null) {
-            txtDescricao = new JTextFieldLimitador(40);
+            txtDescricao = new JTextField();
             txtDescricao.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtDescricao.setDocument(new UpperCaseDoc(40));
         }
         return txtDescricao;
     }

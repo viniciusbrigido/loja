@@ -3,10 +3,7 @@ package view;
 import personalizado.*;
 import util.Cores;
 import javax.swing.*;
-import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.*;
-import static java.awt.Cursor.getDefaultCursor;
 
 public class CadastroProdutoView extends ControllerView {
 
@@ -31,14 +28,14 @@ public class CadastroProdutoView extends ControllerView {
     private JLabel lblTamanhoCaracteristica;
     private JLabel lblCor;
 
-    private JTextFieldLimitador txtDescricao;
+    private JTextField txtDescricao;
     private JTextFieldMoeda txtPreco;
     private JComboBox<String> comboMarca;
     private JComboBox<String> comboTipo;
     private JComboBox<String> comboTamanho;
     private JComboBox<String> comboCor;
-    private JTextFieldLimitador txtBarra;
-    private JTextFieldLimitador txtTamanho;
+    private JTextField txtBarra;
+    private JTextField txtTamanho;
     private JTextFieldSomenteNumeros txtEstoque;
 
     private JButton btnAdicionarCaracteristica;
@@ -46,7 +43,6 @@ public class CadastroProdutoView extends ControllerView {
     private JButton btnEditarProduto;
     private JButton btnNovoProduto;
     private JButton btnSairCaracteristica;
-
 
     public CadastroProdutoView() {
         setTitle("Cadastro de Produtos");
@@ -443,10 +439,11 @@ public class CadastroProdutoView extends ControllerView {
         return gbcPanelBotoesCaracteristica;
     }
 
-    public JTextFieldLimitador getTxtDescricao() {
+    public JTextField getTxtDescricao() {
         if (txtDescricao == null) {
-            txtDescricao = new JTextFieldLimitador(100);
+            txtDescricao = new JTextField();
             txtDescricao.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtDescricao.setDocument(new UpperCaseDoc(100));
         }
         return txtDescricao;
     }
@@ -495,10 +492,11 @@ public class CadastroProdutoView extends ControllerView {
         return comboCor;
     }
 
-    public JTextFieldLimitador getTxtTamanho() {
+    public JTextField getTxtTamanho() {
         if (txtTamanho == null) {
-            txtTamanho = new JTextFieldLimitador(3);
+            txtTamanho = new JTextField();
             txtTamanho.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtTamanho.setDocument(new UpperCaseDoc(3));
         }
         return txtTamanho;
     }
@@ -511,10 +509,11 @@ public class CadastroProdutoView extends ControllerView {
         return txtEstoque;
     }
 
-    public JTextFieldLimitador getTxtBarra() {
+    public JTextField getTxtBarra() {
         if (txtBarra == null) {
-            txtBarra = new JTextFieldLimitador(13);
+            txtBarra = new JTextField();
             txtBarra.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtBarra.setDocument(new UpperCaseDoc(13));
         }
         return txtBarra;
     }

@@ -1,7 +1,6 @@
 package view;
 
-import personalizado.JTextFieldLimitador;
-import personalizado.JTextFieldSomenteNumeros;
+import personalizado.*;
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,7 +15,7 @@ public class CadastroCondicaoPagamentoView extends ControllerView {
     private JLabel lblNumDiasAtePrimeiraParcela;
     private JLabel lblNumDiasEntreParcelas;
 
-    private JTextFieldLimitador txtDescricao;
+    private JTextField txtDescricao;
     private JTextFieldSomenteNumeros txtNumDiasAtePrimeiraParcela;
     private JTextFieldSomenteNumeros txtNumDiasEntreParcelas;
 
@@ -208,10 +207,11 @@ public class CadastroCondicaoPagamentoView extends ControllerView {
         return gbcPanelBotoes;
     }
 
-    public JTextFieldLimitador getTxtDescricao() {
+    public JTextField getTxtDescricao() {
         if (txtDescricao == null) {
-            txtDescricao = new JTextFieldLimitador(40);
+            txtDescricao = new JTextField();
             txtDescricao.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtDescricao.setDocument(new UpperCaseDoc(100));
         }
         return txtDescricao;
     }

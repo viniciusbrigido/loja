@@ -1,6 +1,6 @@
 package view;
 
-import personalizado.JTextFieldLimitador;
+import personalizado.UpperCaseDoc;
 import util.Cores;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -27,12 +27,12 @@ public class CadastroFornecedorView extends ControllerView {
     private JLabel lblCnpj;
     private JLabel lblInscricaoEstadual;
 
-    private JTextFieldLimitador txtNome;
-    private JTextFieldLimitador txtRazaoSocial;
-    private JTextFieldLimitador txtComplemento;
-    private JTextFieldLimitador txtEmail;
+    private JTextField txtNome;
+    private JTextField txtRazaoSocial;
+    private JTextField txtComplemento;
+    private JTextField txtEmail;
     private JTextField txtCnpj;
-    private JTextFieldLimitador txtInscricaoEstadual;
+    private JTextField txtInscricaoEstadual;
     private JComboBox<String> comboEndereco;
 
     private JButton btnCadastroFone;
@@ -387,34 +387,38 @@ public class CadastroFornecedorView extends ControllerView {
         return gbcPanelBotoes;
     }
 
-    public JTextFieldLimitador getTxtNome() {
+    public JTextField getTxtNome() {
         if (txtNome == null) {
-            txtNome = new JTextFieldLimitador(100);
+            txtNome = new JTextField();
             txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtNome.setDocument(new UpperCaseDoc(100));
         }
         return txtNome;
     }
 
-    public JTextFieldLimitador getTxtRazaoSocial() {
+    public JTextField getTxtRazaoSocial() {
         if (txtRazaoSocial == null) {
-            txtRazaoSocial = new JTextFieldLimitador(100);
+            txtRazaoSocial = new JTextField();
             txtRazaoSocial.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtRazaoSocial.setDocument(new UpperCaseDoc(100));
         }
         return txtRazaoSocial;
     }
 
-    public JTextFieldLimitador getTxtComplemento() {
+    public JTextField getTxtComplemento() {
         if (txtComplemento == null) {
-            txtComplemento = new JTextFieldLimitador(45);
+            txtComplemento = new JTextField();
             txtComplemento.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtComplemento.setDocument(new UpperCaseDoc(100));
         }
         return txtComplemento;
     }
 
-    public JTextFieldLimitador getTxtEmail() {
+    public JTextField getTxtEmail() {
         if (txtEmail == null) {
-            txtEmail = new JTextFieldLimitador(100);
+            txtEmail = new JTextField();
             txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtEmail.setDocument(new UpperCaseDoc(100));
         }
         return txtEmail;
     }
@@ -431,10 +435,11 @@ public class CadastroFornecedorView extends ControllerView {
         return txtCnpj;
     }
 
-    public JTextFieldLimitador getTxtInscricaoEstadual() {
+    public JTextField getTxtInscricaoEstadual() {
         if (txtInscricaoEstadual == null) {
-            txtInscricaoEstadual = new JTextFieldLimitador(14);
+            txtInscricaoEstadual = new JTextField(14);
             txtInscricaoEstadual.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            txtInscricaoEstadual.setDocument(new UpperCaseDoc(14));
         }
         return txtInscricaoEstadual;
     }
